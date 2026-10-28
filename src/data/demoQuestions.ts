@@ -618,4 +618,16 @@ std::cout << val1 << " " << val2;`,
     correctOptionIndex: 2,
     explanation: '*p refers to n, so adding 4 through the dereference changes n from 9 to 13.'
   }
+  ,
+  {
+    id: 117,
+    conceptId: 'pointer-declaration',
+    conceptName: 'Pointer Declaration (Type*)',
+    difficulty: 'Intermediate',
+    question: 'Which initialization stores the address of total in an int pointer?',
+    codeSnippet: 'int total = 42;',
+    options: ['int* p = total;', 'int p = &total;', 'int* p = &total;', 'int* p = *total;'],
+    correctOptionIndex: 2,
+    explanation: 'The pointer type is int*, and &total provides the address of the existing integer. The pointer should be used only while total remains alive.'
+  }
 ];

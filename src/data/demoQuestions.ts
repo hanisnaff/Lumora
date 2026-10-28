@@ -511,4 +511,112 @@ std::cout << val1 << " " << val2;`,
     correctOptionIndex: 2,
     explanation: '`nullptr` is a C++11 keyword that represents a null pointer constant of type `std::nullptr_t`, avoiding integer overload ambiguity that plagued NULL.',
   },
+  ,
+  {
+    id: 107,
+    conceptId: 'memory-addresses',
+    conceptName: 'Memory Addresses (&)',
+    difficulty: 'Beginner',
+    question: 'Which expression gives the address of the integer variable count?',
+    codeSnippet: 'int count = 7;',
+    options: ['count', '*count', '&count', 'nullptr'],
+    correctOptionIndex: 2,
+    explanation: 'The unary address-of operator & returns the location where count is stored; count alone is its value.'
+  },
+  {
+    id: 108,
+    conceptId: 'memory-addresses',
+    conceptName: 'Memory Addresses (&)',
+    difficulty: 'Intermediate',
+    question: 'If int* p = &score;, what does p store?',
+    codeSnippet: 'int score = 18;\nint* p = &score;',
+    options: ['The value 18', 'The address of score', 'The address of p itself', 'A copy of score'],
+    correctOptionIndex: 1,
+    explanation: 'The expression &score produces score’s address, which is stored in p.'
+  },
+  {
+    id: 109,
+    conceptId: 'pointer-declaration',
+    conceptName: 'Pointer Declaration (Type*)',
+    difficulty: 'Beginner',
+    question: 'Which declaration creates a pointer to an int?',
+    options: ['int p;', 'int* p;', 'pointer<int> p;', 'int &*p;'],
+    correctOptionIndex: 1,
+    explanation: 'int* p declares p as a pointer to an int. Initialize it with a valid address or nullptr before use.'
+  },
+  {
+    id: 110,
+    conceptId: 'pointer-declaration',
+    conceptName: 'Pointer Declaration (Type*)',
+    difficulty: 'Intermediate',
+    question: 'Which is the safest initial value for an int pointer that does not yet point to an object?',
+    options: ['1', 'uninitialized memory', 'nullptr', '&nullptr'],
+    correctOptionIndex: 2,
+    explanation: 'nullptr clearly represents that the pointer currently points to no object. Check it before dereferencing.'
+  },
+  {
+    id: 111,
+    conceptId: 'pointer-assignment',
+    conceptName: 'Pointer Assignment & Mutation',
+    difficulty: 'Beginner',
+    question: 'What changes when p = &b; executes?',
+    codeSnippet: 'int a = 2, b = 4;\nint* p = &a;\np = &b;',
+    options: ['a becomes b', 'p now points to b', 'b becomes the address of p', 'Both values become equal'],
+    correctOptionIndex: 1,
+    explanation: 'Pointer assignment changes the address stored in p. It does not copy or change the values of a or b.'
+  },
+  {
+    id: 112,
+    conceptId: 'pointer-assignment',
+    conceptName: 'Pointer Assignment & Mutation',
+    difficulty: 'Intermediate',
+    question: 'After this code, what are a and b?',
+    codeSnippet: 'int a = 3, b = 8;\nint* p = &a;\np = &b;\n*p = 11;',
+    options: ['a=11, b=8', 'a=3, b=11', 'a=11, b=11', 'a=3, b=8'],
+    correctOptionIndex: 1,
+    explanation: 'p is reassigned to b, then *p writes 11 into b. a remains 3.'
+  },
+  {
+    id: 113,
+    conceptId: 'pointer-safety',
+    conceptName: 'Null Pointers & Safety',
+    difficulty: 'Beginner',
+    question: 'What should you do before dereferencing a pointer that may be null?',
+    options: ['Increment it', 'Check that it is not nullptr', 'Cast it to int', 'Nothing; null is safe to dereference'],
+    correctOptionIndex: 1,
+    explanation: 'Dereferencing nullptr is undefined behavior. Check the pointer before accessing the pointed-to object.'
+  },
+  {
+    id: 114,
+    conceptId: 'pointer-safety',
+    conceptName: 'Null Pointers & Safety',
+    difficulty: 'Intermediate',
+    question: 'What does this guard prevent?',
+    codeSnippet: 'if (p != nullptr) { std::cout << *p; }',
+    options: ['All memory leaks', 'Dereferencing a null pointer in this block', 'p from changing address', 'Compilation errors'],
+    correctOptionIndex: 1,
+    explanation: 'The condition allows the dereference only when p is non-null. It does not prove that every non-null pointer is valid.'
+  },
+  {
+    id: 115,
+    conceptId: 'dereferencing',
+    conceptName: 'Dereferencing (*ptr)',
+    difficulty: 'Beginner',
+    question: 'What value does *p evaluate to?',
+    codeSnippet: 'int n = 6;\nint* p = &n;',
+    options: ['The address of n', '6', 'The address of p', 'nullptr'],
+    correctOptionIndex: 1,
+    explanation: 'Dereferencing p with *p accesses the int object p points to, whose value is 6.'
+  },
+  {
+    id: 116,
+    conceptId: 'dereferencing',
+    conceptName: 'Dereferencing (*ptr)',
+    difficulty: 'Intermediate',
+    question: 'What is the value of n after this statement?',
+    codeSnippet: 'int n = 9;\nint* p = &n;\n*p += 4;',
+    options: ['9', '4', '13', 'The address of n'],
+    correctOptionIndex: 2,
+    explanation: '*p refers to n, so adding 4 through the dereference changes n from 9 to 13.'
+  }
 ];

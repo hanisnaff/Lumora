@@ -54,9 +54,10 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed.selectedSubject) setSubject(parsed.selectedSubject);
-        if (parsed.selectedTopic) setTopic(parsed.selectedTopic);
-        if (parsed.difficulty) setDifficulty(parsed.difficulty);
+        // Keep restored state aligned with the currently implemented demo curriculum.
+        if (parsed.selectedSubject === 'C++') setSubject('C++');
+        if (parsed.selectedTopic === 'Pointers') setTopic('Pointers');
+        if (['Beginner', 'Intermediate', 'Advanced'].includes(parsed.difficulty)) setDifficulty(parsed.difficulty);
         if (parsed.assessmentAnswers) setAssessmentAnswers(parsed.assessmentAnswers);
         if (parsed.assessmentResult) setAssessmentResult(parsed.assessmentResult);
         if (parsed.conceptMasteries) setConceptMasteries(parsed.conceptMasteries);

@@ -20,7 +20,6 @@ interface LearningContextType {
   practiceAttempts: PracticeAttempt[];
   completedLessons: string[];
   activeLessonConcept: ConceptId;
-  streakDays: number;
 
   setSubject: (subject: string) => void;
   setTopic: (topic: string) => void;
@@ -47,7 +46,6 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [practiceAttempts, setPracticeAttempts] = useState<PracticeAttempt[]>([]);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
-  const [streakDays] = useState<number>(0); // No activity streak is claimed until tracked from real dated sessions.
   const [hydrated, setHydrated] = useState(false);
 
   // Initialize from localStorage on mount
@@ -178,7 +176,6 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         practiceAttempts,
         completedLessons,
         activeLessonConcept,
-        streakDays,
         setSubject,
         setTopic,
         setDifficulty,

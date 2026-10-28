@@ -124,8 +124,8 @@ export const LearningSetupPage: React.FC = () => {
                     className={`relative p-5 rounded-2xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] ${
                       isSelected
                         ? 'bg-[#FFFFFF] border-[#244B3C] shadow-md ring-2 ring-[#244B3C]'
-                        : 'bg-[#F8FAF9] border-[#D6DDD8] hover:bg-[#E8EBE9]/50'} ${!sub.featured ? 'opacity-70 cursor-not-allowed' : ''}
-                    }`}
+                        : 'bg-[#F8FAF9] border-[#D6DDD8] hover:bg-[#E8EBE9]/50'
+                    } ${!sub.featured ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -169,8 +169,8 @@ export const LearningSetupPage: React.FC = () => {
                     className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all duration-180 flex items-center gap-2 ${
                       isSelected
                         ? 'bg-[#244B3C] text-[#F8FAF9] border-[#244B3C] shadow-xs'
-                        : 'bg-[#F8FAF9] text-[#68716C] border-[#D6DDD8] hover:text-[#244B3C] hover:bg-[#E8EBE9]/60'} ${!isFeatured ? 'opacity-60 cursor-not-allowed' : ''}
-                    }`}
+                        : 'bg-[#F8FAF9] text-[#68716C] border-[#D6DDD8] hover:text-[#244B3C] hover:bg-[#E8EBE9]/60'
+                    } ${!isFeatured ? 'opacity-60 cursor-not-allowed' : ''}`}
                   >
                     <span>{t}</span>
                     {isFeatured && (

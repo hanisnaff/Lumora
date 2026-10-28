@@ -92,23 +92,23 @@ export const LearningSetupPage: React.FC = () => {
       <div className="space-y-10">
         
         {/* Setup Card Container */}
-        <section className="bg-[#FAF8F3] border border-[#D9CCBA] rounded-2xl p-6 sm:p-8 shadow-xs relative overflow-hidden bg-dot-pattern">
+        <section className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 sm:p-8 shadow-xs relative overflow-hidden bg-dot-pattern">
           <div className="max-w-[700px]">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1A3628] mb-2.5">
-              <span className="w-2 h-2 rounded-full bg-[#C8E348]" />
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#C6F36B]" />
               <span>DIAGNOSTIC CONFIGURATION</span>
             </div>
-            <h2 className="font-heading font-extrabold text-[#1A3628] tracking-tight text-2xl sm:text-3xl">
+            <h2 className="font-heading font-extrabold text-[#244B3C] tracking-tight text-2xl sm:text-3xl">
               Let's find your starting point.
             </h2>
-            <p className="text-[15.5px] text-[#5C675F] mt-2 leading-relaxed">
+            <p className="text-[15.5px] text-[#68716C] mt-2 leading-relaxed">
               Choose a subject and we'll discover what you understand and what needs more attention.
             </p>
           </div>
 
           {/* 1. Subject Selection */}
           <div className="mt-8">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A3628] mb-3">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
               1. Select Subject
             </label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -119,27 +119,27 @@ export const LearningSetupPage: React.FC = () => {
                     key={sub.id}
                     type="button"
                     onClick={() => setSubject(sub.id)}
-                    className={`relative p-5 rounded-2xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A3628] ${
+                    className={`relative p-5 rounded-2xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] ${
                       isSelected
-                        ? 'bg-[#FFFFFF] border-[#1A3628] shadow-md ring-2 ring-[#1A3628]'
-                        : 'bg-[#FAF8F3] border-[#D9CCBA] hover:bg-[#F3EBDD]/50'
+                        ? 'bg-[#FFFFFF] border-[#244B3C] shadow-md ring-2 ring-[#244B3C]'
+                        : 'bg-[#F8FAF9] border-[#D6DDD8] hover:bg-[#E8EBE9]/50'
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Code2 className="w-4 h-4 text-[#1A3628]" />
-                        <span className="font-heading font-bold text-base text-[#1A3628]">
+                        <Code2 className="w-4 h-4 text-[#244B3C]" />
+                        <span className="font-heading font-bold text-base text-[#244B3C]">
                           {sub.name}
                         </span>
                       </div>
                       <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
-                        sub.featured ? 'bg-[#1A3628] text-[#C8E348]' : 'bg-[#D9CCBA]/50 text-[#5C675F]'
+                        sub.featured ? 'bg-[#244B3C] text-[#C6F36B]' : 'bg-[#D6DDD8]/50 text-[#68716C]'
                       }`}>
                         {sub.tag}
                       </span>
                     </div>
 
-                    <p className="text-xs text-[#5C675F] mt-2.5 leading-relaxed">
+                    <p className="text-xs text-[#68716C] mt-2.5 leading-relaxed">
                       {sub.description}
                     </p>
                   </button>
@@ -150,7 +150,7 @@ export const LearningSetupPage: React.FC = () => {
 
           {/* 2. Topic Selection */}
           <div className="mt-7">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A3628] mb-3">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
               2. Focus Topic ({selectedSubject})
             </label>
             <div className="flex flex-wrap gap-2.5">
@@ -164,14 +164,14 @@ export const LearningSetupPage: React.FC = () => {
                     onClick={() => setTopic(t)}
                     className={`px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all duration-180 flex items-center gap-2 ${
                       isSelected
-                        ? 'bg-[#1A3628] text-[#FAF8F3] border-[#1A3628] shadow-xs'
-                        : 'bg-[#FAF8F3] text-[#5C675F] border-[#D9CCBA] hover:text-[#1A3628] hover:bg-[#F3EBDD]/60'
+                        ? 'bg-[#244B3C] text-[#F8FAF9] border-[#244B3C] shadow-xs'
+                        : 'bg-[#F8FAF9] text-[#68716C] border-[#D6DDD8] hover:text-[#244B3C] hover:bg-[#E8EBE9]/60'
                     }`}
                   >
                     <span>{t}</span>
                     {isFeatured && (
                       <span className={`text-[9px] px-1.5 py-0.2 rounded font-mono font-bold ${
-                        isSelected ? 'bg-[#C8E348] text-[#1A3628]' : 'bg-[#1A3628] text-[#C8E348]'
+                        isSelected ? 'bg-[#C6F36B] text-[#244B3C]' : 'bg-[#244B3C] text-[#C6F36B]'
                       }`}>
                         Active Demo
                       </span>
@@ -184,7 +184,7 @@ export const LearningSetupPage: React.FC = () => {
 
           {/* 3. Difficulty Preference */}
           <div className="mt-7">
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#1A3628] mb-3">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
               3. Starting Difficulty Preference
             </label>
             <div className="flex flex-wrap gap-3">
@@ -197,8 +197,8 @@ export const LearningSetupPage: React.FC = () => {
                     onClick={() => setDifficulty(diff)}
                     className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all duration-180 ${
                       isSelected
-                        ? 'bg-[#1A3628] text-[#FAF8F3] border-[#1A3628]'
-                        : 'bg-[#FAF8F3] text-[#5C675F] border-[#D9CCBA] hover:text-[#1A3628] hover:bg-[#F3EBDD]/60'
+                        ? 'bg-[#244B3C] text-[#F8FAF9] border-[#244B3C]'
+                        : 'bg-[#F8FAF9] text-[#68716C] border-[#D6DDD8] hover:text-[#244B3C] hover:bg-[#E8EBE9]/60'
                     }`}
                   >
                     {diff}
@@ -209,19 +209,19 @@ export const LearningSetupPage: React.FC = () => {
           </div>
 
           {/* Action Row */}
-          <div className="mt-8 pt-6 border-t border-[#D9CCBA]/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs text-[#5C675F]">
-              <Sparkles className="w-3.5 h-3.5 text-[#1A3628]" />
+          <div className="mt-8 pt-6 border-t border-[#D6DDD8]/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xs text-[#68716C]">
+              <Sparkles className="w-3.5 h-3.5 text-[#244B3C]" />
               <span>5 diagnostic questions &bull; Takes ~3 minutes &bull; Instant gap mapping</span>
             </div>
 
             <button
               type="button"
               onClick={handleStartDiagnostic}
-              className="inline-flex items-center gap-2 bg-[#1A3628] text-[#FAF8F3] px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#254636] transition-colors shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1A3628]"
+              className="inline-flex items-center gap-2 bg-[#244B3C] text-[#F8FAF9] px-6 py-3 rounded-xl text-sm font-bold hover:bg-[#1D3D31] transition-colors shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C]"
             >
               <span>Start diagnostic</span>
-              <ArrowRight className="w-4 h-4 text-[#C8E348]" />
+              <ArrowRight className="w-4 h-4 text-[#C6F36B]" />
             </button>
           </div>
         </section>
@@ -230,11 +230,11 @@ export const LearningSetupPage: React.FC = () => {
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 className="font-heading font-extrabold text-xl text-[#1A3628] tracking-tight flex items-center gap-2">
-                <Layers className="w-5 h-5 text-[#1A3628]" />
+              <h3 className="font-heading font-extrabold text-xl text-[#244B3C] tracking-tight flex items-center gap-2">
+                <Layers className="w-5 h-5 text-[#244B3C]" />
                 <span>Learning Path Overview: {selectedTopic}</span>
               </h3>
-              <p className="text-xs text-[#5C675F] mt-0.5">
+              <p className="text-xs text-[#68716C] mt-0.5">
                 Modules adapt based on your diagnostic results and targeted practice.
               </p>
             </div>
@@ -243,11 +243,11 @@ export const LearningSetupPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate(recommended.targetRoute)}
-              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#FAF8F3] border border-[#D9CCBA] text-xs font-bold text-[#1A3628] hover:border-[#1A3628] transition-colors shadow-xs"
+              className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#F8FAF9] border border-[#D6DDD8] text-xs font-bold text-[#244B3C] hover:border-[#244B3C] transition-colors shadow-xs"
             >
-              <span className="w-2 h-2 rounded-full bg-[#C8E348] border border-[#1A3628]" />
+              <span className="w-2 h-2 rounded-full bg-[#C6F36B] border border-[#244B3C]" />
               <span>Next: {recommended.title}</span>
-              <ChevronRight className="w-3.5 h-3.5 text-[#5C675F]" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#68716C]" />
             </button>
           </div>
 
@@ -262,23 +262,23 @@ export const LearningSetupPage: React.FC = () => {
                 <div
                   key={mod.id}
                   onClick={() => handleModuleClick(mod.conceptId)}
-                  className="bg-[#FAF8F3] border border-[#D9CCBA] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-180 hover:border-[#1A3628]/40 hover:-translate-y-0.5 cursor-pointer shadow-xs"
+                  className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-all duration-180 hover:border-[#244B3C]/40 hover:-translate-y-0.5 cursor-pointer shadow-xs"
                 >
                   <div className="flex items-start sm:items-center gap-3.5">
                     {/* State Marker */}
                     <div className="shrink-0 mt-0.5 sm:mt-0">
                       {isCompleted && (
-                        <div className="w-9 h-9 rounded-full bg-[#1A3628] text-[#C8E348] flex items-center justify-center shadow-xs">
+                        <div className="w-9 h-9 rounded-full bg-[#244B3C] text-[#C6F36B] flex items-center justify-center shadow-xs">
                           <CheckCircle2 className="w-5 h-5 stroke-[2.5]" />
                         </div>
                       )}
                       {isInProgress && (
-                        <div className="w-9 h-9 rounded-full bg-[#FAF8F3] border-2 border-[#1A3628] flex items-center justify-center shadow-xs">
-                          <span className="w-3 h-3 rounded-full bg-[#C8E348]" />
+                        <div className="w-9 h-9 rounded-full bg-[#F8FAF9] border-2 border-[#244B3C] flex items-center justify-center shadow-xs">
+                          <span className="w-3 h-3 rounded-full bg-[#C6F36B]" />
                         </div>
                       )}
                       {isNotStarted && (
-                        <div className="w-9 h-9 rounded-full bg-[#F3EBDD] border border-[#D9CCBA] flex items-center justify-center text-xs font-mono font-bold text-[#5C675F]">
+                        <div className="w-9 h-9 rounded-full bg-[#E8EBE9] border border-[#D6DDD8] flex items-center justify-center text-xs font-mono font-bold text-[#68716C]">
                           0{index + 1}
                         </div>
                       )}
@@ -286,34 +286,34 @@ export const LearningSetupPage: React.FC = () => {
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-heading font-bold text-sm sm:text-base text-[#1A3628]">
+                        <h4 className="font-heading font-bold text-sm sm:text-base text-[#244B3C]">
                           {mod.title}
                         </h4>
                         <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
                           isCompleted
-                            ? 'bg-[#1A3628]/10 text-[#1A3628]'
+                            ? 'bg-[#244B3C]/10 text-[#244B3C]'
                             : isInProgress
-                            ? 'bg-[#1A3628] text-[#C8E348]'
-                            : 'bg-[#D9CCBA]/40 text-[#5C675F]'
+                            ? 'bg-[#244B3C] text-[#C6F36B]'
+                            : 'bg-[#D6DDD8]/40 text-[#68716C]'
                         }`}>
                           {isCompleted ? 'Completed' : isInProgress ? 'In Progress' : 'Not Started'}
                         </span>
                       </div>
-                      <p className="text-xs text-[#5C675F] mt-1 line-clamp-1">
+                      <p className="text-xs text-[#68716C] mt-1 line-clamp-1">
                         {mod.description}
                       </p>
                     </div>
                   </div>
 
                   {/* Right metadata & Action */}
-                  <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#D9CCBA]/40">
-                    <div className="flex items-center gap-3 text-xs text-[#5C675F]">
+                  <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#D6DDD8]/40">
+                    <div className="flex items-center gap-3 text-xs text-[#68716C]">
                       <span className="flex items-center gap-1 font-mono">
-                        <Clock className="w-3.5 h-3.5 text-[#5C675F]" />
+                        <Clock className="w-3.5 h-3.5 text-[#68716C]" />
                         <span>~{mod.estimatedMinutes}m</span>
                       </span>
                       {mod.masteryScore > 0 && (
-                        <span className="font-bold text-[#1A3628] font-mono">
+                        <span className="font-bold text-[#244B3C] font-mono">
                           {mod.masteryScore}% mastery
                         </span>
                       )}
@@ -321,7 +321,7 @@ export const LearningSetupPage: React.FC = () => {
 
                     <button
                       type="button"
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#1A3628] hover:text-[#254636] transition-colors"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#244B3C] hover:text-[#1D3D31] transition-colors"
                     >
                       <BookOpen className="w-3.5 h-3.5" />
                       <span>{isCompleted ? 'Review' : 'Open'}</span>

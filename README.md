@@ -59,18 +59,22 @@ The application operates as one interconnected, state-driven feedback loop:
 
 ## 🎨 Visual Identity & Design System
 
-- **Main Background**: `#F3EBDD` (warm beige)
-- **Cards & Elevated Surfaces**: `#FAF8F3` (soft off-white)
-- **Headings & Primary Text**: `#343434` (dark charcoal)
-- **Secondary Text**: `#66615B` (warm muted gray-brown)
-- **Borders**: `#D9CCBA` (fine, soft sand border)
-- **Accent**: `#C5A982` (muted warm tan)
+- **Main Background**: `#E8EBE9` (warm beige)
+- **Cards & Elevated Surfaces**: `#F8FAF9` (soft off-white)
+- **Headings & Primary Text**: `#242A27` (dark charcoal)
+- **Secondary Text**: `#68716C` (warm muted gray-brown)
+- **Borders**: `#D6DDD8` (fine, soft sand border)
+- **Accent**: `#C6F36B` (muted warm tan)
 - **Headings Font**: **Plus Jakarta Sans** (Google Fonts)
 - **Body & UI Font**: **Inter** (Google Fonts)
 
 ---
 
 ## 🛠️ Architecture & Services
+
+The featured, fully interactive curriculum is **C++ Pointers**. Other subjects and topics are marked as previews until their matching assessments and lessons are implemented. The progress dashboard uses real local demo state, starts with an empty state, and does not fabricate historical scores or a learning streak. Targeted practice includes at least three concept-specific questions for each pointer concept.
+
+A GitHub Actions workflow runs `npm ci` and `npm run build` on pushes and pull requests to `main`.
 
 ```text
 src/

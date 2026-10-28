@@ -511,7 +511,6 @@ std::cout << val1 << " " << val2;`,
     correctOptionIndex: 2,
     explanation: '`nullptr` is a C++11 keyword that represents a null pointer constant of type `std::nullptr_t`, avoiding integer overload ambiguity that plagued NULL.',
   },
-  ,
   {
     id: 107,
     conceptId: 'memory-addresses',

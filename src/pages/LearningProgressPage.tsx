@@ -7,7 +7,6 @@ import { EmptyProgressVisual } from '../components/illustrations/EmptyProgressVi
 import { ConceptGraphVisual } from '../components/illustrations/ConceptGraphVisual';
 import {
   TrendingUp,
-  Flame,
   CheckCircle2,
   BookOpen,
   ArrowRight,
@@ -25,7 +24,6 @@ export const LearningProgressPage: React.FC = () => {
     assessmentResult,
     completedLessons,
     practiceAttempts,
-    streakDays,
     resetProgress,
     selectedSubject,
     selectedTopic,

@@ -64,7 +64,7 @@ export const LearningProgressPage: React.FC = () => {
       timestamp: attempt.timestamp,
     })),
   ].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-  const questionsCompleted = conceptsList.reduce((total, concept) => total + concept.questionsTested, 0);
+  const questionsCompleted = (assessmentResult ? Object.keys(assessmentResult.answers).length : 0) + practiceAttempts.reduce((total, attempt) => total + (attempt.totalQuestions ?? 0), 0);
 
   const handleStudyConcept = (conceptId: any) => {
     setActiveLessonConcept(conceptId);

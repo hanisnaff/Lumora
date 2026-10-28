@@ -48,6 +48,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [streakDays] = useState<number>(3); // Explicitly labeled as demo data
+  const [hydrated, setHydrated] = useState(false);
 
   // Initialize from localStorage on mount
   useEffect(() => {
@@ -67,11 +68,15 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       }
     } catch (e) {
       console.warn('Could not parse saved MindPath demo state:', e);
+    } finally {
+      setHydrated(true);
     }
   }, []);
 
   // Save state changes to localStorage
   useEffect(() => {
+    // Do not overwrite saved progress with defaults before the initial read completes.
+    if (!hydrated) return;
     try {
       const stateToSave = {
         selectedSubject,
@@ -98,6 +103,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     practiceAttempts,
     completedLessons,
     activeLessonConcept,
+    hydrated,
   ]);
 
   const saveAssessmentAnswer = (questionId: number, optionIndex: number) => {
@@ -146,13 +152,15 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const resetProgress = () => {
     localStorage.removeItem(STORAGE_KEY);
+    setSubject('C++');
+    setTopic('Pointers');
+    setDifficulty('Beginner');
     setAssessmentAnswers({});
     setAssessmentResult(null);
     setConceptMasteries(INITIAL_CONCEPTS);
     setPracticeAttempts([]);
     setCompletedLessons([]);
     setActiveLessonConcept('dereferencing');
-    setDifficulty('Beginner');
   };
 
   return (

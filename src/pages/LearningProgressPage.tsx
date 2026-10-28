@@ -49,23 +49,24 @@ export const LearningProgressPage: React.FC = () => {
     conceptMasteries
   );
 
-  // Simulated session trend for visual graph (integrating current actual score)
+  // Only show sessions actually completed in this browser.
   const sessionHistory = [
-    { session: 'Baseline Check', score: 35, date: 'Oct 24', isHistorical: true },
-    { session: 'Unit Calibration', score: 48, date: 'Oct 26', isHistorical: true },
-    {
-      session: 'Active Diagnostic',
-      score: assessmentResult ? assessmentResult.percentage : 60,
-      date: 'Today',
-      isHistorical: false,
-    },
-    {
-      session: 'Post-Drill Mastery',
-      score: averageMastery > 0 ? averageMastery : 68,
-      date: 'Current',
-      isHistorical: false,
-    },
-  ];
+    ...(assessmentResult ? [{
+      session: 'Diagnostic assessment',
+      score: assessmentResult.percentage,
+      date: new Date(assessmentResult.submittedAt).toLocaleDateString(),
+      timestamp: assessmentResult.submittedAt,
+    }] : []),
+    ...practiceAttempts.map((attempt) => ({
+      session: `Practice · ${attempt.conceptId ? conceptMasteries[attempt.conceptId]?.conceptName ?? 'Concept review' : 'Concept review'}`,
+      score: attempt.totalQuestions
+        ? Math.round(((attempt.correctAnswers ?? 0) / attempt.totalQuestions) * 100)
+        : (attempt.isCorrect ? 100 : 0),
+      date: new Date(attempt.timestamp).toLocaleDateString(),
+      timestamp: attempt.timestamp,
+    })),
+  ].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+  const questionsCompleted = conceptsList.reduce((total, concept) => total + concept.questionsTested, 0);
 
   const handleStudyConcept = (conceptId: any) => {
     setActiveLessonConcept(conceptId);
@@ -82,21 +83,17 @@ export const LearningProgressPage: React.FC = () => {
         {/* Top 4 Key Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
-          {/* Card 1: Streak */}
+          {/* Card 1: Completed questions */}
           <div className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-5 shadow-xs">
             <div className="flex items-center justify-between text-[#68716C]">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#244B3C]">Learning Streak</span>
-              <Flame className="w-4 h-4 text-[#244B3C]" />
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#244B3C]">Questions completed</span>
+              <CheckCircle2 className="w-4 h-4 text-[#244B3C]" />
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="font-heading font-extrabold text-3xl text-[#244B3C]">
-                {streakDays} Days
-              </span>
-              <span className="text-[10px] text-[#68716C] font-mono">(simulated demo)</span>
+              <span className="font-heading font-extrabold text-3xl text-[#244B3C]">{questionsCompleted}</span>
+              <span className="text-[10px] text-[#68716C] font-mono">answered</span>
             </div>
-            <p className="text-xs text-[#68716C] mt-1">
-              Active study recorded for 3 consecutive days.
-            </p>
+            <p className="text-xs text-[#68716C] mt-1">Counts diagnostic and targeted-practice questions.</p>
           </div>
 
           {/* Card 2: Average Mastery */}
@@ -145,7 +142,7 @@ export const LearningProgressPage: React.FC = () => {
               <span className="text-[10px] text-[#68716C] font-mono">modules</span>
             </div>
             <p className="text-xs text-[#68716C] mt-1">
-              {practiceAttempts.length} interactive practice attempts logged.
+              {practiceAttempts.length} practice sessions completed.
             </p>
           </div>
 
@@ -225,46 +222,38 @@ export const LearningProgressPage: React.FC = () => {
               </div>
 
               <p className="text-xs text-[#68716C] mt-3 leading-relaxed">
-                Tracks mastery evolution over time. Shows simulated past checks alongside your current session's live data.
+                Your completed diagnostic and practice sessions, in chronological order.
               </p>
 
-              {/* Accessible Minimal Bar Chart */}
-              <div className="mt-6 space-y-4">
-                {sessionHistory.map((item, idx) => (
-                  <div key={idx} className="space-y-1">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-medium text-[#242A27] flex items-center gap-1.5">
-                        <span>{item.session}</span>
-                        {item.isHistorical ? (
-                          <span className="text-[9px] text-[#68716C] font-mono">(simulated)</span>
-                        ) : (
-                          <span className="text-[9px] bg-[#C6F36B] text-[#244B3C] px-1.5 py-0.2 rounded font-mono font-bold">Live</span>
-                        )}
-                      </span>
-                      <span className="font-mono font-bold text-[#244B3C]">
-                        {item.score}%
-                      </span>
+              {/* Actual session history or a clear empty state */}
+              {sessionHistory.length > 0 ? (
+                <div className="mt-6 space-y-4">
+                  {sessionHistory.slice(-6).reverse().map((item, idx) => (
+                    <div key={`${item.timestamp}-${idx}`} className="space-y-1">
+                      <div className="flex items-center justify-between gap-3 text-xs">
+                        <span className="font-medium text-[#242A27]">{item.session}</span>
+                        <span className="font-mono font-bold text-[#244B3C]">{item.score}%</span>
+                      </div>
+                      <div className="flex items-center justify-between gap-3 text-[10px] text-[#68716C]">
+                        <span>{item.date}</span><span>{item.score >= 80 ? 'Strong result' : item.score >= 50 ? 'Keep practising' : 'Review recommended'}</span>
+                      </div>
+                      <div className="w-full h-2.5 bg-[#E8EBE9] rounded-full overflow-hidden border border-[#D6DDD8]/50">
+                        <div className={`h-full rounded-full transition-all duration-500 ${item.score >= 80 ? 'bg-[#244B3C]' : item.score >= 50 ? 'bg-[#C6F36B]' : 'bg-[#D76B5B]'}`} style={{ width: `${item.score}%` }} />
+                      </div>
                     </div>
-
-                    <div className="w-full h-2.5 bg-[#E8EBE9] rounded-full overflow-hidden border border-[#D6DDD8]/50">
-                      <div
-                        className={`h-full rounded-full transition-all duration-500 ${
-                          item.score >= 80
-                            ? 'bg-[#244B3C]'
-                            : item.score >= 50
-                            ? 'bg-[#C6F36B]'
-                            : 'bg-[#A85B53]'
-                        }`}
-                        style={{ width: `${Math.max(item.score, 6)}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-6 rounded-xl border border-dashed border-[#D6DDD8] bg-[#E8EBE9]/60 p-5 text-center">
+                  <p className="font-semibold text-sm text-[#244B3C]">Your history starts here</p>
+                  <p className="mt-1 text-xs text-[#68716C]">Complete the diagnostic to record your first real score.</p>
+                  <button type="button" onClick={() => navigate('/assessment')} className="mt-3 rounded-lg bg-[#244B3C] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1D3D31] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#244B3C]">Start diagnostic</button>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 pt-4 border-t border-[#D6DDD8]/40 text-[11px] text-[#68716C]">
-              Historical checkpoints clearly distinguished from active in-browser assessment telemetry.
+              History is stored locally in this browser and reflects completed sessions only.
             </div>
           </div>
 

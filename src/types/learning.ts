@@ -98,6 +98,9 @@ export interface PracticeAttempt {
   selectedOption: number;
   isCorrect: boolean;
   timestamp: string;
+  conceptId?: ConceptId;
+  totalQuestions?: number;
+  correctAnswers?: number;
 }
 
 export interface LearningPathModule {

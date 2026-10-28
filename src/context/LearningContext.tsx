@@ -47,7 +47,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [practiceAttempts, setPracticeAttempts] = useState<PracticeAttempt[]>([]);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
-  const [streakDays] = useState<number>(3); // Explicitly labeled as demo data
+  const [streakDays] = useState<number>(0); // No activity streak is claimed until tracked from real dated sessions.
   const [hydrated, setHydrated] = useState(false);
 
   // Initialize from localStorage on mount
@@ -143,9 +143,12 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       ...prev,
       {
         questionId: Date.now(),
-        selectedOption: 0,
-        isCorrect: correct > 0,
+        selectedOption: -1,
+        isCorrect: correct === total,
         timestamp: new Date().toISOString(),
+        conceptId,
+        totalQuestions: total,
+        correctAnswers: correct,
       },
     ]);
   };

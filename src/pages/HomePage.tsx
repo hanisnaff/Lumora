@@ -48,7 +48,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F3EBDD] text-[#343434] selection:bg-[#C5A982]/30 selection:text-[#343434] font-sans antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-[#E8EBE9] text-[#242A27] selection:bg-[#C6F36B]/30 selection:text-[#242A27] font-sans antialiased overflow-x-hidden">
       {/* Refined Navigation Bar */}
       <Navbar
         onStartLearning={handleOpenStart}

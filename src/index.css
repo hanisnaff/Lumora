@@ -1,0 +1,129 @@
+:root {
+  /* Cool Grey & Refined Off-White System */
+  --bg-main: #E8EBE9;
+  --bg-surface: #F8FAF9;
+  --bg-surface-elevated: #FFFFFF;
+
+  /* Primary Brand Forest Green */
+  --brand-primary: #244B3C;
+  --brand-hover: #1D3D31;
+  --brand-surface: #1E3F33;
+
+  /* Typography */
+  --text-primary: #242A27;
+  --text-secondary: #68716C;
+
+  /* Structural Borders */
+  --border-subtle: #D6DDD8;
+
+  /* State Colors */
+  --state-selected: #DCEBE2;
+  --accent-lime: #C6F36B;
+  --accent-lime-hover: #B8E85C;
+  --accent-lime-glow: rgba(198, 243, 107, 0.28);
+  --color-success: #2E8055;
+  --color-warning: #D99A38;
+  --color-error: #D76B5B;
+
+  /* Button Tokens */
+  --btn-primary-bg: #244B3C;
+  --btn-primary-text: #FFFFFF;
+
+  /* Font Families */
+  --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@import "tailwindcss";
+
+@theme {
+  --color-bg-main: var(--bg-main);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-surface-elevated);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-hover: var(--brand-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-subtle: var(--border-subtle);
+  --color-state-selected: var(--state-selected);
+  --color-accent-lime: var(--accent-lime);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-error: var(--color-error);
+
+  --font-heading: var(--font-heading);
+  --font-sans: var(--font-body);
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Architectural dot grid pattern with cool grey tone */
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, #D6DDD8 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+.bg-dot-pattern-dense {
+  background-image: radial-gradient(circle, #C2CDC6 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
+}
+
+/* Delicate blueprint line grid with cool grey */
+.bg-line-grid {
+  background-image: 
+    linear-gradient(to right, rgba(214, 221, 216, 0.45) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(214, 221, 216, 0.45) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Frosted glass backdrop utilities */
+.frosted-glass-scrolled {
+  background-color: rgba(248, 250, 249, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid #D6DDD8;
+  box-shadow: 0 4px 20px -2px rgba(36, 75, 60, 0.05);
+}
+
+.frosted-glass-top {
+  background-color: rgba(232, 235, 233, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+}
+
+/* Custom fine scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #E8EBE9;
+}
+::-webkit-scrollbar-thumb {
+  background: #C2CDC6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #244B3C;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

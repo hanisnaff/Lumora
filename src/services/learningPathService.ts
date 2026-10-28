@@ -91,33 +91,53 @@ export function getRecommendedAction(
     };
   }
 
-  if (weakestConceptId && masteries[weakestConceptId]?.score < 80) {
-    const conceptName = masteries[weakestConceptId]?.conceptName || 'Pointers';
+  // Always recalculate from current mastery so the recommendation evolves after practice.
+  const concepts = Object.values(masteries).filter(Boolean);
+  const weakest = concepts.reduce((low, concept) => concept.score < low.score ? concept : low);
+  const candidate = masteries[weakestConceptId || weakest.conceptId];
+  const target = candidate && candidate.score < 80 && candidate.score <= weakest.score
+    ? candidate
+    : weakest;
+
+  if (target.score < 50) {
     return {
       type: 'lesson',
-      title: `Study Gap: ${conceptName}`,
-      description: `Your diagnostic identified ${conceptName} as your lowest mastery area (${masteries[weakestConceptId]?.score}%).`,
+      title: `Revisit the basics: ${target.conceptName}`,
+      description: `${target.conceptName} is at ${target.score}%. Try the alternate explanation and review the prerequisite before another drill.`,
       targetRoute: '/lesson',
-      conceptId: weakestConceptId,
+      conceptId: target.conceptId,
     };
   }
 
-  // Find any other concept needing practice
-  const needsPractice = Object.values(masteries).find((c) => c.score < 80 && c.questionsTested > 0);
-  if (needsPractice) {
+  if (target.score < 80) {
     return {
-      type: 'practice',
-      title: `Targeted Practice: ${needsPractice.conceptName}`,
-      description: `Solidify your understanding of ${needsPractice.conceptName} through interactive problem drills.`,
-      targetRoute: '/practice',
-      conceptId: needsPractice.conceptId,
+      type: target.questionsTested > 0 ? 'practice' : 'lesson',
+      title: target.questionsTested > 0
+        ? `Practise: ${target.conceptName}`
+        : `Study gap: ${target.conceptName}`,
+      description: target.questionsTested > 0
+        ? `Your current mastery is ${target.score}%. Try another short practice set to reinforce this concept.`
+        : `Your diagnostic identified ${target.conceptName} as a learning gap (${target.score}%).`,
+      targetRoute: target.questionsTested > 0 ? '/practice' : '/lesson',
+      conceptId: target.conceptId,
+    };
+  }
+
+  const untested = concepts.find((concept) => concept.questionsTested === 0);
+  if (untested) {
+    return {
+      type: 'lesson',
+      title: `Explore next: ${untested.conceptName}`,
+      description: 'Your assessed concepts are looking solid. Build coverage by learning this concept next.',
+      targetRoute: '/lesson',
+      conceptId: untested.conceptId,
     };
   }
 
   return {
     type: 'advance',
-    title: 'Ready for Unit Synthesis',
-    description: 'All core pointer concepts meet the 80% demonstration mastery threshold. Proceed to Dynamic Memory & Heap.',
+    title: 'Ready for the next topic',
+    description: 'All core pointer concepts meet the 80% demonstration mastery threshold. Continue to the next learning module.',
     targetRoute: '/learn',
   };
 }

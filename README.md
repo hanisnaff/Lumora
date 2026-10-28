@@ -1,6 +1,6 @@
 # MindPath AI — Adaptive Learning Platform (Hackathon MVP)
 
-MindPath AI is an AI-powered adaptive learning platform that identifies a student's concept-level knowledge gaps through targeted diagnostic checks and builds a personalized, dynamic learning path that moves with them.
+MindPath AI is an adaptive-learning hackathon demo that identifies a student's concept-level knowledge gaps through a diagnostic quiz and updates a personalized learning path using deterministic local scoring. It does not call an external AI API.
 
 This application includes both the **editorial homepage** and the complete **end-to-end adaptive learning workspace MVP**.
 
@@ -59,7 +59,7 @@ The application operates as one interconnected, state-driven feedback loop:
 
 ## 🎨 Visual Identity & Design System
 
-- **Main Background**: `#E8EBE9` (warm beige)
+- **Main Background**: `#E8EBE9` (cool grey)
 - **Cards & Elevated Surfaces**: `#F8FAF9` (soft off-white)
 - **Headings & Primary Text**: `#242A27` (dark charcoal)
 - **Secondary Text**: `#68716C` (warm muted gray-brown)

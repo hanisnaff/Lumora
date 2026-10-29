@@ -11,19 +11,19 @@ export const ForStudents: React.FC<ForStudentsProps> = ({ onStartLearning }) => 
       icon: GraduationCap,
       category: 'STEM & Quantitative Disciplines',
       title: 'Stop compounding early misunderstandings.',
-      description: 'In subjects like C++, calculus, and computer systems, an unaddressed gap in week two makes week eight impenetrable. MindPath flags foundational weaknesses before they sabotage your grade.'
+      description: 'In subjects like C++, calculus, and computer systems, an unaddressed gap in week two makes week eight impenetrable. Lumora flags foundational weaknesses before they sabotage your grade.'
     },
     {
       icon: Brain,
       category: 'Self-Directed Learners',
       title: 'Validate real understanding, not just passive recall.',
-      description: 'Watching a tutorial creates an illusion of competence. MindPath gives you active, low-friction checks that prove whether you can genuinely apply the theorem or algorithm on your own.'
+      description: 'Watching a tutorial creates an illusion of competence. Lumora gives you active, low-friction checks that prove whether you can genuinely apply the theorem or algorithm on your own.'
     },
     {
       icon: Target,
       category: 'Exam & Milestone Preparation',
       title: 'Spend preparation hours where they matter most.',
-      description: 'Instead of re-doing 50 practice problems you already understand, MindPath surfaces the exact problem archetypes where your reasoning tends to break down.'
+      description: 'Instead of re-doing 50 practice problems you already understand, Lumora surfaces the exact problem archetypes where your reasoning tends to break down.'
     }
   ];
 
@@ -43,7 +43,7 @@ export const ForStudents: React.FC<ForStudentsProps> = ({ onStartLearning }) => 
           </h2>
 
           <p className="text-[17px] text-[#68716C] mt-4 leading-relaxed">
-            MindPath is built for students who care about genuine conceptual depth and want their study time to produce clear, lasting mastery.
+            Lumora is built for students who care about genuine conceptual depth and want their study time to produce clear, lasting mastery.
           </p>
         </div>
 

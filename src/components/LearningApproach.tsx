@@ -18,7 +18,7 @@ export const LearningApproach: React.FC = () => {
           </h2>
 
           <p className="text-[17px] text-[#68716C] mt-4 leading-relaxed">
-            Most platforms treat learning as a conveyor belt: watch lecture, fail quiz, repeat. MindPath models understanding as an interconnected graph, isolating the exact missing link so new ideas click into place.
+            Most platforms treat learning as a conveyor belt: watch lecture, fail quiz, repeat. Lumora models understanding as an interconnected graph, isolating the exact missing link so new ideas click into place.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export const LearningApproach: React.FC = () => {
             </div>
           </div>
 
-          {/* MindPath Approach Card (Deep Forest Green Accent) */}
+          {/* Lumora Approach Card (Deep Forest Green Accent) */}
           <div className="bg-[#244B3C] text-[#F8FAF9] border border-[#1D3D31] rounded-2xl p-7 sm:p-8 flex flex-col justify-between shadow-lg relative overflow-hidden">
             {/* Subtle background glow */}
             <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-[#C6F36B]/10 blur-2xl pointer-events-none" />
@@ -71,7 +71,7 @@ export const LearningApproach: React.FC = () => {
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#C6F36B] flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#C6F36B]" />
-                  MindPath Architecture
+                  Lumora Architecture
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs text-[#C6F36B] font-mono">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#C6F36B]" />
@@ -83,7 +83,7 @@ export const LearningApproach: React.FC = () => {
                 Dynamic dependency navigation
               </h3>
               <p className="text-[15px] text-[#F8FAF9]/80 leading-relaxed mt-2.5">
-                MindPath maps your exact mental model. If an advanced formula fails, the platform identifies whether the blocker is algebraic simplification or concept formulation.
+                Lumora maps your exact mental model. If an advanced formula fails, the platform identifies whether the blocker is algebraic simplification or concept formulation.
               </p>
 
               <div className="mt-6 space-y-2.5 text-xs text-[#F8FAF9]">

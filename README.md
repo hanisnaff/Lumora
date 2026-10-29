@@ -1,6 +1,6 @@
 # Lumora — Adaptive Learning, Built Around You
 
-Lumora is an adaptive-learning platform that helps learners identify concept-level knowledge gaps, study focused lessons, practice weak areas, and track mastery over time.
+Lumora is an adaptive-learning platform that helps learners identify concept-level knowledge gaps, study focused lessons, practice weak areas, and track mastery over time. Cloud progress is tied to an anonymous browser session; sign-in/account linking is needed for cross-device recovery.
 
 ## Current learning flow
 

@@ -102,7 +102,7 @@ export const LearningSetupPage: React.FC = () => {
           <div className="max-w-[700px]">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-2.5">
               <span className="w-2 h-2 rounded-full bg-[#C6F36B]" />
-              <span>DIAGNOSTIC CONFIGURATION</span>
+              <span>YOUR STARTING POINT</span>
             </div>
             <h2 className="font-heading font-extrabold text-[#244B3C] tracking-tight text-2xl sm:text-3xl">
               Let's find your starting point.
@@ -236,7 +236,7 @@ export const LearningSetupPage: React.FC = () => {
           </div>
         </motion.section>
 
-        {/* Dynamic Learning Path Overview */}
+        {/* Your learning steps */}
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>

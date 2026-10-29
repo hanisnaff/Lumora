@@ -250,7 +250,7 @@ export const DiagnosticAssessmentPage: React.FC = () => {
             </h3>
 
             <p className="text-sm text-[#68716C] mt-2 leading-relaxed">
-              You have answered {answeredCount} of {totalQuestions} questions. MindPath will analyze your reasoning, isolate any concept-level gaps, and craft your targeted learning path.
+              You have answered {answeredCount} of {totalQuestions} questions. Lumora will analyze your reasoning, isolate any concept-level gaps, and craft your targeted learning path.
             </p>
 
             {answeredCount < totalQuestions && (

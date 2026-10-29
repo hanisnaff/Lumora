@@ -21,7 +21,7 @@ export const HowItWorks: React.FC = () => {
             </h2>
 
             <p className="text-[17px] text-[#68716C] mt-3 leading-relaxed">
-              Your learning path changes as your understanding grows. Traditional courses force you through identical chapters; MindPath pinpoints the exact concept holding you back.
+              Your learning path changes as your understanding grows. Traditional courses force you through identical chapters; Lumora pinpoints the exact concept holding you back.
             </p>
           </div>
 
@@ -135,7 +135,7 @@ export const HowItWorks: React.FC = () => {
                       Recalibrate with every practice drill.
                     </h3>
                     <p className="text-xs sm:text-[14px] text-[#68716C] leading-relaxed mt-2">
-                      Reassess your understanding through targeted drills. As your confidence grows, MindPath dynamically unlocks the next conceptual milestone.
+                      Reassess your understanding through targeted drills. As your confidence grows, Lumora dynamically unlocks the next conceptual milestone.
                     </p>
                   </div>
                   <div className="md:col-span-5 rounded-xl bg-[#E8EBE9]/40 border border-[#D6DDD8]/60 p-1">

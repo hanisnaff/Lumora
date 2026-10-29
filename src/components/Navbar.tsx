@@ -56,13 +56,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onExploreDemo }
     >
       <div className="max-w-[1240px] h-full mx-auto px-6 flex items-center justify-between">
         {/* Left: Logo */}
-        <a
-          href="#"
+        <Link
+          to="/"
           className="group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] rounded-lg p-0.5"
           aria-label="Lumora homepage"
         >
           <Logo />
-        </a>
+        </Link>
 
         {/* Middle: Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">

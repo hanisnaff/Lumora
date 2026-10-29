@@ -7,7 +7,7 @@ interface NavbarProps {
   onExploreDemo: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onSignIn }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onExploreDemo }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onSignIn }) => 
         <div className="hidden md:flex items-center gap-5">
           <button
             type="button"
-            onClick={onSignIn}
+            onClick={onExploreDemo}
             className="text-[14.5px] font-semibold text-[#242A27] hover:text-[#244B3C] transition-colors duration-200 px-2 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] rounded-lg"
           >Explore demo</button>
           <button
@@ -134,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onSignIn }) => 
                 type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  onSignIn();
+                  onExploreDemo();
                 }}
                 className="w-full py-2.5 text-center text-sm font-semibold text-[#242A27] border border-[#D6DDD8] rounded-xl bg-[#FFFFFF] hover:bg-[#E8EBE9] transition-colors"
               >Explore demo</button>

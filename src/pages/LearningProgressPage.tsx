@@ -366,7 +366,7 @@ export const LearningProgressPage: React.FC = () => {
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#68716C]">
           <div className="flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C6F36B]" />
-            <span>Progress telemetry automatically persisted across browser reloads.</span>
+            <span>Your progress is saved in this browser; cloud sync is available when connected.</span>
           </div>
 
           <button

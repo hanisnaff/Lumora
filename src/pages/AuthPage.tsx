@@ -93,25 +93,29 @@ export const AuthPage: React.FC = () => {
           refresh_token: payload.refresh_token,
           expires_at: Date.now() / 1000 + expiresIn,
         }));
-        // Copy this browser's existing progress into the signed-in account before loading the dashboard.
+        // Migrate local demo progress only for a new account with no saved cloud state.
+        // Never overwrite an existing account's progress with data from this browser.
         try {
           const localState = localStorage.getItem('lumora_learning_state_v1');
           if (localState) {
-            const syncResponse = await fetch('/api/progress', {
-              method: 'PUT',
-              headers: {
-                Authorization: 'Bearer ' + payload.access_token,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ state: JSON.parse(localState) }),
-            });
-            if (!syncResponse.ok) {
-              const syncPayload = await syncResponse.json().catch(() => ({})) as Record<string, unknown>;
-              throw new Error(typeof syncPayload.error === 'string' ? syncPayload.error : 'Progress sync failed.');
+            const authHeaders = { Authorization: 'Bearer ' + payload.access_token };
+            const cloudResponse = await fetch('/api/progress', { headers: authHeaders });
+            if (!cloudResponse.ok) throw new Error('Could not check existing cloud progress.');
+            const cloudPayload = await cloudResponse.json() as { state?: unknown };
+            if (!cloudPayload.state) {
+              const syncResponse = await fetch('/api/progress', {
+                method: 'PUT',
+                headers: { ...authHeaders, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ state: JSON.parse(localState) }),
+              });
+              if (!syncResponse.ok) {
+                const syncPayload = await syncResponse.json().catch(() => ({})) as Record<string, unknown>;
+                throw new Error(typeof syncPayload.error === 'string' ? syncPayload.error : 'Progress sync failed.');
+              }
             }
           }
         } catch (syncError) {
-          console.warn('Could not copy browser progress to the account:', syncError);
+          console.warn('Could not migrate browser progress to the account:', syncError);
         }
         window.location.assign('/learn');
         return;

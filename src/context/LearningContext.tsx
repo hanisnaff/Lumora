@@ -69,8 +69,11 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     const hydrate = async () => {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) applySavedState(JSON.parse(saved) as Record<string, unknown>);
+        const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('mindpath_ai_state_v1');
+        if (saved) {
+          applySavedState(JSON.parse(saved) as Record<string, unknown>);
+          localStorage.setItem(STORAGE_KEY, saved);
+        }
       } catch (error) {
         console.warn('Could not parse saved Lumora state:', error);
       }

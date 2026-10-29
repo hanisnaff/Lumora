@@ -59,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
 
             {/* Description */}
             <p className="text-[17px] sm:text-[18px] text-[#68716C] leading-[1.65] max-w-[530px] mt-6 mb-8 font-normal">
-              Not everyone learns the same way. MindPath discovers what you understand, finds the exact conceptual gaps, and builds a learning path that moves with you.
+              Not everyone learns the same way. Lumora discovers what you understand, finds the exact conceptual gaps, and builds a learning path that moves with you.
             </p>
 
             {/* CTA Buttons */}

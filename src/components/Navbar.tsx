@@ -4,7 +4,7 @@ import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
   onStartLearning: () => void;
-  onSignIn: () => void;
+  onExploreDemo: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onSignIn }) => {

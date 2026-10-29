@@ -56,6 +56,22 @@ export const AuthPage: React.FC = () => {
           refresh_token: payload.refresh_token,
           expires_at: Date.now() / 1000 + expiresIn,
         }));
+        // Copy this browser's existing progress into the signed-in account before loading the dashboard.
+        try {
+          const localState = localStorage.getItem('lumora_learning_state_v1');
+          if (localState) {
+            await fetch('/api/progress', {
+              method: 'PUT',
+              headers: {
+                Authorization: 'Bearer ' + payload.access_token,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ state: JSON.parse(localState) }),
+            });
+          }
+        } catch (syncError) {
+          console.warn('Could not copy browser progress to the account:', syncError);
+        }
         window.location.assign('/learn');
         return;
       }

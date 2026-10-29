@@ -58,13 +58,9 @@ export const Footer: React.FC = () => {
 
         {/* Sub-footer Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#68716C]">
-          <p>&copy; {new Date().getFullYear()} MindPath AI. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Lumora. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-[#244B3C] cursor-pointer transition-colors">Privacy Policy</span>
-            <span>&bull;</span>
-            <span className="hover:text-[#244B3C] cursor-pointer transition-colors">Terms of Service</span>
-            <span>&bull;</span>
-            <span className="hover:text-[#244B3C] cursor-pointer transition-colors">System Status</span>
+            <a href="https://github.com/hanisnaff/Lumora" target="_blank" rel="noreferrer" className="hover:text-[#244B3C] transition-colors">GitHub repository</a>
           </div>
         </div>
 

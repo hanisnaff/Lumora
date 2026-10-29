@@ -47,10 +47,10 @@ export const AuthPage: React.FC = () => {
       }
 
       if (mode === 'reset') {
-        const response = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+        const response = await fetch(`${SUPABASE_URL}/auth/v1/recover?redirect_to=${encodeURIComponent(`${window.location.origin}/auth`)}`, {
           method: 'POST',
           headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email.trim(), redirect_to: `${window.location.origin}/auth` }),
+          body: JSON.stringify({ email: email.trim() }),
         });
         const payload = await response.json().catch(() => ({})) as Record<string, unknown>;
         if (!response.ok) {

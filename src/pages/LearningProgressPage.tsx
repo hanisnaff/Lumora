@@ -73,15 +73,15 @@ export const LearningProgressPage: React.FC = () => {
 
   return (
     <LearningShell
-      title="Learning Progress & Mastery Dashboard"
-      subtitle={`${selectedSubject} &bull; ${selectedTopic} Track &bull; Real-time Session Telemetry`}
+      title="Your learning progress"
+      subtitle={`${selectedSubject} &bull; ${selectedTopic} Track &bull; Your study progress`}
     >
       <div className="space-y-8">
         {!assessmentResult && (
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#D6DDD8] bg-[#F8FAF9] p-5 sm:p-6">
             <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-[#244B3C]">Your learning workspace</p>
-              <h2 className="mt-1 font-heading text-lg font-bold text-[#242A27]">Your baseline is still to come.</h2>
+              <p className="text-xs font-bold uppercase tracking-wider text-[#244B3C]">Your next step</p>
+              <h2 className="mt-1 font-heading text-lg font-bold text-[#242A27]">Start with a quick check-in.</h2>
               <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#68716C]">Take the five-question C++ pointer diagnostic to create your first mastery profile. Scores and history will appear here after you submit it.</p>
             </div>
             <button type="button" onClick={() => navigate('/assessment')} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#244B3C] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#1D3D31] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#244B3C]">

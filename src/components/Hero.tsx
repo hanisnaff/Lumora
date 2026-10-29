@@ -38,7 +38,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
                 ADAPTIVE LEARNING ARCHITECTURE
               </span>
               <span className="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-[#244B3C] text-[#FFFFFF]">
-                AI-Driven
+                Concept-led
               </span>
             </div>
 

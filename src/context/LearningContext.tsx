@@ -9,6 +9,7 @@ import {
 import { INITIAL_CONCEPTS, DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
 import { calculateAssessmentResult } from '../services/assessmentService';
 import { updateMasteryAfterPractice } from '../services/masteryService';
+import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress } from '../services/remoteProgress';
 
 interface LearningContextType {
   selectedSubject: string;
@@ -32,7 +33,7 @@ interface LearningContextType {
   resetProgress: () => void;
 }
 
-const STORAGE_KEY = 'mindpath_ai_state_v1';
+const STORAGE_KEY = 'lumora_learning_state_v1';
 
 const LearningContext = createContext<LearningContextType | undefined>(undefined);
 
@@ -48,28 +49,49 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [hydrated, setHydrated] = useState(false);
 
-  // Initialize from localStorage on mount
+  // Restore local progress first, then let the database copy take precedence when configured.
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Keep restored state aligned with the currently implemented demo curriculum.
-        if (parsed.selectedSubject === 'C++') setSubject('C++');
-        if (parsed.selectedTopic === 'Pointers') setTopic('Pointers');
-        if (['Beginner', 'Intermediate', 'Advanced'].includes(parsed.difficulty)) setDifficulty(parsed.difficulty);
-        if (parsed.assessmentAnswers) setAssessmentAnswers(parsed.assessmentAnswers);
-        if (parsed.assessmentResult) setAssessmentResult(parsed.assessmentResult);
-        if (parsed.conceptMasteries) setConceptMasteries(parsed.conceptMasteries);
-        if (parsed.practiceAttempts) setPracticeAttempts(parsed.practiceAttempts);
-        if (parsed.completedLessons) setCompletedLessons(parsed.completedLessons);
-        if (parsed.activeLessonConcept) setActiveLessonConcept(parsed.activeLessonConcept);
+    let cancelled = false;
+
+    const applySavedState = (parsed: Record<string, unknown>) => {
+      if (parsed.selectedSubject === 'C++') setSubject('C++');
+      if (parsed.selectedTopic === 'Pointers') setTopic('Pointers');
+      if (typeof parsed.difficulty === 'string' && ['Beginner', 'Intermediate', 'Advanced'].includes(parsed.difficulty)) {
+        setDifficulty(parsed.difficulty as Difficulty);
       }
-    } catch (e) {
-      console.warn('Could not parse saved MindPath demo state:', e);
-    } finally {
-      setHydrated(true);
-    }
+      if (parsed.assessmentAnswers && typeof parsed.assessmentAnswers === 'object') setAssessmentAnswers(parsed.assessmentAnswers as Record<number, number>);
+      if (parsed.assessmentResult) setAssessmentResult(parsed.assessmentResult as AssessmentResult);
+      if (parsed.conceptMasteries && typeof parsed.conceptMasteries === 'object') setConceptMasteries(parsed.conceptMasteries as Record<ConceptId, ConceptMastery>);
+      if (Array.isArray(parsed.practiceAttempts)) setPracticeAttempts(parsed.practiceAttempts as PracticeAttempt[]);
+      if (Array.isArray(parsed.completedLessons)) setCompletedLessons(parsed.completedLessons as string[]);
+      if (typeof parsed.activeLessonConcept === 'string') setActiveLessonConcept(parsed.activeLessonConcept as ConceptId);
+    };
+
+    const hydrate = async () => {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) applySavedState(JSON.parse(saved) as Record<string, unknown>);
+      } catch (error) {
+        console.warn('Could not parse saved Lumora state:', error);
+      }
+
+      if (isRemoteProgressConfigured) {
+        try {
+          const remote = await loadRemoteProgress();
+          if (!cancelled && remote) {
+            applySavedState(remote);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
+          }
+        } catch (error) {
+          console.warn('Lumora could not load cloud progress; keeping local progress:', error);
+        }
+      }
+
+      if (!cancelled) setHydrated(true);
+    };
+
+    void hydrate();
+    return () => { cancelled = true; };
   }, []);
 
   // Save state changes to localStorage
@@ -92,6 +114,42 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     } catch (e) {
       console.warn('Could not save MindPath demo state to localStorage:', e);
     }
+  }, [
+    selectedSubject,
+    selectedTopic,
+    difficulty,
+    assessmentAnswers,
+    assessmentResult,
+    conceptMasteries,
+    practiceAttempts,
+    completedLessons,
+    activeLessonConcept,
+    hydrated,
+  ]);
+
+  // Debounce cloud writes to avoid sending a request for every individual state update.
+  useEffect(() => {
+    if (!hydrated || !isRemoteProgressConfigured) return;
+
+    const stateToSync = {
+      selectedSubject,
+      selectedTopic,
+      difficulty,
+      assessmentAnswers,
+      assessmentResult,
+      conceptMasteries,
+      practiceAttempts,
+      completedLessons,
+      activeLessonConcept,
+    };
+
+    const timeoutId = window.setTimeout(() => {
+      void saveRemoteProgress(stateToSync).catch((error) => {
+        console.warn('Lumora cloud sync failed; local progress is still available:', error);
+      });
+    }, 700);
+
+    return () => window.clearTimeout(timeoutId);
   }, [
     selectedSubject,
     selectedTopic,

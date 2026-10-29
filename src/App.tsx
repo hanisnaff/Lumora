@@ -7,6 +7,7 @@ import { KnowledgeGapResultsPage } from './pages/KnowledgeGapResultsPage';
 import { PersonalizedLessonPage } from './pages/PersonalizedLessonPage';
 import { TargetedPracticePage } from './pages/TargetedPracticePage';
 import { LearningProgressPage } from './pages/LearningProgressPage';
+import { AuthPage } from './pages/AuthPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/learn" element={<LearningSetupPage />} />
+          <Route path="/auth" element={<AuthPage />} />
           <Route path="/assessment" element={<DiagnosticAssessmentPage />} />
           <Route path="/results" element={<KnowledgeGapResultsPage />} />
           <Route path="/lesson" element={<PersonalizedLessonPage />} />

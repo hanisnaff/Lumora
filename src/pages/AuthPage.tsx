@@ -28,6 +28,24 @@ export const AuthPage: React.FC = () => {
     setNotice('');
 
     try {
+      if (mode === 'update') {
+        if (!recoveryToken) throw new Error('That reset link is missing or expired. Request a new one below.');
+        const response = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+          method: 'PUT',
+          headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + recoveryToken, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password }),
+        });
+        const payload = await response.json().catch(() => ({})) as Record<string, unknown>;
+        if (!response.ok) {
+          throw new Error(typeof payload.message === 'string' ? payload.message : 'We could not update your password. Request a fresh reset link and try again.');
+        }
+        window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+        setPassword('');
+        setMode('signin');
+        setNotice('Your password has been updated. Sign in with your new password.');
+        return;
+      }
+
       if (mode === 'reset') {
         const response = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
           method: 'POST',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
+import { Link } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 interface NavbarProps {
@@ -79,6 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onExploreDemo }
 
         {/* Right: Actions */}
         <div className="hidden md:flex items-center gap-5">
+          <Link
+            to="/auth"
+            className="text-[14.5px] font-semibold text-[#242A27] hover:text-[#244B3C] transition-colors duration-200 px-2 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] rounded-lg"
+          >Sign in</Link>
           <button
             type="button"
             onClick={onExploreDemo}

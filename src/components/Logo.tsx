@@ -46,8 +46,8 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 28 }) => {
         <span className="font-heading font-extrabold text-xl tracking-tight text-[#242A27]">
           Lumora
         </span>
-        <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-1.5 py-0.5 rounded border border-[#D6DDD8] text-[#244B3C] bg-[#DCEBE2]">
-          AI
+        <span className="text-[9px] font-mono font-bold tracking-wider uppercase px-1.5 py-0.5 rounded border border-[#D6DDD8] text-[#244B3C] bg-[#DCEBE2]">
+          Adaptive
         </span>
       </div>
     </div>

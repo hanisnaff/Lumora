@@ -73,12 +73,9 @@ export const TargetedPracticePage: React.FC = () => {
       setIsAnswerSubmitted(false);
     } else {
       // Completed practice session!
-      const finalCorrect = isCorrect
-        ? sessionResults.correctCount
-        : sessionResults.correctCount;
-      const finalTotal = sessionResults.totalAnswered;
-
-      recordPracticeSession(activeLessonConcept, finalTotal, finalCorrect);
+      // The submitted answer was already counted in sessionResults above.
+      // Record that accumulated total exactly once when the learner finishes.
+      recordPracticeSession(activeLessonConcept, sessionResults.totalAnswered, sessionResults.correctCount);
       setSessionResults((prev) => ({ ...prev, finished: true }));
     }
   };

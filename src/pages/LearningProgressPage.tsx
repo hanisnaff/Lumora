@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
 import { getRecommendedAction } from '../services/learningPathService';
+import type { ConceptId } from '../types/learning';
 import { EmptyProgressVisual } from '../components/illustrations/EmptyProgressVisual';
 import { ConceptGraphVisual } from '../components/illustrations/ConceptGraphVisual';
 import {
@@ -36,10 +37,10 @@ export const LearningProgressPage: React.FC = () => {
   const practisingCount = conceptsList.filter((c) => c.status === 'practising').length;
   const reviewCount = conceptsList.filter((c) => c.status === 'needs-review').length;
 
-  // Average mastery calculation from session data
-  const averageMastery = Math.round(
-    conceptsList.reduce((acc, curr) => acc + curr.score, 0) / totalConcepts
-  );
+  // Guard the empty-state case so the dashboard never displays NaN.
+  const averageMastery = totalConcepts > 0
+    ? Math.round(conceptsList.reduce((acc, curr) => acc + curr.score, 0) / totalConcepts)
+    : 0;
 
   const recommended = getRecommendedAction(
     !!assessmentResult,
@@ -66,7 +67,7 @@ export const LearningProgressPage: React.FC = () => {
   ].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   const questionsCompleted = (assessmentResult ? Object.keys(assessmentResult.answers).length : 0) + practiceAttempts.reduce((total, attempt) => total + (attempt.totalQuestions ?? 0), 0);
 
-  const handleStudyConcept = (conceptId: any) => {
+  const handleStudyConcept = (conceptId: ConceptId) => {
     setActiveLessonConcept(conceptId);
     navigate('/lesson');
   };
@@ -116,10 +117,10 @@ export const LearningProgressPage: React.FC = () => {
               <span className="font-heading font-extrabold text-3xl text-[#244B3C]">
                 {averageMastery}%
               </span>
-              <span className="text-[10px] text-[#68716C] font-mono">5 concepts</span>
+              <span className="text-[10px] text-[#68716C] font-mono">{totalConcepts} concepts</span>
             </div>
             <p className="text-xs text-[#68716C] mt-1">
-              Calculated dynamically from your assessments and drills.
+              Average of the current mastery scores across your concepts.
             </p>
           </div>
 

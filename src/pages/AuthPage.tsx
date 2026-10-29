@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
 
@@ -10,7 +10,6 @@ const SESSION_KEY = 'lumora_supabase_session_v1';
 type AuthMode = 'signin' | 'signup';
 
 export const AuthPage: React.FC = () => {
-  const navigate = useNavigate();
   const [mode, setMode] = useState<AuthMode>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,8 +56,7 @@ export const AuthPage: React.FC = () => {
           refresh_token: payload.refresh_token,
           expires_at: Date.now() / 1000 + expiresIn,
         }));
-        navigate('/learn', { replace: true });
-        window.location.reload();
+        window.location.assign('/learn');
         return;
       }
 

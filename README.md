@@ -46,7 +46,7 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 | Navigation | React Router |
 | Icons | Lucide React |
 | Hosting and API | Vercel |
-| Authentication | Supabase anonymous sessions |
+| Authentication | Supabase anonymous sessions and email/password accounts |
 | Persistence | Supabase Postgres with row-level security |
 | CI | GitHub Actions |
 
@@ -70,10 +70,12 @@ The frontend can run without cloud persistence; progress remains in local browse
 
 Lumora is configured with the public URL and publishable key for its connected Supabase project. These are public client values, not secrets. You can override them when using a different project.
 
-1. Open Supabase **Authentication** settings and enable **Anonymous Sign-Ins**.
-2. Confirm that the **public.learning_progress** table exists. If needed, run [supabase/schema.sql](supabase/schema.sql) in the Supabase SQL Editor. The script can be safely re-run.
-3. The table uses row-level security (RLS). Authenticated sessions can read or modify only the row whose **user_id** matches their own Supabase user ID.
-4. Open the deployed app and complete an assessment or practice session. Confirm that a row appears in **public.learning_progress**.
+1. Open Supabase **Authentication** settings and enable **Anonymous Sign-Ins** so learners can try the demo without creating an account.
+2. Ensure email/password authentication is enabled if you want learners to create accounts and sign in.
+3. In **URL Configuration**, set the Site URL and add the exact app callback URLs to the Redirect URLs allow list, including your deployed app's `/auth` route and `http://localhost:5173/auth` for local development. Password recovery returns to `/auth` to let the learner set a new password.
+4. Confirm that the **public.learning_progress** table exists. If needed, run [supabase/schema.sql](supabase/schema.sql) in the Supabase SQL Editor. The script can be safely re-run.
+5. The table uses row-level security (RLS). Authenticated sessions can read or modify only the row whose **user_id** matches their own Supabase user ID.
+6. Open the app and complete an assessment or practice session. Confirm that a row appears in **public.learning_progress**.
 
 ### Environment variables
 
@@ -97,7 +99,7 @@ Copy [.env.example](.env.example) as a reference. **Never put a service-role or 
 5. Open **https://YOUR-DEPLOYMENT.vercel.app/api/health**. A healthy response should contain **ok: true**, **databaseConfigured: true**, and **databaseReachable: true**.
 6. Complete a learning activity and verify that a row is created or updated in Supabase **public.learning_progress**.
 
-If the health endpoint reports that the table cannot be queried, rerun **supabase/schema.sql** and check the table grants. If anonymous sign-in fails, confirm that **Anonymous Sign-Ins** is enabled in Supabase Auth.
+If the health endpoint reports that the table cannot be queried, rerun **supabase/schema.sql** and check the table grants. If anonymous sign-in fails, confirm that **Anonymous Sign-Ins** is enabled in Supabase Auth. If account creation, sign-in, or password recovery fails, check the email/password provider settings and make sure the app's `/auth` callback URL is allow-listed.
 
 ## Project structure
 

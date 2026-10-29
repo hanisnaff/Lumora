@@ -13,7 +13,7 @@ export const HowItWorks: React.FC = () => {
           <div className="max-w-[640px]">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
               <span className="w-2 h-2 rounded-full bg-[#C6F36B]" />
-              <span>THE ADAPTIVE LEARNING CYCLE</span>
+              <span>HOW LUMORA HELPS YOU LEARN</span>
             </div>
 
             <h2 className="font-heading font-extrabold text-[#244B3C] tracking-tight text-[clamp(2rem,3.2vw+0.5rem,2.75rem)] leading-[1.18]">
@@ -21,7 +21,7 @@ export const HowItWorks: React.FC = () => {
             </h2>
 
             <p className="text-[17px] text-[#68716C] mt-3 leading-relaxed">
-              Your learning path changes as your understanding grows. Traditional courses force you through identical chapters; Lumora pinpoints the exact concept holding you back.
+              Instead of making you repeat an entire chapter, Lumora checks a few key ideas, points out what needs work, and helps you practise those ideas.
             </p>
           </div>
 
@@ -60,17 +60,17 @@ export const HowItWorks: React.FC = () => {
 
               {/* Title & Copy */}
               <h3 className="font-heading font-bold text-xl text-[#244B3C] tracking-tight mt-2">
-                Pinpoint root misconceptions in 3 minutes.
+                Find the ideas you need to work on.
               </h3>
               <p className="text-[15px] text-[#68716C] leading-relaxed mt-2.5">
-                Start with a short assessment that reveals what you genuinely know and where your reasoning breaks down. No penalty for guessing, just honest diagnostic clarity.
+                Answer five short questions. Your results highlight which C++ pointer concepts feel solid and which ones need another explanation.
               </p>
             </div>
 
             <div className="mt-6 pt-4 border-t border-[#D6DDD8]/50 flex items-center justify-between text-xs text-[#68716C]">
               <span className="flex items-center gap-1.5">
                 <Compass className="w-3.5 h-3.5 text-[#244B3C]" />
-                <span>Concept-level diagnosis</span>
+                <span>See your strengths and gaps</span>
               </span>
               <span className="font-mono text-[11px] text-[#244B3C] font-bold">5 targeted questions</span>
             </div>
@@ -99,10 +99,10 @@ export const HowItWorks: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center mt-4">
                 <div className="md:col-span-7">
                   <h3 className="font-heading font-bold text-lg sm:text-xl text-[#F8FAF9] tracking-tight">
-                    Focused explanations, zero redundant fluff.
+                    Understand the tricky parts.
                   </h3>
                   <p className="text-xs sm:text-[14px] text-[#F8FAF9]/80 leading-relaxed mt-2">
-                    Get clear plain-language mental models, relatable analogies, and interactive memory diagrams built around your exact gap.
+                    Read a focused lesson with plain-language explanations and examples aimed at the concept you found difficult.
                   </p>
                 </div>
                 <div className="md:col-span-5 rounded-xl bg-white/5 border border-white/10 p-1">
@@ -132,10 +132,10 @@ export const HowItWorks: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center mt-4">
                   <div className="md:col-span-7">
                     <h3 className="font-heading font-bold text-lg sm:text-xl text-[#244B3C] tracking-tight">
-                      Recalibrate with every practice drill.
+                      Practise until it makes sense.
                     </h3>
                     <p className="text-xs sm:text-[14px] text-[#68716C] leading-relaxed mt-2">
-                      Reassess your understanding through targeted drills. As your confidence grows, Lumora dynamically unlocks the next conceptual milestone.
+                      Try practice questions, get feedback, and use your results to decide what to review next.
                     </p>
                   </div>
                   <div className="md:col-span-5 rounded-xl bg-[#E8EBE9]/40 border border-[#D6DDD8]/60 p-1">

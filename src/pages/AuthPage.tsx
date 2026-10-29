@@ -162,13 +162,13 @@ export const AuthPage: React.FC = () => {
           {(mode === 'reset' || mode === 'update') && <button type="button" onClick={() => { setMode('signin'); setError(''); setNotice(''); }} className="mt-7 mb-6 inline-flex items-center gap-2 text-sm font-semibold text-[#244B3C] hover:underline"><ArrowLeft className="w-4 h-4" /> Back to sign in</button>}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <label className="block">
+            {mode !== 'update' && <label className="block">
               <span className="block text-sm font-semibold text-[#34463D] mb-1.5">Email address</span>
               <span className="flex items-center gap-2 rounded-xl border border-[#D6DDD8] bg-white px-3.5 focus-within:ring-2 focus-within:ring-[#244B3C]/20 focus-within:border-[#244B3C]">
                 <Mail className="w-4 h-4 text-[#68716C]" />
                 <input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full min-w-0 py-3 bg-transparent outline-none text-sm text-[#242A27] placeholder:text-[#9AA39D]" />
               </span>
-            </label>
+            </label>}
             {(mode === 'signin' || mode === 'signup' || mode === 'update') && <label className="block">
               <span className="block text-sm font-semibold text-[#34463D] mb-1.5">Password</span>
               <span className="flex items-center gap-2 rounded-xl border border-[#D6DDD8] bg-white px-3.5 focus-within:ring-2 focus-within:ring-[#244B3C]/20 focus-within:border-[#244B3C]">

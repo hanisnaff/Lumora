@@ -102,7 +102,7 @@ export const KnowledgeGapResultsPage: React.FC = () => {
                 Here's what to focus on next.
               </h2>
               <p className="text-[15px] text-[#68716C] max-w-xl leading-relaxed">
-                MindPath analyzed your diagnostic reasoning. Rather than re-reading the entire unit, focus on the specific concepts below to accelerate your mastery.
+                Lumora analyzed your diagnostic reasoning. Rather than re-reading the entire unit, focus on the specific concepts below to accelerate your mastery.
               </p>
             </div>
 
@@ -362,7 +362,7 @@ export const KnowledgeGapResultsPage: React.FC = () => {
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Retake diagnostic assessment with alternate answers</span>
           </button>
-          <span className="font-mono">MindPath Adaptive Evaluator v2.4</span>
+          <span className="font-mono">Lumora Adaptive Evaluator v2.4</span>
         </div>
 
       </div>

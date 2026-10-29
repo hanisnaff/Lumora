@@ -63,9 +63,9 @@ export const CTASection: React.FC<CTASectionProps> = ({ onStartLearning }) => {
             <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-[#F8FAF9]/60 mt-5">
               <span>Free 3-minute diagnostic baseline</span>
               <span>&bull;</span>
-              <span>No credit card required</span>
+              <span>No account needed to start</span>
               <span>&bull;</span>
-              <span>Personalized C++ & STEM pathways</span>
+              <span>C++ pointers demo • Progress tracking</span>
             </div>
 
           </div>

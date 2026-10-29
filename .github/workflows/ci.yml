@@ -1,4 +1,4 @@
-name: MindPath AI CI
+name: Lumora CI
 
 on:
   push:

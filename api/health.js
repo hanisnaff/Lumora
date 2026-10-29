@@ -20,12 +20,7 @@ export default async function handler(req, res) {
   try {
     const response = await fetch(
       `${config.url}/rest/v1/learning_progress?select=user_id&limit=1`,
-      {
-        headers: {
-          apikey: config.serviceRoleKey,
-          Authorization: `Bearer ${config.serviceRoleKey}`,
-        },
-      },
+      { headers: { apikey: config.anonKey } },
     );
 
     if (!response.ok) {
@@ -34,7 +29,7 @@ export default async function handler(req, res) {
         ok: false,
         databaseConfigured: true,
         databaseReachable: false,
-        message: "Supabase is configured, but the learning_progress table could not be queried. Run supabase/schema.sql.",
+        message: "Supabase is configured, but the learning_progress table could not be queried. Check the table grants and run supabase/schema.sql.",
       });
     }
 

@@ -22,7 +22,7 @@ export const HomePage: React.FC = () => {
   };
   return (
     <div className="min-h-screen bg-[#E8EBE9] text-[#242A27] selection:bg-[#C6F36B]/30 selection:text-[#242A27] font-sans antialiased overflow-x-hidden">
-      <Navbar onStartLearning={handleOpenStart} onSignIn={handleOpenSignIn} />
+      <Navbar onStartLearning={handleOpenStart} onExploreDemo={handleExploreDemo} />
       <main id="main-content">
         <Hero onStartLearning={handleOpenStart} onSeeHowItWorks={handleScrollToHowItWorks} />
         <ValueStrip />

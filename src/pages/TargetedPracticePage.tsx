@@ -107,7 +107,7 @@ export const TargetedPracticePage: React.FC = () => {
             </h2>
             <p className="text-sm text-[#68716C] mt-2 max-w-md mx-auto leading-relaxed">
               {accuracy >= 80
-                ? 'Your drill results demonstrate solid command of this concept. MindPath has elevated your mastery status.'
+                ? 'Your drill results demonstrate solid command of this concept. Lumora has elevated your mastery status.'
                 : 'Good effort! Repetition on targeted drills creates durable memory hooks. Review the recommendation below.'}
             </p>
           </div>

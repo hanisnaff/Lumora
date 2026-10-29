@@ -29,7 +29,7 @@ export const DiagnosticAssessmentPage: React.FC = () => {
   const selectedOptionIndex = assessmentAnswers[currentQuestion.id];
 
   const totalQuestions = questions.length;
-  const answeredCount = Object.keys(assessmentAnswers).length;
+  const answeredCount = questions.filter((question) => assessmentAnswers[question.id] !== undefined).length;
   const isLastQuestion = currentIndex === totalQuestions - 1;
 
   const handleSelectOption = (optionIndex: number) => {

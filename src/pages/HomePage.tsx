@@ -12,7 +12,7 @@ import { Footer } from '../components/Footer';
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const handleOpenStart = () => navigate('/learn');
-  const handleOpenSignIn = () => navigate('/learn');
+  const handleExploreDemo = () => navigate('/learn');
   const handleScrollToHowItWorks = () => {
     const el = document.getElementById('how-it-works');
     if (el) {

@@ -67,6 +67,10 @@ Add variables to **Production, Preview, and Development** as appropriate, then r
 
 Vercel hosts the frontend and API functions. Supabase hosts authentication and the database; Vercel does not provide a persistent SQL database by itself.
 
+## Deployment health check
+
+After adding all five environment variables and running the SQL schema, open `https://YOUR-DEPLOYMENT.vercel.app/api/health`. A healthy response reports `ok: true`, `databaseConfigured: true`, and `databaseReachable: true`. This endpoint never returns credentials. A 503 response explains whether environment variables or the database table are not ready.
+
 ## API
 
 - `GET /api/progress` — returns the authenticated learner's saved state.

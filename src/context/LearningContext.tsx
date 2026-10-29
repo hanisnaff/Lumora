@@ -115,7 +115,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
     } catch (e) {
-      console.warn('Could not save MindPath demo state to localStorage:', e);
+      console.warn('Could not save Lumora demo state to localStorage:', e);
     }
   }, [
     selectedSubject,

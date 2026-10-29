@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onExploreDemo }
             type="button"
             onClick={onExploreDemo}
             className="text-[14.5px] font-semibold text-[#242A27] hover:text-[#244B3C] transition-colors duration-200 px-2 py-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C] rounded-lg"
-          >Explore demo</button>
+          >Try the demo</button>
           <button
             type="button"
             onClick={onStartLearning}

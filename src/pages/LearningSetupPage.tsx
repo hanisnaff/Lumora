@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
@@ -92,7 +93,12 @@ export const LearningSetupPage: React.FC = () => {
       <div className="space-y-10">
         
         {/* Setup Card Container */}
-        <section className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 sm:p-8 shadow-xs relative overflow-hidden bg-dot-pattern">
+        <motion.section
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+          className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 sm:p-8 shadow-xs relative overflow-hidden bg-dot-pattern"
+        >
           <div className="max-w-[700px]">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-2.5">
               <span className="w-2 h-2 rounded-full bg-[#C6F36B]" />
@@ -228,7 +234,7 @@ export const LearningSetupPage: React.FC = () => {
               <ArrowRight className="w-4 h-4 text-[#C6F36B]" />
             </button>
           </div>
-        </section>
+        </motion.section>
 
         {/* Dynamic Learning Path Overview */}
         <section className="space-y-4">

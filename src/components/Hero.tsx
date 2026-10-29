@@ -35,19 +35,19 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F8FAF9] border border-[#D6DDD8] shadow-xs mb-6">
               <span className="w-2 h-2 rounded-full bg-[#C6F36B] border border-[#244B3C]" />
               <span className="text-[11.5px] font-bold tracking-wider uppercase text-[#244B3C]">
-                ADAPTIVE LEARNING ARCHITECTURE
+                A SIMPLE WAY TO STUDY SMARTER
               </span>
               <span className="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-[#244B3C] text-[#FFFFFF]">
-                Concept-led
+                C++ POINTERS DEMO
               </span>
             </div>
 
             {/* Main Headline */}
             <h1 className="font-heading font-extrabold text-[#242A27] tracking-[-0.03em] leading-[1.12] text-[clamp(2.5rem,5.2vw+0.5rem,4.25rem)]">
-              Learn at your pace.
+              Find what you know.
               <span className="block mt-1 font-extrabold text-[#242A27]">
                 <span className="relative inline-block">
-                  Master your way.
+                  Learn what you missed.
                   {/* Subtle lime brush accent */}
                   <span 
                     className="absolute -bottom-1 left-0 right-0 h-[5px] rounded-full bg-[#C6F36B]/80" 
@@ -59,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
 
             {/* Description */}
             <p className="text-[17px] sm:text-[18px] text-[#68716C] leading-[1.65] max-w-[530px] mt-6 mb-8 font-normal">
-              Not everyone learns the same way. Lumora discovers what you understand, finds the exact conceptual gaps, and builds a learning path that moves with you.
+              Answer five quick questions about C++ pointers. Lumora shows which ideas you already understand, explains the ones you missed, and gives you practice to improve.
             </p>
 
             {/* CTA Buttons */}
@@ -69,7 +69,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
                 onClick={onStartLearning}
                 className="group inline-flex items-center justify-center gap-2.5 bg-[#244B3C] text-[#FFFFFF] px-6 py-3.5 rounded-xl text-[15px] font-semibold hover:bg-[#1D3D31] active:scale-[0.99] transition-all duration-200 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C]"
               >
-                <span>Start diagnostic</span>
+                <span>Start 5-question check</span>
                 <ArrowRight className="w-4 h-4 text-[#C6F36B] transition-transform duration-200 group-hover:translate-x-1" />
               </button>
 
@@ -87,12 +87,12 @@ export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) 
             <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#68716C]">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#2E8055] flex-shrink-0" />
-                <span>3-minute diagnostic baseline</span>
+                <span>About 3 minutes</span>
               </div>
               <span className="hidden sm:inline text-[#D6DDD8]">&bull;</span>
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-[#244B3C] flex-shrink-0" />
-                <span>Isolates root misconceptions</span>
+                <span>Clear feedback after each step</span>
               </div>
             </div>
           </motion.div>

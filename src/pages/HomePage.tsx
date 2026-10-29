@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
@@ -8,14 +8,11 @@ import { LearningApproach } from '../components/LearningApproach';
 import { ForStudents } from '../components/ForStudents';
 import { CTASection } from '../components/CTASection';
 import { Footer } from '../components/Footer';
-import { QuickStartModal } from '../components/QuickStartModal';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const [modalState, setModalState] = useState<{ isOpen: boolean; type: 'start' | 'signin' }>({ isOpen: false, type: 'start' });
-  const handleOpenStart = () => navigate('/workspace');
-  const handleOpenSignIn = () => setModalState({ isOpen: true, type: 'signin' });
-  const handleCloseModal = () => setModalState(prev => ({ ...prev, isOpen: false }));
+  const handleOpenStart = () => navigate('/learn');
+  const handleOpenSignIn = () => navigate('/learn');
   const handleScrollToHowItWorks = () => {
     const el = document.getElementById('how-it-works');
     if (el) {
@@ -35,7 +32,6 @@ export const HomePage: React.FC = () => {
         <CTASection onStartLearning={handleOpenStart} />
       </main>
       <Footer />
-      <QuickStartModal isOpen={modalState.isOpen} onClose={handleCloseModal} type={modalState.type} onNavigateToLearn={() => navigate('/workspace')} />
     </div>
   );
 };

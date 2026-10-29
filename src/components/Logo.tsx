@@ -44,7 +44,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 28 }) => {
 
       <div className="flex items-center gap-1.5">
         <span className="font-heading font-extrabold text-xl tracking-tight text-[#242A27]">
-          MindPath
+          Lumora
         </span>
         <span className="text-[10px] font-mono font-bold tracking-wider uppercase px-1.5 py-0.5 rounded border border-[#D6DDD8] text-[#244B3C] bg-[#DCEBE2]">
           AI

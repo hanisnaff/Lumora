@@ -87,7 +87,7 @@ export const LearningSetupPage: React.FC = () => {
   return (
     <LearningShell
       title="Learning Setup & Path"
-      subtitle="Configure your curriculum and review your dynamic concept modules."
+      subtitle="Start with the working C++ pointers demo. No account or sign-in is needed to try it."
     >
       <div className="space-y-10">
         
@@ -102,14 +102,14 @@ export const LearningSetupPage: React.FC = () => {
               Let's find your starting point.
             </h2>
             <p className="text-[15.5px] text-[#68716C] mt-2 leading-relaxed">
-              Choose a subject and we'll discover what you understand and what needs more attention.
+              C++ Pointers is the working demo. Choose your difficulty, answer five questions, then follow the lesson and practice recommended for you.
             </p>
           </div>
 
           {/* 1. Subject Selection */}
           <div className="mt-8">
             <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
-              1. Select Subject
+              1. Choose a learning track
             </label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {subjects.map((sub) => {
@@ -153,7 +153,7 @@ export const LearningSetupPage: React.FC = () => {
           {/* 2. Topic Selection */}
           <div className="mt-7">
             <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
-              2. Focus Topic ({selectedSubject})
+              2. Choose a topic
             </label>
             <div className="flex flex-wrap gap-2.5">
               {topics.map((t) => {
@@ -189,7 +189,7 @@ export const LearningSetupPage: React.FC = () => {
           {/* 3. Difficulty Preference */}
           <div className="mt-7">
             <label className="block text-xs font-bold uppercase tracking-wider text-[#244B3C] mb-3">
-              3. Starting Difficulty Preference
+              3. Choose your starting level
             </label>
             <div className="flex flex-wrap gap-3">
               {difficulties.map((diff) => {
@@ -216,7 +216,7 @@ export const LearningSetupPage: React.FC = () => {
           <div className="mt-8 pt-6 border-t border-[#D6DDD8]/70 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs text-[#68716C]">
               <Sparkles className="w-3.5 h-3.5 text-[#244B3C]" />
-              <span>5 diagnostic questions &bull; Takes ~3 minutes &bull; Instant gap mapping</span>
+              <span>5 quick questions • About 3 minutes • No sign-in required</span>
             </div>
 
             <button
@@ -236,10 +236,10 @@ export const LearningSetupPage: React.FC = () => {
             <div>
               <h3 className="font-heading font-extrabold text-xl text-[#244B3C] tracking-tight flex items-center gap-2">
                 <Layers className="w-5 h-5 text-[#244B3C]" />
-                <span>Learning Path Overview: {selectedTopic}</span>
+                <span>Your learning steps: {selectedTopic}</span>
               </h3>
               <p className="text-xs text-[#68716C] mt-0.5">
-                Modules adapt based on your diagnostic results and targeted practice.
+                After the check, start with the lesson and practice suggested by your results.
               </p>
             </div>
 

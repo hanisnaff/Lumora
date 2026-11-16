@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
@@ -22,11 +22,10 @@ export const TargetedPracticePage: React.FC = () => {
     selectedSubject,
   } = useLearning();
 
-  // Filter questions for the active concept; fallback to dereferencing or all practice questions
-  const conceptQuestions = TARGETED_PRACTICE_QUESTIONS.filter(
-    (q) => q.conceptId === activeLessonConcept
+  // Never attribute another concept's questions to the active concept.
+  const questions = TARGETED_PRACTICE_QUESTIONS.filter(
+    (question) => question.conceptId === activeLessonConcept
   );
-  const questions = conceptQuestions.length > 0 ? conceptQuestions : TARGETED_PRACTICE_QUESTIONS.slice(0, 3);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -42,13 +41,23 @@ export const TargetedPracticePage: React.FC = () => {
     finished: false,
   });
 
+  useEffect(() => {
+    setCurrentIndex(0);
+    setSelectedOption(null);
+    setIsAnswerSubmitted(false);
+    setConsecutiveErrors(0);
+    setSessionResults({ correctCount: 0, totalAnswered: 0, finished: false });
+  }, [activeLessonConcept]);
+
   const currentQuestion = questions[currentIndex];
   const totalQuestions = questions.length;
   const isCorrect =
-    selectedOption !== null && selectedOption === currentQuestion.correctOptionIndex;
+    currentQuestion !== undefined
+    && selectedOption !== null
+    && selectedOption === currentQuestion.correctOptionIndex;
 
   const handleSubmitAnswer = () => {
-    if (selectedOption === null || isAnswerSubmitted) return;
+    if (!currentQuestion || selectedOption === null || isAnswerSubmitted) return;
 
     setIsAnswerSubmitted(true);
     const correct = selectedOption === currentQuestion.correctOptionIndex;
@@ -67,6 +76,7 @@ export const TargetedPracticePage: React.FC = () => {
   };
 
   const handleNextQuestion = () => {
+    if (!currentQuestion) return;
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex(currentIndex + 1);
       setSelectedOption(null);
@@ -82,7 +92,9 @@ export const TargetedPracticePage: React.FC = () => {
 
   // End of Practice View
   if (sessionResults.finished) {
-    const accuracy = Math.round((sessionResults.correctCount / totalQuestions) * 100);
+    const accuracy = sessionResults.totalAnswered > 0
+      ? Math.round((sessionResults.correctCount / sessionResults.totalAnswered) * 100)
+      : 0;
     const updatedScore = conceptMasteries[activeLessonConcept]?.score ?? accuracy;
 
     return (
@@ -114,7 +126,7 @@ export const TargetedPracticePage: React.FC = () => {
             <div>
               <span className="text-[11px] font-bold uppercase text-[#68716C]">Session Accuracy</span>
               <div className="font-heading font-extrabold text-2xl text-[#244B3C] mt-0.5">
-                {sessionResults.correctCount} / {totalQuestions}
+                {sessionResults.correctCount} / {sessionResults.totalAnswered}
               </div>
               <span className="text-xs text-[#68716C] font-mono">({accuracy}%)</span>
             </div>
@@ -172,6 +184,18 @@ export const TargetedPracticePage: React.FC = () => {
             </button>
           </div>
         </div>
+      </LearningShell>
+    );
+  }
+
+  if (!currentQuestion) {
+    return (
+      <LearningShell title="Practice unavailable" subtitle={`${selectedSubject} · Targeted practice`}>
+        <section className="mx-auto max-w-xl rounded-2xl border border-[#D6DDD8] bg-white p-7 text-center">
+          <h2 className="font-heading text-xl font-bold text-[#244B3C]">No practice questions yet</h2>
+          <p className="mt-2 text-sm leading-6 text-[#68716C]">There are no drills available for this concept yet. Review the lesson or choose another concept.</p>
+          <button type="button" onClick={() => navigate('/lesson')} className="mt-5 rounded-xl bg-[#244B3C] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1D3D31]">Return to lesson</button>
+        </section>
       </LearningShell>
     );
   }

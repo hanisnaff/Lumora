@@ -339,7 +339,7 @@ p = &second;     // p now points to second
       value: '205',
       address: '0x7ffe920',
       pointerName: 'p',
-      pointerValue: '0x7ffe920 (re-aimed)',
+      pointerValue: '0x7ffe920',
       pointerAddress: '0x7ffe928',
     },
     commonMistakes: [

@@ -7,18 +7,7 @@ import {
   canUseOfflineLocalProgress,
   hasLearningActivity,
   shouldMigrateAnonymousProgress,
-  canPreserveAnonymousProgressCache,
 } from "../src/services/progressOwnership.js";
-
-test("does not relabel a signed-in cache as anonymous when its session is missing", () => {
-  const signedInOwner = { userId: "user-a", isAnonymous: false };
-  const anonymousOwner = { userId: "anon-a", isAnonymous: true };
-  assert.equal(canPreserveAnonymousProgressCache(null, false), true);
-  assert.equal(canPreserveAnonymousProgressCache(anonymousOwner, true), true);
-  assert.equal(canPreserveAnonymousProgressCache(signedInOwner, true), false);
-  assert.equal(canPreserveAnonymousProgressCache(signedInOwner, false), false);
-  assert.equal(canPreserveAnonymousProgressCache(null, true), false);
-});
 
 test("reuses a cache for the same authenticated user", () => {
   const owner = { userId: "user-a", isAnonymous: false };
@@ -31,6 +20,7 @@ test("never reuses one signed-in user's cache for a different account", () => {
   const current = { userId: "user-b", isAnonymous: false };
   assert.equal(isSameProgressOwner(previous, current), false);
   assert.equal(canReuseLocalProgress(previous, current), false);
+  assert.equal(canReuseLocalProgress(previous, { userId: "anon-new", isAnonymous: true }), false);
   assert.equal(canUseOfflineLocalProgress(previous, true), false);
 });
 

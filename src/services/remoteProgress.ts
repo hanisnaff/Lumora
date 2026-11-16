@@ -1,3 +1,5 @@
+import { canStartAnonymousSession, type ProgressOwner } from './progressOwnership';
+
 type RemoteSession = {
   access_token: string;
   refresh_token: string;
@@ -95,6 +97,27 @@ async function getSession(): Promise<RemoteSession> {
       // this learner's signed-in progress to the wrong account.
       throw new Error("Your saved session could not be refreshed. Sign in again to sync or delete account progress.");
     }
+  }
+
+  // Do not silently replace a missing signed-in session with a new anonymous
+  // identity. That would strand the old account's local cache and could later
+  // make it look like anonymous demo data.
+  let previousOwner: ProgressOwner | null = null;
+  let ownerRaw: string | null;
+  try {
+    ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
+  } catch {
+    throw new Error("Could not verify the saved account identity. Sign in again to sync progress.");
+  }
+  if (ownerRaw) {
+    try {
+      previousOwner = JSON.parse(ownerRaw) as ProgressOwner;
+    } catch {
+      throw new Error("The saved account identity is invalid. Sign in again to sync progress.");
+    }
+  }
+  if (!canStartAnonymousSession(previousOwner)) {
+    throw new Error("Your saved account session is missing. Sign in again to continue syncing progress.");
   }
 
   // Supabase must have anonymous sign-ins enabled in Authentication settings.

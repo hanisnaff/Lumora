@@ -4,7 +4,7 @@ import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
 import type { ConceptId } from '../types/learning';
 import { DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
-import { ArrowRight, RotateCcw } from 'lucide-react';
+import { ArrowRight, ChevronDown, RotateCcw } from 'lucide-react';
 
 export const KnowledgeGapResultsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -68,6 +68,7 @@ export const KnowledgeGapResultsPage: React.FC = () => {
                   <span className={selectedOption === undefined ? 'text-xs font-semibold text-[#68736C]' : isCorrect ? 'text-xs font-semibold text-[#285443]' : 'text-xs font-semibold text-[#A85B53]'}>
                     {selectedOption === undefined ? 'Not answered' : isCorrect ? 'Correct' : 'Review'}
                   </span>
+                  <ChevronDown className="h-4 w-4 shrink-0 text-[#68736C]" />
                 </summary>
                 <div className="space-y-3 border-t border-[#E2E8E2] px-4 py-4">
                   <p className="text-sm font-medium leading-6 text-[#202923]">{question.question}</p>

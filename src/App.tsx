@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import { LearningProvider } from './context/LearningContext';
 import { HomePage } from './pages/HomePage';
 import { LearningSetupPage } from './pages/LearningSetupPage';
@@ -12,6 +13,7 @@ import { AuthPage } from './pages/AuthPage';
 export default function App() {
   return (
     <LearningProvider>
+      <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -25,6 +27,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
+      </MotionConfig>
     </LearningProvider>
   );
 }

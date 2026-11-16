@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import handler from "../api/progress.js";
 
 async function invoke({
@@ -106,4 +107,14 @@ test("deletes only the authenticated user's progress", async () => {
   assert.deepEqual(response.payload, { deleted: true });
   assert.match(calls[1].url, /user_id=eq\.user-123/);
   assert.equal(calls[1].options.method, "DELETE");
+});
+
+test("Vercel config includes baseline browser security headers", () => {
+  const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
+  const headers = config.headers?.find((rule) => rule.source === "/(.*)")?.headers ?? [];
+  const values = Object.fromEntries(headers.map((header) => [header.key, header.value]));
+  assert.equal(values["X-Content-Type-Options"], "nosniff");
+  assert.equal(values["Referrer-Policy"], "strict-origin-when-cross-origin");
+  assert.equal(values["X-Frame-Options"], "DENY");
+  assert.equal(values["Permissions-Policy"], "camera=(), microphone=(), geolocation=()");
 });

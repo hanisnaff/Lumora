@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       }
 
       const rows = await response.json();
-      return sendJson(res, 200, { state: rows[0]?.state ?? null, userId: user.id, isAnonymous: Boolean(user.is_anonymous) });
+      return sendJson(res, 200, { state: rows[0]?.state ?? null, userId: user.id, isAnonymous: user.is_anonymous === true });
     }
 
     const state = req.body?.state;

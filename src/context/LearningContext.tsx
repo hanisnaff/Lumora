@@ -37,7 +37,6 @@ interface LearningContextType {
 }
 
 const STORAGE_KEY = 'lumora_learning_state_v1';
-const PROGRESS_OWNER_KEY = 'lumora_progress_owner_v1';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);

@@ -122,12 +122,12 @@ ptr = &b;
     conceptId: 'pointer-safety',
     conceptName: 'Null Pointers & Safety',
     question: 'What is the danger of executing the following line without proper initialization?',
-    codeSnippet: `int* uninitPtr;
+    codeSnippet: `int* uninitPtr; // local pointer, not initialized
 *uninitPtr = 99;`,
     options: [
       'C++ automatically allocates new memory on the heap for 99',
       'It creates a warning but runs safely by defaulting to address 0x0',
-      'It attempts to write to an arbitrary memory address, causing undefined behavior or a crash (segmentation fault)',
+      'It uses an indeterminate pointer value; dereferencing it has undefined behavior',
       'The compiler automatically converts uninitPtr to nullptr',
     ],
     correctOptionIndex: 2,

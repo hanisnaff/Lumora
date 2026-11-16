@@ -360,7 +360,7 @@ p = &second;     // p now points to second
     conceptId: 'pointer-safety',
     conceptName: 'Null Pointers & Safety',
     title: 'Safe Pointer Handling and nullptr',
-    subtitle: 'Avoid segmentation faults and undefined behavior with defensive pointer patterns.',
+    subtitle: 'Use defensive pointer patterns to avoid invalid null-pointer dereferences and undefined behavior.',
     badge: 'Best Practice',
     estimatedMinutes: 5,
     primaryExplanation:

@@ -59,7 +59,7 @@ std::cout << &score;`,
     ],
     correctOptionIndex: 1,
     explanation:
-      'The & operator (address-of) produces a pointer to the variable’s storage location in the program’s virtual address space. It gives you an address, not the variable’s contents.',
+      'The & operator (address-of) produces a pointer to the variable’s storage location in the program’s address space. It gives you an address, not the variable’s contents.',
   },
   {
     id: 2,
@@ -184,7 +184,7 @@ std::cout << number; // Outputs 42!`,
       {
         mistake: 'Forgetting * when modifying the target value',
         correction: 'Write `*ptr = 20;` instead of `ptr = 20;`',
-        why: 'Writing `ptr = 20` attempts to set the pointer to point to address 20, causing a compilation error or severe memory violation.',
+        why: '`ptr = 20` is ill-formed: a nonzero integer cannot be assigned to an `int*` without an explicit conversion. Casting an arbitrary integer to a pointer does not make it safe to dereference.',
       },
     ],
     checkQuestion: {
@@ -192,7 +192,7 @@ std::cout << number; // Outputs 42!`,
       options: [
         'px now points to address 10',
         'x becomes 10',
-        'x remains 7 and px increments by 3 bytes',
+        'x remains 7 and px advances to the next address',
         'Compilation error',
       ],
       correctIndex: 1,
@@ -261,7 +261,7 @@ std::cout << "Address: " << &price << "\\n";`,
     badge: 'Core Syntax',
     estimatedMinutes: 5,
     primaryExplanation:
-      'A pointer declaration specifies both that the variable is a pointer and what type of data it points to. For example, `int* ptr` means "ptr holds the address of an integer". The type informs the compiler how many bytes to read and how arithmetic works.',
+      'A pointer declaration specifies both that the variable is a pointer and what type of data it points to. For example, `int* ptr` means "ptr holds the address of an integer". The pointed-to type determines the type accessed by dereferencing and the scale of pointer arithmetic; its size is implementation-dependent.',
     alternateExplanation:
       'If you have a business card, it is not enough to just say "this is an address". You need to know if it is the address of an apartment, a warehouse, or a skyscraper so you know what to expect when you arrive.',
     analogy: {
@@ -377,7 +377,7 @@ p = &second;     // p now points to second
 if (safePtr != nullptr) {
     *safePtr = 10;       // Will NOT execute; safely guarded
 } else {
-    std::cout << "Pointer is currently empty, safe from crash!\\n";
+    std::cout << "Pointer is null; no dereference was attempted.\\n";
 }`,
       steps: [
         { line: 1, explanation: 'Initializes `safePtr` to the null pointer value `nullptr`.' },
@@ -397,7 +397,7 @@ if (safePtr != nullptr) {
       {
         mistake: 'Leaving pointers uninitialized: int* p;',
         correction: 'Always initialize: int* p = nullptr; or int* p = &var;',
-        why: 'Uninitialized pointers contain unpredictable stack garbage that looks like a real address.',
+        why: 'An uninitialized local pointer has an indeterminate value; it is not a usable address and must not be read or dereferenced.',
       },
     ],
     checkQuestion: {

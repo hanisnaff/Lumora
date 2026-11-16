@@ -154,6 +154,7 @@ The example is abbreviated; the application stores the full learning state. Requ
 ## Security notes
 
 - Browser-visible Supabase publishable keys are expected to be public; RLS is the access-control boundary.
+- Progress and the Supabase browser session are stored in localStorage. Use a trusted browser profile and avoid shared or untrusted devices.
 - Vercel responses include baseline browser security headers for content-type sniffing, referrer handling, framing, and unused device permissions.
 - The API validates each access token with Supabase before accessing progress.
 - Browser-cache ownership is tracked: anonymous demo progress can be claimed during sign-in only when the destination account has no existing learning activity; a cache associated with a different signed-in account is never reused.

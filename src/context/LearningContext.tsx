@@ -37,6 +37,7 @@ interface LearningContextType {
 }
 
 const STORAGE_KEY = 'lumora_learning_state_v1';
+const PROGRESS_OWNER_KEY = 'lumora_progress_owner_v1';
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -243,8 +244,20 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
         setProgressSyncError('Cloud progress could not be loaded. Check your connection or sign in again to restore account sync.');
         // A signed-in account's cache is not displayed until its identity is verified.
-        const newlyMarkedDemo = !previousOwner && !localState && markUnownedLocalProgressAsDemo();
-        const offlineOwner = newlyMarkedDemo ? { userId: null, isAnonymous: true } : previousOwner;
+        let offlineOwner = previousOwner;
+        if (!offlineOwner && !localState) {
+          try {
+            const currentOwnerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
+            if (currentOwnerRaw) {
+              const currentOwner = JSON.parse(currentOwnerRaw) as { userId?: string | null; isAnonymous?: boolean };
+              if (currentOwner.isAnonymous === true) offlineOwner = currentOwner;
+            }
+          } catch {
+            // Do not infer ownership from malformed browser metadata.
+          }
+        }
+        const newlyMarkedDemo = !offlineOwner && !localState && markUnownedLocalProgressAsDemo();
+        if (newlyMarkedDemo) offlineOwner = { userId: null, isAnonymous: true };
         if (localState && canUseOfflineLocalProgress(offlineOwner, true)) applySavedState(localState);
         // Preserve unowned legacy or signed-in caches until their identity can be verified.
         // A fresh offline demo and previously identified anonymous progress can still work.

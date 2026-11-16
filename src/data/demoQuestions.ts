@@ -380,7 +380,7 @@ if (safePtr != nullptr) {
     std::cout << "Pointer is currently empty, safe from crash!\\n";
 }`,
       steps: [
-        { line: 1, explanation: 'Initializes `safePtr` to `nullptr` (address 0x0).' },
+        { line: 1, explanation: 'Initializes `safePtr` to the null pointer value `nullptr`.' },
         { line: 3, explanation: 'The guard condition evaluates to false, skipping dereference.' },
         { line: 6, explanation: 'Safe branch executed cleanly without segmentation fault.' },
       ],
@@ -390,7 +390,7 @@ if (safePtr != nullptr) {
       value: 'N/A',
       address: 'N/A',
       pointerName: 'safePtr',
-      pointerValue: '0x0 (nullptr)',
+      pointerValue: 'nullptr (null pointer value)',
       pointerAddress: '0x7ffe700',
     },
     commonMistakes: [

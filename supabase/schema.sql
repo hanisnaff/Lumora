@@ -8,8 +8,6 @@ create table if not exists public.learning_progress (
   updated_at timestamptz not null default now()
 );
 
-create index if not exists learning_progress_updated_at_idx
-  on public.learning_progress (updated_at desc);
 
 alter table public.learning_progress enable row level security;
 

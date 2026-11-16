@@ -80,7 +80,7 @@ export const UnderstandVisual: React.FC = () => {
         {/* Layer 3: Target Application (Upcoming) */}
         <rect x="70" y="16" width="140" height="24" rx="6" fill="#FAF8F3" stroke="#D9CCBA" strokeWidth="1.2" strokeDasharray="3 3" />
         <text x="140" y="32" textAnchor="middle" fill="#5C675F" fontSize="9" fontWeight="600" fontFamily="Inter">
-          Example next topic &bull; Pointer Arithmetic
+          Next topic &bull; Pointer Arithmetic
         </text>
       </svg>
     </div>

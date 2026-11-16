@@ -63,6 +63,7 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 Open the local URL printed by Vite. To type-check and create the production bundle:
 
     npm test
+    npm test
     npm run build
     npm run preview
 

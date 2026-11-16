@@ -104,12 +104,27 @@ async function progressRequest(method: "GET" | "PUT" | "DELETE", state?: unknown
 
 export async function loadRemoteProgress(): Promise<Record<string, unknown> | null> {
   if (!isRemoteProgressConfigured) return null;
+  const hadSessionBeforeLoad = Boolean(readSession());
   const response = await progressRequest("GET");
   if (typeof response.isAnonymous === "boolean") {
     try {
+      const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
+      let previousOwner: { isAnonymous?: unknown } | null = null;
+      if (ownerRaw) {
+        try {
+          previousOwner = JSON.parse(ownerRaw) as { isAnonymous?: unknown };
+        } catch {
+          previousOwner = null;
+        }
+      }
+      // If an existing session unexpectedly becomes anonymous, ownership of
+      // the browser cache is uncertain. Keep migration disabled unless it was
+      // already positively identified as anonymous/demo progress.
+      const isSafeAnonymousCache = response.isAnonymous
+        && (!hadSessionBeforeLoad || previousOwner?.isAnonymous === true);
       localStorage.setItem(PROGRESS_OWNER_KEY, JSON.stringify({
         userId: response.userId ?? null,
-        isAnonymous: response.isAnonymous,
+        isAnonymous: response.isAnonymous ? isSafeAnonymousCache : false,
       }));
     } catch {
       // Progress loading should still work if browser storage is unavailable.

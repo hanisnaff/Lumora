@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
+import { canMigrateAnonymousProgress } from '../services/progressOwnership';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://ewjhbfggfjlvseozixtv.supabase.co').replace(/\/$/, '');
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN';
@@ -107,7 +108,7 @@ export const AuthPage: React.FC = () => {
             if (ownerRaw) {
               try {
                 const owner = JSON.parse(ownerRaw) as { isAnonymous?: unknown };
-                localProgressIsAnonymous = owner.isAnonymous === true;
+                localProgressIsAnonymous = canMigrateAnonymousProgress(owner);
               } catch {
                 localProgressIsAnonymous = false;
               }

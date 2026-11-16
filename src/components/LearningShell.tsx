@@ -123,8 +123,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
         <div className="p-3.5 border-t border-[#D6DDD8]/70">
           <button
             type="button"
-            onClick={() => { setResetError(''); setResetError('');
-              setResetModalOpen(true); }}
+            onClick={() => { setResetError(''); setResetModalOpen(true); }}
             className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#68716C] hover:text-[#244B3C] hover:bg-[#E8EBE9]/80 rounded-xl border border-[#D6DDD8]/80 transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
@@ -184,6 +183,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
             type="button"
             onClick={() => {
               setMobileSidebarOpen(false);
+              setResetError('');
               setResetModalOpen(true);
             }}
             className="w-full mt-3 py-2 text-xs font-semibold text-[#68716C] border border-[#D6DDD8] rounded-xl"

@@ -13,7 +13,7 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 - **Concept-level feedback:** review results and focus practice on weaker concepts.
 - **Answer review:** revisit each diagnostic question, compare your response with the correct answer, and read its explanation.
 - **Progress tracking:** local browser storage with optional cloud sync through Supabase.
-- **Responsive UI:** React, TypeScript, Tailwind CSS, and custom learning visualizations.
+- **Responsive and accessible UI:** React, TypeScript, Tailwind CSS, custom learning visualizations, and reduced-motion support.
 - **Deployment-ready:** Vite frontend, Vercel serverless progress API, Supabase Auth, and Postgres.
 
 ## Contents

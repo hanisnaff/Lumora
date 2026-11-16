@@ -68,7 +68,7 @@ function normaliseMasteries(value: unknown): Record<ConceptId, ConceptMastery> {
       status: score >= 80 ? 'mastered' : score >= 50 ? 'practising' : 'needs-review',
       questionsTested,
       correctAnswers,
-      ...(typeof candidate.lastPracticed === 'string' ? { lastPracticed: candidate.lastPracticed } : {}),
+      ...(isValidTimestamp(candidate.lastPracticed) ? { lastPracticed: candidate.lastPracticed } : {}),
     };
   }
   return result;

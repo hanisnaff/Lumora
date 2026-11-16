@@ -26,3 +26,8 @@ export function shouldMigrateAnonymousProgress(
   owner: ProgressOwner | null,
   cloudState: unknown
 ): boolean;
+
+export function canPreserveAnonymousProgressCache(
+  previousOwner: ProgressOwner | null,
+  hadSessionBeforeLoad: boolean
+): boolean;

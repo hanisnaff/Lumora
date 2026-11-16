@@ -81,7 +81,6 @@ Lumora is configured with the public URL and publishable key for its connected S
 4. In **URL Configuration**, set the Site URL and add the exact app callback URLs to the Redirect URLs allow list, including your deployed app's `/auth` route and `http://localhost:5173/auth` for local development. Password recovery returns to `/auth` to let the learner set a new password.
 5. Confirm that the **public.learning_progress** table exists. If needed, run [supabase/schema.sql](supabase/schema.sql) in the Supabase SQL Editor. The script can be safely re-run.
 6. The table uses row-level security (RLS). Authenticated sessions can read or modify only the row whose **user_id** matches their own Supabase user ID.
-6. In Authentication → Settings → Password Security, enable leaked-password protection. See the [Supabase password security guide](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection).
 7. Open the app and complete an assessment or practice session. Confirm that a row appears in **public.learning_progress**.
 
 ### Environment variables

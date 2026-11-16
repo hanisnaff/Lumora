@@ -11,6 +11,7 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 
 - **Guided learning flow:** setup → diagnostic assessment → knowledge-gap results → personalized lesson → targeted practice → progress dashboard.
 - **Concept-level feedback:** review results and focus practice on weaker concepts.
+- **Answer review:** revisit each diagnostic question, compare your response with the correct answer, and read its explanation.
 - **Progress tracking:** local browser storage with optional cloud sync through Supabase.
 - **Responsive UI:** React, TypeScript, Tailwind CSS, and custom learning visualizations.
 - **Deployment-ready:** Vite frontend, Vercel serverless progress API, Supabase Auth, and Postgres.

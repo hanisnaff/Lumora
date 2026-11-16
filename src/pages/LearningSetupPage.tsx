@@ -7,7 +7,7 @@ import { ArrowRight, BookOpen, CheckCircle2, ClipboardCheck, Dumbbell, LockKeyho
 
 export const LearningSetupPage: React.FC = () => {
   const navigate = useNavigate();
-  const { assessmentResult, conceptMasteries, setActiveLessonConcept } = useLearning();
+  const { assessmentResult, conceptMasteries, setActiveLessonConcept, completedLessons, practiceAttempts } = useLearning();
 
   const next = getRecommendedAction(
     Boolean(assessmentResult),
@@ -19,6 +19,10 @@ export const LearningSetupPage: React.FC = () => {
     if (next.conceptId) setActiveLessonConcept(next.conceptId);
     navigate(next.targetRoute);
   };
+
+  const focusConcept = assessmentResult?.weakestConceptId;
+  const lessonDone = Boolean(focusConcept && completedLessons.includes(focusConcept));
+  const practiceDone = Boolean(focusConcept && practiceAttempts.some((attempt) => attempt.conceptId === focusConcept));
 
   const steps = [
     {
@@ -35,8 +39,8 @@ export const LearningSetupPage: React.FC = () => {
       title: 'Learn what needs work',
       description: 'Get one focused explanation based on your answers.',
       icon: BookOpen,
-      state: assessmentResult ? 'current' : 'upcoming',
-      action: 'Open lesson',
+      state: !assessmentResult ? 'upcoming' : lessonDone ? 'done' : 'current',
+      action: lessonDone ? 'Review lesson' : 'Open lesson',
       onClick: () => {
         if (assessmentResult) setActiveLessonConcept(assessmentResult.weakestConceptId);
         navigate(assessmentResult ? '/lesson' : '/assessment');
@@ -45,10 +49,10 @@ export const LearningSetupPage: React.FC = () => {
     {
       number: '03',
       title: 'Try a few questions',
-      description: 'Practise the concept and see whether it makes sense.',
+      description: 'Answer a short set of questions and check what has improved.',
       icon: Dumbbell,
-      state: 'upcoming',
-      action: 'Practice',
+      state: !assessmentResult ? 'upcoming' : practiceDone ? 'done' : lessonDone ? 'current' : 'upcoming',
+      action: practiceDone ? 'Practise again' : 'Start practice',
       onClick: () => navigate(assessmentResult ? '/practice' : '/assessment'),
     },
   ] as const;

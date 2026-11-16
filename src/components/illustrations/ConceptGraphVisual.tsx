@@ -97,7 +97,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
             Memory Addr (&)
           </text>
           <text x="0" y="45" textAnchor="middle" fill="#7D8880" fontSize="8.5" fontFamily="monospace">
-            MASTERED
+            SAMPLE COMPLETE
           </text>
         </g>
 
@@ -109,7 +109,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
             Type* Syntax
           </text>
           <text x="0" y="43" textAnchor="middle" fill="#7D8880" fontSize="8.5" fontFamily="monospace">
-            VERIFIED
+            SAMPLE COMPLETE
           </text>
         </g>
 
@@ -133,7 +133,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
           </text>
           <rect x="-44" y="-22" width="88" height="15" rx="7.5" fill="#C6F36B" />
           <text x="0" y="-12" textAnchor="middle" fill="#244B3C" fontSize="8" fontWeight="800" fontFamily="monospace" letterSpacing="0.5">
-            CURRENT FOCUS
+            SAMPLE FOCUS
           </text>
         </g>
 
@@ -145,7 +145,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
             Pointer Mutation
           </text>
           <text x="0" y="41" textAnchor="middle" fill="#7D8880" fontSize="8.5" fontFamily="monospace">
-            UPCOMING
+            EXAMPLE NEXT
           </text>
         </g>
 
@@ -157,7 +157,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
             nullptr Safety
           </text>
           <text x="0" y="41" textAnchor="middle" fill="#7D8880" fontSize="8.5" fontFamily="monospace">
-            QUEUED
+            EXAMPLE QUEUED
           </text>
         </g>
 
@@ -166,7 +166,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
           <rect x="0" y="0" width="72" height="18" rx="4" fill="#F8FAF9" stroke="#D6DDD8" strokeWidth="1" />
           <circle cx="8" cy="9" r="3" fill="#C6F36B" />
           <text x="16" y="12.5" fill="#242A27" fontSize="8.5" fontWeight="600" fontFamily="monospace">
-            Gap: 42%
+            Sample gap: 42%
           </text>
         </g>
       </svg>

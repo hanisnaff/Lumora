@@ -99,6 +99,7 @@ export const LearningPathPreview: React.FC = () => {
               </button>
             </div>
           </div>
+          <p className="mt-2 text-[10px] text-[#68716C]">Illustrative sample only — these scores and completion states are not real learner records.</p>
 
           {/* Progress Indicator: Concept understanding */}
           <div className="py-4">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Compass, CheckCircle2, Sparkles } from 'lucide-react';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import { LearningPathPreview } from './LearningPathPreview';
 
 interface HeroProps {
@@ -8,107 +8,37 @@ interface HeroProps {
   onSeeHowItWorks: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) => {
-  return (
-    <section className="relative pt-10 pb-16 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-26 overflow-hidden bg-dot-pattern">
-      {/* Subtle organic depth */}
-      <div 
-        className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#C6F36B]/10 blur-3xl pointer-events-none -z-10" 
-        aria-hidden="true" 
-      />
-      <div 
-        className="absolute bottom-10 right-1/4 w-[500px] h-[500px] rounded-full bg-[#244B3C]/5 blur-3xl pointer-events-none -z-10" 
-        aria-hidden="true" 
-      />
-
-      <div className="max-w-[1240px] mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
-          
-          {/* Left Column (~55% -> 7 cols in 12-col grid) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="lg:col-span-7 flex flex-col items-start text-left"
-          >
-            {/* Eyebrow with Cool Grey & Lime Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F8FAF9] border border-[#D6DDD8] shadow-xs mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#C6F36B] border border-[#244B3C]" />
-              <span className="text-[11.5px] font-bold tracking-wider uppercase text-[#244B3C]">
-                A SIMPLE WAY TO STUDY SMARTER
-              </span>
-              <span className="text-[9.5px] font-mono px-1.5 py-0.2 rounded bg-[#244B3C] text-[#FFFFFF]">
-                C++ POINTERS DEMO
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="font-heading font-extrabold text-[#242A27] tracking-[-0.03em] leading-[1.12] text-[clamp(2.5rem,5.2vw+0.5rem,4.25rem)]">
-              Find what you know.
-              <span className="block mt-1 font-extrabold text-[#242A27]">
-                <span className="relative inline-block">
-                  Learn what you missed.
-                  {/* Subtle lime brush accent */}
-                  <span 
-                    className="absolute -bottom-1 left-0 right-0 h-[5px] rounded-full bg-[#C6F36B]/80" 
-                    aria-hidden="true" 
-                  />
-                </span>
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-[17px] sm:text-[18px] text-[#68716C] leading-[1.65] max-w-[530px] mt-6 mb-8 font-normal">
-              Answer five quick questions about C++ pointers. Lumora shows which ideas you already understand, explains the ones you missed, and gives you practice to improve.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
-              <button
-                type="button"
-                onClick={onStartLearning}
-                className="group inline-flex items-center justify-center gap-2.5 bg-[#244B3C] text-[#FFFFFF] px-6 py-3.5 rounded-xl text-[15px] font-semibold hover:bg-[#1D3D31] active:scale-[0.99] transition-all duration-200 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C]"
-              >
-                <span>Start 5-question check</span>
-                <ArrowRight className="w-4 h-4 text-[#C6F36B] transition-transform duration-200 group-hover:translate-x-1" />
-              </button>
-
-              <button
-                type="button"
-                onClick={onSeeHowItWorks}
-                className="inline-flex items-center justify-center gap-2 bg-[#F8FAF9] text-[#244B3C] border border-[#D6DDD8] px-6 py-3.5 rounded-xl text-[15px] font-semibold hover:bg-[#FFFFFF] hover:border-[#244B3C] active:scale-[0.99] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#244B3C]"
-              >
-                <Compass className="w-4 h-4 text-[#68716C]" />
-                <span>See how it works</span>
-              </button>
-            </div>
-
-            {/* Small supporting trust strip */}
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#68716C]">
-              <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#2E8055] flex-shrink-0" />
-                <span>About 3 minutes</span>
-              </div>
-              <span className="hidden sm:inline text-[#D6DDD8]">&bull;</span>
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#244B3C] flex-shrink-0" />
-                <span>Clear feedback after each step</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column (~45% -> 5 cols in 12-col grid) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: 'easeOut', delay: 0.1 }}
-            className="lg:col-span-5 w-full flex justify-center lg:justify-end"
-          >
-            <LearningPathPreview />
-          </motion.div>
-
+export const Hero: React.FC<HeroProps> = ({ onStartLearning, onSeeHowItWorks }) => (
+  <section className="relative overflow-hidden bg-dot-pattern py-14 sm:py-20 lg:py-24">
+    <div className="pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full bg-[#C6F36B]/10 blur-3xl" />
+    <div className="mx-auto grid max-w-[1240px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-12 lg:gap-14">
+      <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }} className="flex flex-col items-start text-left lg:col-span-7">
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#D6DDD8] bg-[#F8FAF9] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-[#244B3C]">
+          <span className="h-2 w-2 rounded-full border border-[#244B3C] bg-[#C6F36B]" />
+          C++ POINTERS · INTERACTIVE DEMO
         </div>
-      </div>
-    </section>
-  );
-};
+        <h1 className="font-heading text-[clamp(2.7rem,5.2vw+0.5rem,4.4rem)] font-extrabold leading-[1.08] tracking-[-0.04em] text-[#242A27]">
+          Learn what you <span className="relative whitespace-nowrap">missed.<span className="absolute -bottom-1 left-0 right-0 h-1 rounded-full bg-[#C6F36B]/80" /></span>
+        </h1>
+        <p className="mt-6 max-w-[470px] text-base leading-relaxed text-[#68716C] sm:text-lg">
+          Take a short check. Get a lesson built around your gaps.
+        </p>
+        <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <button type="button" onClick={onStartLearning} className="group inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#244B3C] px-6 py-3.5 text-[15px] font-semibold text-white shadow-sm transition hover:bg-[#1D3D31]">
+            Start the 5-question check <ArrowRight className="h-4 w-4 text-[#C6F36B] transition-transform group-hover:translate-x-1" />
+          </button>
+          <button type="button" onClick={onSeeHowItWorks} className="rounded-xl border border-[#D6DDD8] bg-[#F8FAF9] px-6 py-3.5 text-[15px] font-semibold text-[#244B3C] transition hover:border-[#244B3C] hover:bg-white">
+            How it works
+          </button>
+        </div>
+        <div className="mt-6 flex items-center gap-2 text-xs text-[#68716C]">
+          <CheckCircle2 className="h-4 w-4 text-[#2E8055]" />
+          About 3 minutes · No sign-in required
+        </div>
+      </motion.div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="flex w-full justify-center lg:col-span-5 lg:justify-end">
+        <LearningPathPreview />
+      </motion.div>
+    </div>
+  </section>
+);

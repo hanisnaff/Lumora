@@ -53,7 +53,7 @@ export const DIAGNOSTIC_QUESTIONS: AssessmentQuestion[] = [
 std::cout << &score;`,
     options: [
       'The value 42 stored in the variable',
-      'The memory address where the variable score is stored in RAM',
+      'The address of the score object in the program’s address space',
       'A duplicate copy of the score variable',
       'A reference that increments the score variable by 1',
     ],
@@ -161,7 +161,7 @@ std::cout << *ptr;   // Reads 10 (dereferencing)
 *ptr = 42;           // Modifies number directly through the pointer
 std::cout << number; // Outputs 42!`,
       steps: [
-        { line: 1, explanation: 'Allocates memory for an integer `number` on the stack with initial value 10.' },
+        { line: 1, explanation: 'Declares a local integer `number` with initial value 10. Its exact physical placement is implementation-dependent.' },
         { line: 2, explanation: 'Uses `&number` to retrieve the address of `number` and assigns it to pointer `ptr`.' },
         { line: 4, explanation: '`*ptr` dereferences `ptr`. It looks up address `0x7ffee1` and reads the value 10.' },
         { line: 6, explanation: '`*ptr = 42` writes 42 into that exact memory cell. `number` is now changed to 42.' },
@@ -203,8 +203,8 @@ std::cout << number; // Outputs 42!`,
   'memory-addresses': {
     conceptId: 'memory-addresses',
     conceptName: 'Memory Addresses (&)',
-    title: 'Understanding Physical & Virtual Memory Locations',
-    subtitle: 'Every variable in your program lives at a specific numbered memory cell in RAM.',
+    title: 'Understanding Object Addresses',
+    subtitle: 'An object has an address while its lifetime is active; C++ does not promise a particular physical RAM location.',
     badge: 'Foundational',
     estimatedMinutes: 5,
     primaryExplanation:
@@ -236,8 +236,8 @@ std::cout << "Address: " << &price << "\\n";`,
     commonMistakes: [
       {
         mistake: 'Assuming addresses remain constant across different program runs',
-        correction: 'Memory addresses are assigned dynamically by the OS upon execution (ASLR).',
-        why: 'Modern operating systems randomize stack/heap layout for security reasons.',
+        correction: 'An object’s numeric address is not a stable identifier across program runs.',
+        why: 'Address-space layout randomization can change process addresses, and the C++ implementation controls how objects are represented and placed.',
       },
     ],
     checkQuestion: {

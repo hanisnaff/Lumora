@@ -53,7 +53,7 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 
 ## Run locally
 
-**Requirements:** Node.js 20 or later and npm.
+**Requirements:** Node.js 20.19 or later (or Node.js 22.12 or later) and npm.
 
     git clone https://github.com/hanisnaff/Lumora.git
     cd Lumora

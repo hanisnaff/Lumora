@@ -383,6 +383,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     skipNextRemoteSync.current = true;
     try {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem('mindpath_ai_state_v1');
     } catch (error) {
       console.warn('Lumora could not clear its local progress cache:', error);
     }

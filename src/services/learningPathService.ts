@@ -9,7 +9,7 @@ export function getLearningPathModules(
       id: 'mod-1',
       title: 'Memory Addresses & the & Operator',
       conceptId: 'memory-addresses',
-      description: 'Understanding object addresses in a program's address space.',
+      description: "Understanding object addresses in a program's address space.",
       status: 'not-started',
       estimatedMinutes: 5,
       masteryScore: masteries['memory-addresses']?.score || 0,

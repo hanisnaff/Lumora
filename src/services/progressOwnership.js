@@ -53,3 +53,7 @@ export function hasLearningActivity(state) {
   }
   return false;
 }
+
+export function shouldMigrateAnonymousProgress(owner, cloudState) {
+  return canMigrateAnonymousProgress(owner) && !hasLearningActivity(cloudState);
+}

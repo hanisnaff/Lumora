@@ -125,3 +125,15 @@ test("Vercel config includes baseline browser security headers", () => {
   assert.equal(values["X-Frame-Options"], "DENY");
   assert.equal(values["Permissions-Policy"], "camera=(), microphone=(), geolocation=()");
 });
+
+test("Supabase progress table keeps every row-level policy user-scoped", () => {
+  const schema = readFileSync(new URL("../supabase/schema.sql", import.meta.url), "utf8");
+  assert.match(schema, /enable row level security/i);
+  assert.match(schema, /grant select on table public\.learning_progress to anon/i);
+  const policies = [...schema.matchAll(/create policy[\s\S]*?;/gi)].map((match) => match[0]);
+  assert.equal(policies.length, 4);
+  for (const policy of policies) {
+    assert.match(policy, /to authenticated/i);
+    assert.match(policy, /\(select auth\.uid\(\)\) = user_id/i);
+  }
+});

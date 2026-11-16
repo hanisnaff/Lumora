@@ -192,7 +192,7 @@ std::cout << number; // Outputs 42!`,
       options: [
         'px now points to address 10',
         'x becomes 10',
-        'x remains 7 and px advances to the next address',
+        'x remains 7 and px advances by three integer elements',
         'Compilation error',
       ],
       correctIndex: 1,

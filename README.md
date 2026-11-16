@@ -149,6 +149,7 @@ The example is abbreviated; the application stores the full learning state. Requ
 
 - Browser-visible Supabase publishable keys are expected to be public; RLS is the access-control boundary.
 - The API validates each access token with Supabase before accessing progress.
+- Browser-cache ownership is tracked: anonymous demo progress can be claimed during sign-in, but a cache associated with a different signed-in account is not reused.
 - Progress requests use the learner's token when querying Postgres, so row-level policies enforce ownership.
 - Do not add service-role keys, database passwords, or other secrets to source control.
 - See [SECURITY.md](SECURITY.md) for reporting a vulnerability.

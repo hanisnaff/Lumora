@@ -67,7 +67,7 @@ export const UnderstandVisual: React.FC = () => {
         <rect x="55" y="52" width="170" height="30" rx="6" fill="#1A3628" stroke="#C8E348" strokeWidth="1.5" />
         <circle cx="72" cy="67" r="5" fill="#C8E348" />
         <text x="84" y="71" fill="#FAF8F3" fontSize="10" fontWeight="700" fontFamily="Plus Jakarta Sans">
-          Dereferencing (*ptr)
+          Dereference *ptr
         </text>
         <rect x="180" y="58" width="38" height="16" rx="3" fill="#C8E348" />
         <text x="184" y="69.5" fill="#1A3628" fontSize="8" fontWeight="800" fontFamily="monospace">
@@ -80,7 +80,7 @@ export const UnderstandVisual: React.FC = () => {
         {/* Layer 3: Target Application (Upcoming) */}
         <rect x="70" y="16" width="140" height="24" rx="6" fill="#FAF8F3" stroke="#D9CCBA" strokeWidth="1.2" strokeDasharray="3 3" />
         <text x="140" y="32" textAnchor="middle" fill="#5C675F" fontSize="9" fontWeight="600" fontFamily="Inter">
-          Next topic &bull; Pointer Arithmetic
+          Next &bull; Pointer Arithmetic
         </text>
       </svg>
     </div>

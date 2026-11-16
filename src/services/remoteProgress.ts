@@ -8,6 +8,7 @@ type RemoteSession = {
 const DEFAULT_SUPABASE_URL = "https://ewjhbfggfjlvseozixtv.supabase.co";
 const DEFAULT_SUPABASE_ANON_KEY = "sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN";
 const SESSION_KEY = "lumora_supabase_session_v1";
+const PROGRESS_OWNER_KEY = "lumora_progress_owner_v1";
 
 const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/\/$/, "");
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;
@@ -98,12 +99,22 @@ async function progressRequest(method: "GET" | "PUT" | "DELETE", state?: unknown
     const payload = (await response.json().catch(() => ({}))) as { error?: string };
     throw new Error(payload.error || `Progress sync failed (${response.status}).`);
   }
-  return response.json() as Promise<{ state?: unknown; saved?: boolean; deleted?: boolean }>;
+  return response.json() as Promise<{ state?: unknown; saved?: boolean; deleted?: boolean; userId?: string; isAnonymous?: boolean }>;
 }
 
 export async function loadRemoteProgress(): Promise<Record<string, unknown> | null> {
   if (!isRemoteProgressConfigured) return null;
   const response = await progressRequest("GET");
+  if (typeof response.isAnonymous === "boolean") {
+    try {
+      localStorage.setItem(PROGRESS_OWNER_KEY, JSON.stringify({
+        userId: response.userId ?? null,
+        isAnonymous: response.isAnonymous,
+      }));
+    } catch {
+      // Progress loading should still work if browser storage is unavailable.
+    }
+  }
   return response.state && typeof response.state === "object" && !Array.isArray(response.state)
     ? (response.state as Record<string, unknown>)
     : null;

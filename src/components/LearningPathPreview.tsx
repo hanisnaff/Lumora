@@ -13,32 +13,32 @@ export const LearningPathPreview: React.FC = () => {
       title: 'Memory Addresses (&)',
       status: 'Completed',
       statusKey: 'completed',
-      duration: 'Completed in 8m',
-      summary: 'Stack allocation and virtual memory addresses verified at 94%.',
-      insightTitle: 'Core foundation verified',
-      insightNote: 'Memory layout and address-of mechanics verified with high consistency.',
-      insightTag: '94% mastery'
+      duration: 'Example completion',
+      summary: 'Example: understanding object addresses in a program.',
+      insightTitle: 'Example foundation check',
+      insightNote: 'Sample progress only; your own results come from the diagnostic check.',
+      insightTag: 'Sample data'
     },
     {
       id: 2,
       title: "Dereferencing (*ptr)",
       status: 'In progress',
       statusKey: 'in-progress',
-      duration: '~6 mins remaining',
+      duration: 'Example active step',
       summary: 'Targeted drill: Modifying underlying values via pointer addresses.',
       insightTitle: 'We found a concept worth revisiting.',
       insightNote: 'Distinction between mutating target values vs re-aiming pointers needs reinforcement.',
-      insightTag: 'Gap identified'
+      insightTag: 'Sample status'
     },
     {
       id: 3,
       title: 'nullptr Safety Checks',
       status: 'Upcoming',
       statusKey: 'upcoming',
-      duration: '5 synthesis questions',
-      summary: 'Defensive guards against uninitialized memory and segmentation faults.',
+      duration: 'Example next step',
+      summary: 'Avoiding invalid dereferences with nullptr checks.',
       insightTitle: 'Upcoming checkpoint',
-      insightNote: 'Synthesizes defensive pointer patterns before advancing to dynamic heap memory.',
+      insightNote: 'Sample checkpoint on nullptr and safe pointer handling.',
       insightTag: 'Unlocks next'
     }
   ];
@@ -105,9 +105,9 @@ export const LearningPathPreview: React.FC = () => {
             <div className="flex items-baseline justify-between mb-2">
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-semibold text-[#244B3C]">
-                  Concept understanding
+                  Example concept progress
                 </span>
-                <span className="text-[11px] text-[#68716C] font-mono">(C++ Pointers &bull; Track Target: 80%)</span>
+                <span className="text-[11px] text-[#68716C] font-mono">(illustrative sample)</span>
               </div>
               <span className="font-heading text-sm font-bold text-[#244B3C]">
                 74%
@@ -238,13 +238,13 @@ export const LearningPathPreview: React.FC = () => {
                   {currentStepData.insightNote}
                 </p>
                 <div className="mt-2.5 flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#C6F36B] hover:underline cursor-pointer">
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#C6F36B]">
                     <span>
                       {currentStepData.statusKey === 'completed'
-                        ? 'View verified prerequisites'
+                        ? 'Review example prerequisites'
                         : currentStepData.statusKey === 'in-progress'
-                        ? 'Launch 5-min concept remediation'
-                        : 'Review checkpoint curriculum'}
+                        ? 'Example remediation step'
+                        : 'Preview next checkpoint'}
                     </span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
@@ -257,7 +257,7 @@ export const LearningPathPreview: React.FC = () => {
           <div className="mt-3.5 flex items-center justify-between text-[11px] text-[#68716C] px-1">
             <span className="flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#244B3C]" />
-              <span>Real-time adaptive path engine</span>
+              <span>Illustrative learning-path preview</span>
             </span>
             <span className="font-mono text-[10px] text-[#244B3C] font-semibold">C++ Systems Track</span>
           </div>

@@ -4,10 +4,7 @@ import { Logo } from './Logo';
 import {
   Home,
   Compass,
-  FileCheck2,
   TrendingUp,
-  BookOpen,
-  Target,
   Menu,
   X,
   RotateCcw,
@@ -39,7 +36,6 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   ];
 
   // Secondary sub-items for active learning flow
-  const subNavItems: typeof navItems = [];
 
   const handleResetConfirm = () => {
     resetProgress();

@@ -67,7 +67,7 @@ Open the local URL printed by Vite. To type-check and create the production bund
     npm run build
     npm run preview
 
-The Node test suite covers both API endpoints, authentication and user scoping, Supabase row-level security, payload limits, HTTP methods, and cache headers.
+The Node test suite covers both API endpoints, authentication and user scoping, local progress ownership rules, Supabase row-level security, payload limits, HTTP methods, and cache headers.
 
 The frontend can run without cloud persistence; progress remains in local browser storage. The Vercel API routes are intended to run on Vercel. To test those routes locally, use the Vercel CLI with the environment variables configured.
 

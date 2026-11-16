@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import {
   Difficulty,
   ConceptId,
@@ -9,7 +9,7 @@ import {
 import { INITIAL_CONCEPTS, DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
 import { calculateAssessmentResult } from '../services/assessmentService';
 import { updateMasteryAfterPractice } from '../services/masteryService';
-import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress } from '../services/remoteProgress';
+import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress, deleteRemoteProgress } from '../services/remoteProgress';
 
 interface LearningContextType {
   selectedSubject: string;
@@ -48,6 +48,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [hydrated, setHydrated] = useState(false);
+  const skipNextRemoteSync = useRef(false);
 
   // Restore local progress first, then let the database copy take precedence when configured.
   useEffect(() => {
@@ -133,6 +134,10 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   // Debounce cloud writes to avoid sending a request for every individual state update.
   useEffect(() => {
     if (!hydrated || !isRemoteProgressConfigured) return;
+    if (skipNextRemoteSync.current) {
+      skipNextRemoteSync.current = false;
+      return;
+    }
 
     const stateToSync = {
       selectedSubject,
@@ -214,7 +219,11 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const resetProgress = () => {
+    skipNextRemoteSync.current = true;
     localStorage.removeItem(STORAGE_KEY);
+    void deleteRemoteProgress().catch((error) => {
+      console.warn('Lumora could not delete cloud progress:', error);
+    });
     setSubject('C++');
     setTopic('Pointers');
     setDifficulty('Beginner');

@@ -83,7 +83,7 @@ async function getSession(): Promise<RemoteSession> {
   return session;
 }
 
-async function progressRequest(method: "GET" | "PUT", state?: unknown) {
+async function progressRequest(method: "GET" | "PUT" | "DELETE", state?: unknown) {
   const session = await getSession();
   const response = await fetch("/api/progress", {
     method,
@@ -98,7 +98,7 @@ async function progressRequest(method: "GET" | "PUT", state?: unknown) {
     const payload = (await response.json().catch(() => ({}))) as { error?: string };
     throw new Error(payload.error || `Progress sync failed (${response.status}).`);
   }
-  return response.json() as Promise<{ state?: unknown; saved?: boolean }>;
+  return response.json() as Promise<{ state?: unknown; saved?: boolean; deleted?: boolean }>;
 }
 
 export async function loadRemoteProgress(): Promise<Record<string, unknown> | null> {
@@ -112,4 +112,9 @@ export async function loadRemoteProgress(): Promise<Record<string, unknown> | nu
 export async function saveRemoteProgress(state: Record<string, unknown>): Promise<void> {
   if (!isRemoteProgressConfigured) return;
   await progressRequest("PUT", state);
+}
+
+export async function deleteRemoteProgress(): Promise<void> {
+  if (!isRemoteProgressConfigured) return;
+  await progressRequest("DELETE");
 }

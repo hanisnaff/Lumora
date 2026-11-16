@@ -9,21 +9,21 @@ export const ForStudents: React.FC<ForStudentsProps> = ({ onStartLearning }) => 
   const useCases = [
     {
       icon: GraduationCap,
-      category: 'STEM & Quantitative Disciplines',
-      title: 'Stop compounding early misunderstandings.',
-      description: 'In subjects like C++, calculus, and computer systems, an unaddressed gap in week two makes week eight impenetrable. Lumora flags foundational weaknesses before they sabotage your grade.'
+      category: 'C++ Fundamentals',
+      title: 'Build confidence with pointer basics.',
+      description: 'Pointers connect several important C++ ideas. This short diagnostic checks a handful of those ideas and shows where to focus next.'
     },
     {
       icon: Brain,
-      category: 'Self-Directed Learners',
-      title: 'Validate real understanding, not just passive recall.',
-      description: 'Watching a tutorial creates an illusion of competence. Lumora gives you active, low-friction checks that prove whether you can genuinely apply the theorem or algorithm on your own.'
+      category: 'Independent Practice',
+      title: 'Check what you can explain and apply.',
+      description: 'Use the questions to test your understanding rather than relying only on rereading notes or watching tutorials.'
     },
     {
       icon: Target,
-      category: 'Exam & Milestone Preparation',
-      title: 'Spend preparation hours where they matter most.',
-      description: 'Instead of re-doing 50 practice problems you already understand, Lumora surfaces the exact problem archetypes where your reasoning tends to break down.'
+      category: 'Review & Reinforcement',
+      title: 'Spend more time on the concepts you missed.',
+      description: 'Review the feedback, read the suggested explanation, and try practice questions for the pointer concepts that need work.'
     }
   ];
 
@@ -39,11 +39,11 @@ export const ForStudents: React.FC<ForStudentsProps> = ({ onStartLearning }) => 
           </div>
 
           <h2 className="font-heading font-extrabold text-[#244B3C] tracking-tight text-[clamp(2rem,3.2vw+0.5rem,2.75rem)] leading-[1.18]">
-            Designed for thinkers, not memorizers.
+            A practical starting point for C++ learners.
           </h2>
 
           <p className="text-[17px] text-[#68716C] mt-4 leading-relaxed">
-            Lumora is built for students who care about genuine conceptual depth and want their study time to produce clear, lasting mastery.
+            This demo currently covers C++ pointers. Use it to check your understanding, revisit a weak concept, and practise with immediate feedback.
           </p>
         </div>
 

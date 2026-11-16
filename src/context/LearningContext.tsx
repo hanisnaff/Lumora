@@ -47,6 +47,9 @@ const safeCount = (value: unknown, maximum = Number.MAX_SAFE_INTEGER): number =>
     ? Math.max(0, Math.min(maximum, value))
     : 0;
 
+const isValidTimestamp = (value: unknown): value is string =>
+  typeof value === 'string' && Number.isFinite(Date.parse(value));
+
 function normaliseMasteries(value: unknown): Record<ConceptId, ConceptMastery> {
   const result: Record<ConceptId, ConceptMastery> = { ...INITIAL_CONCEPTS };
   if (!isRecord(value)) return result;
@@ -90,7 +93,7 @@ function normalisePracticeAttempts(value: unknown): PracticeAttempt[] {
     if (!isRecord(candidate)
       || !Number.isSafeInteger(candidate.questionId)
       || typeof candidate.isCorrect !== 'boolean'
-      || typeof candidate.timestamp !== 'string'
+      || !isValidTimestamp(candidate.timestamp)
       || !Number.isInteger(candidate.selectedOption)
       || (candidate.selectedOption as number) < -1) return [];
 
@@ -112,7 +115,7 @@ function normaliseAssessmentResult(value: unknown): AssessmentResult | null {
     || !isConceptId(value.weakestConceptId)
     || !isConceptId(value.strongestConceptId)
     || !isConceptId(value.recommendedLessonId)
-    || typeof value.submittedAt !== 'string') return null;
+    || !isValidTimestamp(value.submittedAt)) return null;
 
   const totalQuestions = safeCount(value.totalQuestions, DIAGNOSTIC_QUESTIONS.length);
   const correctAnswers = Math.min(safeCount(value.correctAnswers, totalQuestions), totalQuestions);

@@ -34,16 +34,12 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 
   const navItems = [
     { name: 'Home', path: '/', icon: Home, exact: true },
-    { name: 'My learning', path: '/learn', icon: Compass },
-    { name: 'Assessment', path: '/assessment', icon: FileCheck2 },
+    { name: 'Learning path', path: '/learn', icon: Compass },
     { name: 'Progress', path: '/progress', icon: TrendingUp },
   ];
 
   // Secondary sub-items for active learning flow
-  const subNavItems = [
-    { name: 'Active Lesson', path: '/lesson', icon: BookOpen, badge: 'Lesson' },
-    { name: 'Targeted Practice', path: '/practice', icon: Target, badge: 'Drill' },
-  ];
+  const subNavItems: typeof navItems = [];
 
   const handleResetConfirm = () => {
     resetProgress();
@@ -96,36 +92,6 @@ export const LearningShell: React.FC<LearningShellProps> = ({
             );
           })}
 
-          {/* Contextual Study Flow Items */}
-          <div className="pt-4 px-3 py-1.5 text-[11px] font-bold tracking-wider text-[#68716C] uppercase">
-            Your study steps
-          </div>
-          {subNavItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname.startsWith(item.path);
-
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-180 ${
-                  isActive
-                    ? 'bg-[#244B3C] text-[#F8FAF9] shadow-xs'
-                    : 'text-[#68716C] hover:text-[#244B3C] hover:bg-[#E8EBE9]/60'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#C6F36B]' : 'text-[#68716C]'}`} />
-                  <span>{item.name}</span>
-                </div>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold ${
-                  isActive ? 'bg-[#C6F36B] text-[#244B3C]' : 'bg-[#D6DDD8]/50 text-[#68716C]'
-                }`}>
-                  {item.badge}
-                </span>
-              </NavLink>
-            );
-          })}
         </nav>
 
         {/* Quick progress summary */}
@@ -206,25 +172,6 @@ export const LearningShell: React.FC<LearningShellProps> = ({
               </NavLink>
             );
           })}
-          <div className="pt-2 border-t border-[#D6DDD8]/50">
-            {subNavItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setMobileSidebarOpen(false)}
-                  className="flex items-center justify-between px-3.5 py-2 rounded-xl text-sm font-semibold text-[#68716C]"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <Icon className="w-4 h-4" />
-                    <span>{item.name}</span>
-                  </span>
-                  <span className="text-[10px] bg-[#D6DDD8]/40 px-1.5 py-0.5 rounded font-mono">{item.badge}</span>
-                </NavLink>
-              );
-            })}
-          </div>
           <button
             type="button"
             onClick={() => {

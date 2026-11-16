@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
-import { ConceptId } from '../types/learning';
+import type { ConceptId } from '../types/learning';
+import { DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
 import { ArrowRight, RotateCcw } from 'lucide-react';
 
 export const KnowledgeGapResultsPage: React.FC = () => {
@@ -22,6 +23,11 @@ export const KnowledgeGapResultsPage: React.FC = () => {
   }
 
   const concepts = Object.values(assessmentResult.conceptMastery).sort((a, b) => a.score - b.score);
+  const reviewedQuestions = DIAGNOSTIC_QUESTIONS.map((question) => ({
+    question,
+    selectedOption: assessmentResult.answers[question.id],
+    isCorrect: assessmentResult.answers[question.id] === question.correctOptionIndex,
+  }));
   const weakest = assessmentResult.conceptMastery[assessmentResult.weakestConceptId];
   const study = (id: ConceptId) => {
     setActiveLessonConcept(id);
@@ -47,6 +53,42 @@ export const KnowledgeGapResultsPage: React.FC = () => {
           <button type="button" onClick={() => study(weakest.conceptId)} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#285443] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1F4436]">
             Study this concept <ArrowRight className="h-4 w-4" />
           </button>
+        </section>
+
+        <section className="rounded-2xl border border-[#E2E8E2] bg-white p-5 sm:p-6">
+          <div className="mb-4">
+            <h3 className="font-bold text-[#202923]">Review your answers</h3>
+            <p className="mt-1 text-sm text-[#68736C]">Open a question to see the correct answer and why it is correct. Questions you skipped are included too.</p>
+          </div>
+          <div className="space-y-3">
+            {reviewedQuestions.map(({ question, selectedOption, isCorrect }, index) => (
+              <details key={question.id} open={!isCorrect} className="rounded-xl border border-[#E2E8E2] bg-[#FAFCFA]">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-[#202923]">
+                  <span>Question {index + 1}</span>
+                  <span className={selectedOption === undefined ? 'text-xs font-semibold text-[#68736C]' : isCorrect ? 'text-xs font-semibold text-[#285443]' : 'text-xs font-semibold text-[#A85B53]'}>
+                    {selectedOption === undefined ? 'Not answered' : isCorrect ? 'Correct' : 'Review'}
+                  </span>
+                </summary>
+                <div className="space-y-3 border-t border-[#E2E8E2] px-4 py-4">
+                  <p className="text-sm font-medium leading-6 text-[#202923]">{question.question}</p>
+                  {question.codeSnippet && (
+                    <pre className="overflow-x-auto rounded-lg bg-[#202923] p-3 text-xs leading-5 text-white"><code>{question.codeSnippet}</code></pre>
+                  )}
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-lg bg-white p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-[#68736C]">Your answer</p>
+                      <p className="mt-1 text-sm text-[#202923]">{selectedOption === undefined ? 'Not answered' : question.options[selectedOption]}</p>
+                    </div>
+                    <div className="rounded-lg bg-[#F0F5F0] p-3">
+                      <p className="text-[10px] font-bold uppercase tracking-wide text-[#54715F]">Correct answer</p>
+                      <p className="mt-1 text-sm font-semibold text-[#285443]">{question.options[question.correctOptionIndex]}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs leading-6 text-[#68736C]">{question.explanation}</p>
+                </div>
+              </details>
+            ))}
+          </div>
         </section>
 
         <section className="rounded-2xl border border-[#E2E8E2] bg-white p-5 sm:p-6">

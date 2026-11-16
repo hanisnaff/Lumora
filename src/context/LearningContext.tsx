@@ -9,7 +9,7 @@ import {
 import { INITIAL_CONCEPTS, DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
 import { calculateAssessmentResult } from '../services/assessmentService';
 import { updateMasteryAfterPractice } from '../services/masteryService';
-import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress, deleteRemoteProgress } from '../services/remoteProgress';
+import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress, deleteRemoteProgress, SESSION_KEY, PROGRESS_OWNER_KEY } from '../services/remoteProgress';
 import { canReuseLocalProgress, canUseOfflineLocalProgress } from '../services/progressOwnership';
 
 interface LearningContextType {
@@ -54,9 +54,9 @@ const isValidTimestamp = (value: unknown): value is string =>
 
 function markUnownedLocalProgressAsDemo(): boolean {
   try {
-    if (localStorage.getItem('lumora_progress_owner_v1')
-      || localStorage.getItem('lumora_supabase_session_v1')) return false;
-    localStorage.setItem('lumora_progress_owner_v1', JSON.stringify({
+    if (localStorage.getItem(PROGRESS_OWNER_KEY)
+      || localStorage.getItem(SESSION_KEY)) return false;
+    localStorage.setItem(PROGRESS_OWNER_KEY, JSON.stringify({
       userId: null,
       isAnonymous: true,
     }));
@@ -199,7 +199,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       try {
         const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('mindpath_ai_state_v1');
         if (saved) localState = JSON.parse(saved) as Record<string, unknown>;
-        const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+        const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
         if (ownerRaw) previousOwner = JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean };
       } catch (error) {
         console.warn('Could not parse saved Lumora state or ownership:', error);

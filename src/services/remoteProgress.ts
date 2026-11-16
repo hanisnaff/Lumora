@@ -1,3 +1,5 @@
+import { canPreserveAnonymousProgressCache, type ProgressOwner } from './progressOwnership';
+
 type RemoteSession = {
   access_token: string;
   refresh_token: string;
@@ -131,10 +133,10 @@ export async function loadRemoteProgress(): Promise<Record<string, unknown> | nu
   if (typeof response.isAnonymous === "boolean") {
     try {
       const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
-      let previousOwner: { isAnonymous?: unknown } | null = null;
+      let previousOwner: ProgressOwner | null = null;
       if (ownerRaw) {
         try {
-          previousOwner = JSON.parse(ownerRaw) as { isAnonymous?: unknown };
+          previousOwner = JSON.parse(ownerRaw) as ProgressOwner;
         } catch {
           previousOwner = null;
         }
@@ -143,7 +145,7 @@ export async function loadRemoteProgress(): Promise<Record<string, unknown> | nu
       // the browser cache is uncertain. Keep migration disabled unless it was
       // already positively identified as anonymous/demo progress.
       const isSafeAnonymousCache = response.isAnonymous
-        && (!hadSessionBeforeLoad || previousOwner?.isAnonymous === true);
+        && canPreserveAnonymousProgressCache(previousOwner, hadSessionBeforeLoad);
       localStorage.setItem(PROGRESS_OWNER_KEY, JSON.stringify({
         userId: response.userId ?? null,
         isAnonymous: response.isAnonymous ? isSafeAnonymousCache : false,

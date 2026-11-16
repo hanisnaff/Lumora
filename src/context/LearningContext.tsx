@@ -395,10 +395,14 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     setPracticeAttempts([]);
     setCompletedLessons([]);
     setActiveLessonConcept('dereferencing');
+    // A deliberate reset is safe to persist locally even if identity lookup
+    // or the cloud deletion is temporarily unavailable.
+    setLocalPersistenceReady(true);
 
     // Report a cloud deletion failure to the caller instead of silently
     // presenting the reset as complete when the server still has old progress.
     await deleteRemoteProgress();
+    setRemoteIdentityResolved(true);
   };
 
   return (

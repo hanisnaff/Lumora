@@ -238,14 +238,21 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const recordPracticeSession = (conceptId: ConceptId, total: number, correct: number) => {
-    // Update mastery
-    const current = conceptMasteries[conceptId] || INITIAL_CONCEPTS[conceptId];
-    const updated = updateMasteryAfterPractice(current, total, correct);
+    if (!Number.isSafeInteger(total) || total <= 0
+      || !Number.isSafeInteger(correct) || correct < 0 || correct > total) {
+      console.warn('Ignoring invalid practice-session results.');
+      return;
+    }
 
-    setConceptMasteries((prev) => ({
-      ...prev,
-      [conceptId]: updated,
-    }));
+    // Derive mastery from the latest state so rapid consecutive sessions
+    // cannot overwrite one another using a stale render's value.
+    setConceptMasteries((prev) => {
+      const current = prev[conceptId] || INITIAL_CONCEPTS[conceptId];
+      return {
+        ...prev,
+        [conceptId]: updateMasteryAfterPractice(current, total, correct),
+      };
+    });
 
     // Record attempt
     setPracticeAttempts((prev) => [

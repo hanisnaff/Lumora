@@ -36,7 +36,7 @@ export const DiscoverVisual: React.FC = () => {
         {/* Small Data Chip */}
         <rect x="188" y="24" width="76" height="18" rx="4" fill="#1A3628" />
         <text x="194" y="36" fill="#C8E348" fontSize="8" fontWeight="700" fontFamily="monospace">
-          GAP ISOLATED
+          SAMPLE GAP
         </text>
       </svg>
     </div>
@@ -53,11 +53,11 @@ export const UnderstandVisual: React.FC = () => {
         <rect x="40" y="94" width="200" height="26" rx="6" fill="#FAF8F3" stroke="#D9CCBA" strokeWidth="1.5" />
         <circle cx="56" cy="107" r="4" fill="#1A3628" />
         <text x="68" y="111" fill="#28302B" fontSize="9" fontWeight="600" fontFamily="Inter">
-          Layer 01 &bull; Memory Allocation & RAM
+          Layer 01 &bull; Object Addresses
         </text>
         <rect x="196" y="99" width="36" height="15" rx="3" fill="#1A3628" />
         <text x="202" y="110" fill="#C8E348" fontSize="8" fontWeight="700" fontFamily="monospace">
-          94%
+          DEMO
         </text>
 
         {/* Connecting Guide Lines */}
@@ -80,7 +80,7 @@ export const UnderstandVisual: React.FC = () => {
         {/* Layer 3: Target Application (Upcoming) */}
         <rect x="70" y="16" width="140" height="24" rx="6" fill="#FAF8F3" stroke="#D9CCBA" strokeWidth="1.2" strokeDasharray="3 3" />
         <text x="140" y="32" textAnchor="middle" fill="#5C675F" fontSize="9" fontWeight="600" fontFamily="Inter">
-          Next &bull; Pointer Arithmetic & Data Structures
+          Example next topic &bull; Pointer Arithmetic
         </text>
       </svg>
     </div>
@@ -136,7 +136,7 @@ export const ImproveVisual: React.FC = () => {
         <circle cx="215" cy="30" r="4" fill="#C8E348" />
         <rect x="180" y="10" width="70" height="15" rx="3" fill="#C8E348" />
         <text x="215" y="21" textAnchor="middle" fill="#1A3628" fontSize="8" fontWeight="800" fontFamily="monospace">
-          88% MASTERED
+          SAMPLE TARGET
         </text>
 
         {/* Recalibration Feedback arrow */}

@@ -151,6 +151,7 @@ The example is abbreviated; the application stores the full learning state. Requ
 ## Security notes
 
 - Browser-visible Supabase publishable keys are expected to be public; RLS is the access-control boundary.
+- Vercel responses include baseline browser security headers for content-type sniffing, referrer handling, framing, and unused device permissions.
 - The API validates each access token with Supabase before accessing progress.
 - Browser-cache ownership is tracked: anonymous demo progress can be claimed during sign-in, but a cache associated with a different signed-in account is not reused.
 - Progress API responses set private, no-store cache headers, and requests use the learner's token when querying Postgres so row-level policies enforce ownership.

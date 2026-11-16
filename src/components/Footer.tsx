@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
@@ -39,20 +40,12 @@ export const Footer: React.FC = () => {
             >
               How it works
             </a>
-            <a
-              href="#learning-approach"
-              onClick={(e) => handleLinkClick(e, '#learning-approach')}
-              className="text-sm font-semibold text-[#68716C] hover:text-[#244B3C] transition-colors"
-            >
-              Learning approach
-            </a>
-            <a
-              href="#for-students"
-              onClick={(e) => handleLinkClick(e, '#for-students')}
-              className="text-sm font-semibold text-[#68716C] hover:text-[#244B3C] transition-colors"
-            >
-              For students
-            </a>
+            <Link to="/learn" className="text-sm font-semibold text-[#68716C] hover:text-[#244B3C] transition-colors">
+              Try the demo
+            </Link>
+            <Link to="/auth" className="text-sm font-semibold text-[#68716C] hover:text-[#244B3C] transition-colors">
+              Sign in
+            </Link>
           </nav>
         </div>
 

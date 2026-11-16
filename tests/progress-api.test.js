@@ -59,6 +59,30 @@ test("GET returns only the authenticated learner's progress and disables caching
   assert.equal(calls[1].options.headers.Authorization, "Bearer test-access-token");
 });
 
+test("identifies anonymous learner sessions without changing progress ownership", async () => {
+  const { response, calls } = await invoke({
+    authUser: { id: "anonymous-user-456", is_anonymous: true },
+    databaseBody: [],
+  });
+  assert.equal(response.statusCode, 200);
+  assert.deepEqual(response.payload, {
+    state: null,
+    userId: "anonymous-user-456",
+    isAnonymous: true,
+  });
+  assert.equal(calls.length, 2);
+  assert.match(calls[1].url, /user_id=eq\.anonymous-user-456/);
+});
+
+test("does not label an authenticated account as anonymous when the flag is absent", async () => {
+  const { response } = await invoke({
+    authUser: { id: "user-without-flag" },
+    databaseBody: [],
+  });
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.payload.isAnonymous, false);
+});
+
 test("rejects requests without an access token", async () => {
   const { response, calls } = await invoke({ authorization: "" });
   assert.equal(response.statusCode, 401);

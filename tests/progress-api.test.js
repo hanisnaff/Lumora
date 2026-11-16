@@ -83,6 +83,15 @@ test("does not label an authenticated account as anonymous when the flag is abse
   assert.equal(response.payload.isAnonymous, false);
 });
 
+test("does not coerce non-boolean anonymous metadata to true", async () => {
+  const { response } = await invoke({
+    authUser: { id: "user-string-flag", is_anonymous: "false" },
+    databaseBody: [],
+  });
+  assert.equal(response.statusCode, 200);
+  assert.equal(response.payload.isAnonymous, false);
+});
+
 test("accepts the bearer authentication scheme case-insensitively", async () => {
   const { response, calls } = await invoke({ authorization: "bEaReR test-access-token" });
   assert.equal(response.statusCode, 200);

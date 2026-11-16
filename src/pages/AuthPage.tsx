@@ -102,7 +102,7 @@ export const AuthPage: React.FC = () => {
             const cloudResponse = await fetch('/api/progress', { headers: authHeaders });
             if (!cloudResponse.ok) throw new Error('Could not check existing cloud progress.');
             const cloudPayload = await cloudResponse.json() as { state?: unknown };
-            let localProgressIsAnonymous = true;
+            let localProgressIsAnonymous = false;
             const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
             if (ownerRaw) {
               try {

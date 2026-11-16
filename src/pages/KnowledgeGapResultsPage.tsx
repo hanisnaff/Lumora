@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
 import { ConceptId } from '../types/learning';
-import { ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
+import { ArrowRight, RotateCcw } from 'lucide-react';
 
 export const KnowledgeGapResultsPage: React.FC = () => {
   const navigate = useNavigate();

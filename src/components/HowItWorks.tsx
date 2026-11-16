@@ -14,7 +14,10 @@ export const HowItWorks: React.FC = () => (
     <div className="mx-auto max-w-[1240px] px-6">
       <div className="mb-10 flex flex-col justify-between gap-3 border-b border-[#D6DDD8] pb-7 sm:flex-row sm:items-end">
         <div><p className="mb-2 text-xs font-bold uppercase tracking-wider text-[#244B3C]">The process</p><h2 className="font-heading text-3xl font-extrabold tracking-tight text-[#244B3C]">Three steps. A clearer way forward.</h2></div>
-        <p className="max-w-sm text-sm leading-relaxed text-[#68716C]">No need to repeat everything. Focus on the ideas you missed.</p>
+        <div className="max-w-sm">
+          <p className="text-sm leading-relaxed text-[#68716C]">No need to repeat everything. Focus on the ideas you missed.</p>
+          <p className="mt-2 text-[10px] leading-relaxed text-[#89938B]">Illustrations include sample scores and concept states; they are not real learner results.</p>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         {steps.map((step, index) => (

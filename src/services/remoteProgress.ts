@@ -90,9 +90,9 @@ async function getSession(): Promise<RemoteSession> {
       if (session) return session;
       throw new Error("Supabase returned an invalid refreshed session.");
     } catch {
-      localStorage.removeItem(SESSION_KEY);
-      // Do not silently replace a failed signed-in session with an anonymous
-      // one: subsequent progress reads/deletes would target the wrong user.
+      // Keep the expired session record as an identity marker. Removing it
+      // would make the next request create a new anonymous user and could send
+      // this learner's signed-in progress to the wrong account.
       throw new Error("Your saved session could not be refreshed. Sign in again to sync or delete account progress.");
     }
   }

@@ -51,6 +51,19 @@ const safeCount = (value: unknown, maximum = Number.MAX_SAFE_INTEGER): number =>
 const isValidTimestamp = (value: unknown): value is string =>
   typeof value === 'string' && Number.isFinite(Date.parse(value));
 
+function markUnownedLocalProgressAsDemo() {
+  try {
+    if (localStorage.getItem('lumora_progress_owner_v1')
+      || localStorage.getItem('lumora_supabase_session_v1')) return;
+    localStorage.setItem('lumora_progress_owner_v1', JSON.stringify({
+      userId: null,
+      isAnonymous: true,
+    }));
+  } catch {
+    // The demo can still run locally when browser storage is restricted.
+  }
+}
+
 function normaliseMasteries(value: unknown): Record<ConceptId, ConceptMastery> {
   const result: Record<ConceptId, ConceptMastery> = { ...INITIAL_CONCEPTS };
   if (!isRecord(value)) return result;
@@ -190,6 +203,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       }
 
       if (!isRemoteProgressConfigured) {
+        markUnownedLocalProgressAsDemo();
         if (localState) applySavedState(localState);
         if (!cancelled) {
           setRemoteIdentityResolved(true);
@@ -237,6 +251,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
         setProgressSyncError('Cloud progress could not be loaded. Check your connection or sign in again to restore account sync.');
         // A signed-in account's cache is not displayed until its identity is verified.
+        if (!previousOwner) markUnownedLocalProgressAsDemo();
         if (localState && previousOwner?.isAnonymous === true) applySavedState(localState);
         // Preserve an unverified signed-in cache instead of overwriting it with defaults.
         // A new browser or a positively identified anonymous demo can still work offline.

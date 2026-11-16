@@ -382,7 +382,7 @@ if (safePtr != nullptr) {
       steps: [
         { line: 1, explanation: 'Initializes `safePtr` to the null pointer value `nullptr`.' },
         { line: 3, explanation: 'The guard condition evaluates to false, skipping dereference.' },
-        { line: 6, explanation: 'Safe branch executed cleanly without segmentation fault.' },
+        { line: 6, explanation: 'The `else` branch runs; no dereference occurs.' },
       ],
     },
     memoryDiagram: {

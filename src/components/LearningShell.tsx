@@ -60,6 +60,11 @@ export const LearningShell: React.FC<LearningShellProps> = ({
       const first = cancelResetRef.current;
       const last = confirmResetRef.current;
       if (!first || !last) return;
+      if (document.activeElement !== first && document.activeElement !== last) {
+        event.preventDefault();
+        first.focus();
+        return;
+      }
 
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();

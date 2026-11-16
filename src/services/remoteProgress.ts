@@ -71,7 +71,7 @@ async function getSession(): Promise<RemoteSession> {
       const session = saveSession(refreshed);
       if (session) return session;
       throw new Error("Supabase returned an invalid refreshed session.");
-    } catch (error) {
+    } catch {
       localStorage.removeItem(SESSION_KEY);
       // Do not silently replace a failed signed-in session with an anonymous
       // one: subsequent progress reads/deletes would target the wrong user.

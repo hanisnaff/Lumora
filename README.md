@@ -61,8 +61,11 @@ The currently implemented learning track is a hands-on **C++ pointers** demo. Th
 
 Open the local URL printed by Vite. To type-check and create the production bundle:
 
+    npm test
     npm run build
     npm run preview
+
+The Node test suite exercises the progress API's authentication, user scoping, payload limits, HTTP methods, and private cache headers.
 
 The frontend can run without cloud persistence; progress remains in local browser storage. The Vercel API routes are intended to run on Vercel. To test those routes locally, use the Vercel CLI with the environment variables configured.
 

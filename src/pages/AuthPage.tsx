@@ -113,8 +113,8 @@ export const AuthPage: React.FC = () => {
                 localProgressIsAnonymous = false;
               }
             }
-            // Only claim progress from an anonymous/demo session. Never copy one
-            // signed-in account's local cache into a different account.
+            // Only claim anonymous/demo progress, and only when the destination
+            // account has no existing learning activity to protect.
             if (localProgressIsAnonymous && !hasLearningActivity(cloudPayload.state)) {
               const syncResponse = await fetch('/api/progress', {
                 method: 'PUT',

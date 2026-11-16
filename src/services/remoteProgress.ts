@@ -7,8 +7,8 @@ type RemoteSession = {
 // Publishable keys are designed for browser use; RLS protects each learner's row.
 const DEFAULT_SUPABASE_URL = "https://ewjhbfggfjlvseozixtv.supabase.co";
 const DEFAULT_SUPABASE_ANON_KEY = "sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN";
-const SESSION_KEY = "lumora_supabase_session_v1";
-const PROGRESS_OWNER_KEY = "lumora_progress_owner_v1";
+export const SESSION_KEY = "lumora_supabase_session_v1";
+export const PROGRESS_OWNER_KEY = "lumora_progress_owner_v1";
 
 const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/\/$/, "");
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY;

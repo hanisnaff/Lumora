@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface MemoryStackVisualizerProps {
+interface MemoryStackVisualizerorops {
   variableName?: string;
   variableValue?: string;
   variableAddress?: string;
@@ -26,12 +26,12 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#C8E348] border border-[#1A3628]" />
           <span className="font-heading font-bold text-sm text-[#1A3628]">
-            Stack Memory Allocation Layout
+            Illustrative Process Address Space
           </span>
         </div>
         <div className="flex items-center gap-2 text-xs font-mono text-[#5C675F]">
           <span className="px-2 py-0.5 rounded bg-[#F3EBDD] border border-[#D9CCBA]">
-            Architecture: x86-64
+            Example: x86-64
           </span>
           <span className="px-2 py-0.5 rounded bg-[#1A3628] text-[#FAF8F3]">
             Stack Frame
@@ -73,7 +73,7 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
             </div>
 
             <div className="text-[11px] text-[#5C675F] pt-1 flex items-center justify-between">
-              <span>Size: 4 bytes (32-bit)</span>
+              <span>Example object address</span>
               <span className="font-mono text-[10px] text-[#1A3628] font-bold">&amp;{variableName} = {variableAddress}</span>
             </div>
           </div>
@@ -127,7 +127,7 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
             </div>
 
             <div className="text-[11px] text-[#5C675F] pt-1 flex items-center justify-between">
-              <span>Size: 8 bytes (64-bit addr)</span>
+              <span>Pointer's own address</span>
               <span className="font-mono text-[10px] text-[#1A3628] font-bold">{pointerName} stores &amp;{variableName}</span>
             </div>
           </div>
@@ -139,15 +139,15 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
       <div className="mt-6 pt-4 border-t border-[#D9CCBA]/70 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-[#5C675F]">
         <div className="p-2.5 rounded-lg bg-[#F3EBDD]/60 border border-[#D9CCBA]/60">
           <strong className="text-[#1A3628] block mb-0.5">1. Storage:</strong>
-          <code>int number = 10;</code> allocates 4 bytes at memory address <code>{variableAddress}</code>.
+          <code>{variableName}</code> has the illustrative process address <code>{variableAddress}</code> in this example.
         </div>
         <div className="p-2.5 rounded-lg bg-[#F3EBDD]/60 border border-[#D9CCBA]/60">
-          <strong className="text-[#1A3628] block mb-0.5">2. Address-Of:</strong>
-          <code>&amp;number</code> queries the physical memory address (<code>{variableAddress}</code>).
+          <strong className="text-[#1A3628] block mb-0.5">2. Address-bf:</strong>
+          <code>&amp;{variableName}</code> produces a pointer to the object's address in the process address space.
         </div>
         <div className="p-2.5 rounded-lg bg-[#F3EBDD]/60 border border-[#D9CCBA]/60">
           <strong className="text-[#1A3628] block mb-0.5">3. Dereference:</strong>
-          <code>*ptr = 42;</code> follows the stored address and overwrites the memory cell directly.
+          <code>*{pointerName}</code> follows the stored pointer value to access its target object, when the pointer is valid.
         </div>
       </div>
 

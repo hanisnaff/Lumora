@@ -15,14 +15,18 @@ export const LearningSetupPage: React.FC = () => {
     conceptMasteries
   );
 
-  const continueLearning = () => {
-    if (next.conceptId) setActiveLessonConcept(next.conceptId);
-    navigate(next.targetRoute);
-  };
-
   const focusConcept = assessmentResult?.weakestConceptId;
   const lessonDone = Boolean(focusConcept && completedLessons.includes(focusConcept));
   const practiceDone = Boolean(focusConcept && practiceAttempts.some((attempt) => attempt.conceptId === focusConcept));
+
+  const continueLearning = () => {
+    if (!assessmentResult) {
+      navigate('/assessment');
+      return;
+    }
+    setActiveLessonConcept(focusConcept || next.conceptId || 'dereferencing');
+    navigate(!lessonDone ? '/lesson' : !practiceDone ? '/practice' : next.targetRoute);
+  };
 
   const steps = [
     {
@@ -52,8 +56,14 @@ export const LearningSetupPage: React.FC = () => {
       description: 'Answer a short set of questions and check what has improved.',
       icon: Dumbbell,
       state: !assessmentResult ? 'upcoming' : practiceDone ? 'done' : lessonDone ? 'current' : 'upcoming',
-      action: practiceDone ? 'Practise again' : 'Start practice',
-      onClick: () => navigate(assessmentResult ? '/practice' : '/assessment'),
+      action: !assessmentResult ? 'Start check' : !lessonDone ? 'Complete lesson first' : practiceDone ? 'Practise again' : 'Start practice',
+      onClick: () => {
+        if (!assessmentResult) navigate('/assessment');
+        else {
+          setActiveLessonConcept(focusConcept || 'dereferencing');
+          navigate(lessonDone ? '/practice' : '/lesson');
+        }
+      },
     },
   ] as const;
 
@@ -69,16 +79,20 @@ export const LearningSetupPage: React.FC = () => {
             {assessmentResult ? 'Here is what to do next.' : 'First, let’s see what you already know.'}
           </h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-[#68736C]">
-            {assessmentResult
-              ? 'Your answers are saved. Continue with the recommended lesson, then practise what you learned.'
-              : 'Take a quick five-question check. We’ll use your answers to choose what you should study first.'}
+            {!assessmentResult
+              ? 'Take a quick five-question check. We’ll use your answers to choose what you should study first.'
+              : !lessonDone
+                ? 'Your results are ready. Start with the lesson for your weakest concept, then try a few questions.'
+                : !practiceDone
+                  ? 'You have completed the lesson. Now answer a short practice set to check your understanding.'
+                  : 'Your lesson and practice are complete. Review your progress or practise again.'}
           </p>
           <button
             type="button"
             onClick={continueLearning}
             className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-[#285443] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1F4436] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#285443]"
           >
-            {assessmentResult ? 'Continue learning' : 'Start the 3-minute check'}
+            {!assessmentResult ? 'Start the 3-minute check' : !lessonDone ? 'Open your lesson' : !practiceDone ? 'Start practice' : 'Continue learning'}
             <ArrowRight className="h-4 w-4" />
           </button>
           {assessmentResult && (

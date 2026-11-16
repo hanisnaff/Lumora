@@ -36,6 +36,103 @@ interface LearningContextType {
 
 const STORAGE_KEY = 'lumora_learning_state_v1';
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const isConceptId = (value: unknown): value is ConceptId =>
+  typeof value === 'string' && Object.prototype.hasOwnProperty.call(INITIAL_CONCEPTS, value);
+
+const safeCount = (value: unknown, maximum = Number.MAX_SAFE_INTEGER): number =>
+  typeof value === 'number' && Number.isSafeInteger(value)
+    ? Math.max(0, Math.min(maximum, value))
+    : 0;
+
+function normaliseMasteries(value: unknown): Record<ConceptId, ConceptMastery> {
+  const result: Record<ConceptId, ConceptMastery> = { ...INITIAL_CONCEPTS };
+  if (!isRecord(value)) return result;
+
+  for (const [key, candidate] of Object.entries(value)) {
+    if (!isConceptId(key) || !isRecord(candidate)) continue;
+    const score = typeof candidate.score === 'number' && Number.isFinite(candidate.score)
+      ? Math.max(0, Math.min(100, Math.round(candidate.score)))
+      : 0;
+    const questionsTested = safeCount(candidate.questionsTested);
+    const correctAnswers = Math.min(safeCount(candidate.correctAnswers), questionsTested);
+    result[key] = {
+      conceptId: key,
+      conceptName: INITIAL_CONCEPTS[key].conceptName,
+      score,
+      status: score >= 80 ? 'mastered' : score >= 50 ? 'practising' : 'needs-review',
+      questionsTested,
+      correctAnswers,
+      ...(typeof candidate.lastPracticed === 'string' ? { lastPracticed: candidate.lastPracticed } : {}),
+    };
+  }
+  return result;
+}
+
+function normaliseAnswers(value: unknown): Record<number, number> {
+  if (!isRecord(value)) return {};
+  const answers: Record<number, number> = {};
+  for (const question of DIAGNOSTIC_QUESTIONS) {
+    const selected = value[question.id];
+    if (typeof selected === 'number' && Number.isInteger(selected)
+      && selected >= 0 && selected < question.options.length) {
+      answers[question.id] = selected;
+    }
+  }
+  return answers;
+}
+
+function normalisePracticeAttempts(value: unknown): PracticeAttempt[] {
+  if (!Array.isArray(value)) return [];
+  return value.slice(-500).flatMap((candidate): PracticeAttempt[] => {
+    if (!isRecord(candidate)
+      || !Number.isSafeInteger(candidate.questionId)
+      || typeof candidate.isCorrect !== 'boolean'
+      || typeof candidate.timestamp !== 'string'
+      || !Number.isInteger(candidate.selectedOption)
+      || (candidate.selectedOption as number) < -1) return [];
+
+    const totalQuestions = safeCount(candidate.totalQuestions, 100);
+    const correctAnswers = Math.min(safeCount(candidate.correctAnswers, totalQuestions), totalQuestions);
+    return [{
+      questionId: candidate.questionId as number,
+      selectedOption: candidate.selectedOption as number,
+      isCorrect: candidate.isCorrect,
+      timestamp: candidate.timestamp,
+      ...(isConceptId(candidate.conceptId) ? { conceptId: candidate.conceptId } : {}),
+      ...(totalQuestions > 0 ? { totalQuestions, correctAnswers } : {}),
+    }];
+  });
+}
+
+function normaliseAssessmentResult(value: unknown): AssessmentResult | null {
+  if (!isRecord(value)
+    || !isConceptId(value.weakestConceptId)
+    || !isConceptId(value.strongestConceptId)
+    || !isConceptId(value.recommendedLessonId)
+    || typeof value.submittedAt !== 'string') return null;
+
+  const totalQuestions = safeCount(value.totalQuestions, DIAGNOSTIC_QUESTIONS.length);
+  const correctAnswers = Math.min(safeCount(value.correctAnswers, totalQuestions), totalQuestions);
+  const percentage = typeof value.percentage === 'number' && Number.isFinite(value.percentage)
+    ? Math.max(0, Math.min(100, Math.round(value.percentage)))
+    : 0;
+
+  return {
+    totalQuestions,
+    correctAnswers,
+    percentage,
+    conceptMastery: normaliseMasteries(value.conceptMastery),
+    weakestConceptId: value.weakestConceptId,
+    strongestConceptId: value.strongestConceptId,
+    recommendedLessonId: value.recommendedLessonId,
+    submittedAt: value.submittedAt,
+    answers: normaliseAnswers(value.answers),
+  };
+}
+
 const LearningContext = createContext<LearningContextType | undefined>(undefined);
 
 export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -57,18 +154,21 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     let cancelled = false;
 
-    const applySavedState = (parsed: Record<string, unknown>) => {
+    const applySavedState = (parsed: unknown) => {
+      if (!isRecord(parsed)) return;
       if (parsed.selectedSubject === 'C++') setSubject('C++');
       if (parsed.selectedTopic === 'Pointers') setTopic('Pointers');
       if (typeof parsed.difficulty === 'string' && ['Beginner', 'Intermediate', 'Advanced'].includes(parsed.difficulty)) {
         setDifficulty(parsed.difficulty as Difficulty);
       }
-      if (parsed.assessmentAnswers && typeof parsed.assessmentAnswers === 'object') setAssessmentAnswers(parsed.assessmentAnswers as Record<number, number>);
-      if (parsed.assessmentResult) setAssessmentResult(parsed.assessmentResult as AssessmentResult);
-      if (parsed.conceptMasteries && typeof parsed.conceptMasteries === 'object') setConceptMasteries(parsed.conceptMasteries as Record<ConceptId, ConceptMastery>);
-      if (Array.isArray(parsed.practiceAttempts)) setPracticeAttempts(parsed.practiceAttempts as PracticeAttempt[]);
-      if (Array.isArray(parsed.completedLessons)) setCompletedLessons(parsed.completedLessons as string[]);
-      if (typeof parsed.activeLessonConcept === 'string') setActiveLessonConcept(parsed.activeLessonConcept as ConceptId);
+      setAssessmentAnswers(normaliseAnswers(parsed.assessmentAnswers));
+      setAssessmentResult(normaliseAssessmentResult(parsed.assessmentResult));
+      setConceptMasteries(normaliseMasteries(parsed.conceptMasteries));
+      setPracticeAttempts(normalisePracticeAttempts(parsed.practiceAttempts));
+      setCompletedLessons(Array.isArray(parsed.completedLessons)
+        ? [...new Set(parsed.completedLessons.filter(isConceptId))]
+        : []);
+      setActiveLessonConcept(isConceptId(parsed.activeLessonConcept) ? parsed.activeLessonConcept : 'dereferencing');
     };
 
     const hydrate = async () => {

@@ -166,7 +166,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
           <rect x="0" y="0" width="100" height="18" rx="4" fill="#F8FAF9" stroke="#D6DDD8" strokeWidth="1" />
           <circle cx="8" cy="9" r="3" fill="#C6F36B" />
           <text x="16" y="12.5" fill="#242A27" fontSize="8.5" fontWeight="600" fontFamily="monospace">
-            Sample gap: 42%
+            42% DEMO
           </text>
         </g>
       </svg>

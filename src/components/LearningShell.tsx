@@ -25,6 +25,8 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 }) => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [resetModalOpen, setResetModalOpen] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [resetError, setResetError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const { assessmentResult, resetProgress, selectedSubject, selectedTopic } = useLearning();
@@ -37,10 +39,19 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 
   // Secondary sub-items for active learning flow
 
-  const handleResetConfirm = () => {
-    resetProgress();
-    setResetModalOpen(false);
-    navigate('/learn');
+  const handleResetConfirm = async () => {
+    setResetting(true);
+    setResetError('');
+    try {
+      await resetProgress();
+      setResetModalOpen(false);
+      navigate('/learn');
+    } catch (error) {
+      console.warn('Lumora progress reset did not complete in the cloud:', error);
+      setResetError('Your local progress was reset, but cloud progress could not be deleted. Check your connection and try again.');
+    } finally {
+      setResetting(false);
+    }
   };
 
   return (
@@ -112,7 +123,8 @@ export const LearningShell: React.FC<LearningShellProps> = ({
         <div className="p-3.5 border-t border-[#D6DDD8]/70">
           <button
             type="button"
-            onClick={() => setResetModalOpen(true)}
+            onClick={() => { setResetError(''); setResetError('');
+              setResetModalOpen(true); }}
             className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#68716C] hover:text-[#244B3C] hover:bg-[#E8EBE9]/80 rounded-xl border border-[#D6DDD8]/80 transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
@@ -216,12 +228,14 @@ export const LearningShell: React.FC<LearningShellProps> = ({
               Reset Demo Progress?
             </h3>
             <p className="text-sm text-[#68716C] mt-2 leading-relaxed">
-              This will clear your diagnostic assessment results, concept mastery scores, and return the demo to its initial state.
+              This clears your local diagnostic results, concept mastery, and practice history. Lumora will also try to delete the cloud copy for your current account.
             </p>
+            {resetError && <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-relaxed text-red-800">{resetError}</p>}
             <div className="mt-6 flex items-center justify-end gap-3">
               <button
                 type="button"
                 onClick={() => setResetModalOpen(false)}
+                disabled={resetting}
                 className="px-4 py-2 text-xs font-semibold text-[#68716C] hover:text-[#244B3C] rounded-xl border border-[#D6DDD8]"
               >
                 Cancel
@@ -229,9 +243,10 @@ export const LearningShell: React.FC<LearningShellProps> = ({
               <button
                 type="button"
                 onClick={handleResetConfirm}
+                disabled={resetting}
                 className="px-4 py-2 text-xs font-semibold bg-[#244B3C] text-[#F8FAF9] rounded-xl hover:bg-[#1D3D31]"
               >
-                Confirm Reset
+                {resetting ? 'Resetting…' : 'Confirm Reset'}
               </button>
             </div>
           </div>

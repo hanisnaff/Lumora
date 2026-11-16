@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LearningShell } from '../components/LearningShell';
 import { useLearning } from '../context/LearningContext';
-import { TARGETED_PRACTICE_QUESTIONS } from '../data/demoQuestions';
+import { INITIAL_CONCEPTS, TARGETED_PRACTICE_QUESTIONS } from '../data/demoQuestions';
+import { updateMasteryAfterPractice } from '../services/masteryService';
 import {
   CheckCircle2,
   XCircle,
@@ -83,7 +84,12 @@ export const TargetedPracticePage: React.FC = () => {
   // End of Practice View
   if (sessionResults.finished) {
     const accuracy = Math.round((sessionResults.correctCount / totalQuestions) * 100);
-    const updatedScore = conceptMasteries[activeLessonConcept]?.score || accuracy;
+    const currentMastery = conceptMasteries[activeLessonConcept] || INITIAL_CONCEPTS[activeLessonConcept];
+    const updatedScore = updateMasteryAfterPractice(
+      currentMastery,
+      sessionResults.totalAnswered,
+      sessionResults.correctCount
+    ).score;
 
     return (
       <LearningShell

@@ -34,8 +34,11 @@ export function canUseOfflineLocalProgress(previousOwner, hasLocalState) {
  */
 export function hasLearningActivity(state) {
   if (!state || typeof state !== "object" || Array.isArray(state)) return false;
-  if (state.assessmentResult && typeof state.assessmentResult === "object") return true;
+  if (state.assessmentResult && typeof state.assessmentResult === "object"
+    && !Array.isArray(state.assessmentResult)
+    && Object.keys(state.assessmentResult).length > 0) return true;
   if (state.assessmentAnswers && typeof state.assessmentAnswers === "object"
+    && !Array.isArray(state.assessmentAnswers)
     && Object.keys(state.assessmentAnswers).length > 0) return true;
   if (Array.isArray(state.practiceAttempts) && state.practiceAttempts.length > 0) return true;
   if (Array.isArray(state.completedLessons) && state.completedLessons.length > 0) return true;

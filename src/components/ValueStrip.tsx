@@ -6,17 +6,17 @@ export const ValueStrip: React.FC = () => {
     {
       icon: Clock,
       title: 'Learn at your own pace.',
-      description: 'Progress rapidly through concepts you already know; spend deliberate time on the topics you need.'
+      description: 'Start with a short C++ pointers check, then work through the concepts highlighted in your results.'
     },
     {
       icon: Crosshair,
       title: 'Focus on concept-level gaps.',
-      description: 'Pinpoint the exact underlying misconception before it compounds into larger learning hurdles.'
+      description: 'See feedback grouped by pointer concept instead of relying on one overall score.'
     },
     {
       icon: TrendingUp,
       title: 'Adapt as you improve.',
-      description: 'Every drill, review, and practice session recalibrates your next milestone in real-time.'
+      description: 'Use focused explanations and practice questions to strengthen the concepts you found difficult.'
     }
   ];
 

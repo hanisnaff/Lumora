@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
-import { canMigrateAnonymousProgress } from '../services/progressOwnership';
+import { canMigrateAnonymousProgress, hasLearningActivity } from '../services/progressOwnership';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://ewjhbfggfjlvseozixtv.supabase.co').replace(/\/$/, '');
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN';
@@ -115,7 +115,7 @@ export const AuthPage: React.FC = () => {
             }
             // Only claim progress from an anonymous/demo session. Never copy one
             // signed-in account's local cache into a different account.
-            if (!cloudPayload.state && localProgressIsAnonymous) {
+            if (localProgressIsAnonymous && !hasLearningActivity(cloudPayload.state)) {
               const syncResponse = await fetch('/api/progress', {
                 method: 'PUT',
                 headers: { ...authHeaders, 'Content-Type': 'application/json' },

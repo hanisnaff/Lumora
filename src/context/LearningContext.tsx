@@ -21,6 +21,7 @@ interface LearningContextType {
   practiceAttempts: PracticeAttempt[];
   completedLessons: string[];
   activeLessonConcept: ConceptId;
+  progressSyncError: string | null;
 
   setSubject: (subject: string) => void;
   setTopic: (topic: string) => void;
@@ -150,6 +151,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [hydrated, setHydrated] = useState(false);
   const [remoteIdentityResolved, setRemoteIdentityResolved] = useState(false);
+  const [progressSyncError, setProgressSyncError] = useState<string | null>(null);
   const [localPersistenceReady, setLocalPersistenceReady] = useState(!isRemoteProgressConfigured);
   const skipNextRemoteSync = useRef(false);
 
@@ -192,6 +194,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         if (!cancelled) {
           setRemoteIdentityResolved(true);
           setLocalPersistenceReady(true);
+          setProgressSyncError(null);
           setHydrated(true);
         }
         return;
@@ -229,8 +232,10 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
 
         setRemoteIdentityResolved(true);
         setLocalPersistenceReady(true);
+        setProgressSyncError(null);
       } catch (error) {
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
+        setProgressSyncError('Cloud progress could not be loaded. Check your connection or sign in again to restore account sync.');
         // A signed-in account's cache is not displayed until its identity is verified.
         if (localState && previousOwner?.isAnonymous === true) applySavedState(localState);
         // Preserve an unverified signed-in cache instead of overwriting it with defaults.
@@ -301,8 +306,11 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
 
     const timeoutId = window.setTimeout(() => {
-      void saveRemoteProgress(stateToSync).catch((error) => {
+      void saveRemoteProgress(stateToSync).then(() => {
+        setProgressSyncError(null);
+      }).catch((error) => {
         console.warn('Lumora cloud sync failed; local progress is still available:', error);
+        setProgressSyncError('Cloud sync is unavailable. Your changes are saved locally where possible; check your connection or sign in again.');
       });
     }, 700);
 

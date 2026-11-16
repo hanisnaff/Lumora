@@ -10,6 +10,7 @@ import { INITIAL_CONCEPTS, DIAGNOSTIC_QUESTIONS } from '../data/demoQuestions';
 import { calculateAssessmentResult } from '../services/assessmentService';
 import { updateMasteryAfterPractice } from '../services/masteryService';
 import { isRemoteProgressConfigured, loadRemoteProgress, saveRemoteProgress, deleteRemoteProgress } from '../services/remoteProgress';
+import { canReuseLocalProgress, canUseOfflineLocalProgress } from '../services/progressOwnership';
 
 interface LearningContextType {
   selectedSubject: string;
@@ -228,19 +229,8 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
           const currentOwner = ownerRaw
             ? JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean }
             : null;
-          const sameOwner = Boolean(
-            previousOwner
-            && currentOwner
-            && previousOwner.userId
-            && previousOwner.userId === currentOwner.userId
-            && previousOwner.isAnonymous === currentOwner.isAnonymous
-          );
-          const anonymousProgressCanBeClaimed = previousOwner?.isAnonymous === true;
-          const firstAnonymousSession = !previousOwner && currentOwner?.isAnonymous === true;
-
-          // Anonymous demo progress may be claimed by the account the learner
-          // signs into. A cache owned by a different signed-in account is never reused.
-          if (sameOwner || anonymousProgressCanBeClaimed || firstAnonymousSession) {
+          // Reuse only the same account's cache or anonymous demo progress.
+          if (canReuseLocalProgress(previousOwner, currentOwner)) {
             applySavedState(localState);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
           }
@@ -254,10 +244,11 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         setProgressSyncError('Cloud progress could not be loaded. Check your connection or sign in again to restore account sync.');
         // A signed-in account's cache is not displayed until its identity is verified.
         const newlyMarkedDemo = !previousOwner && markUnownedLocalProgressAsDemo();
-        if (localState && (previousOwner?.isAnonymous === true || newlyMarkedDemo)) applySavedState(localState);
+        const offlineOwner = newlyMarkedDemo ? { userId: null, isAnonymous: true } : previousOwner;
+        if (localState && canUseOfflineLocalProgress(offlineOwner, true)) applySavedState(localState);
         // Preserve an unverified signed-in cache instead of overwriting it with defaults.
         // A new browser or an unowned local demo can still work offline.
-        setLocalPersistenceReady(!localState || previousOwner?.isAnonymous === true || newlyMarkedDemo);
+        setLocalPersistenceReady(canUseOfflineLocalProgress(offlineOwner, Boolean(localState)));
         // Keep cloud writes paused until the current account identity is verified.
       }
 

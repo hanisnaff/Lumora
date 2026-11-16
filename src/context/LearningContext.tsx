@@ -412,6 +412,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     // presenting the reset as complete when the server still has old progress.
     await deleteRemoteProgress();
     setRemoteIdentityResolved(true);
+    setProgressSyncError(null);
   };
 
   return (

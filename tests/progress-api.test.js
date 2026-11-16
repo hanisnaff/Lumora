@@ -142,11 +142,10 @@ test("writes progress with the authenticated user ID", async () => {
   assert.equal(response.statusCode, 200);
   assert.deepEqual(response.payload, { saved: true });
   assert.match(calls[1].url, /on_conflict=user_id/);
-  assert.deepEqual(JSON.parse(calls[1].options.body), {
-    user_id: "user-123",
-    state,
-    updated_at: JSON.parse(calls[1].options.body).updated_at,
-  });
+  const savedPayload = JSON.parse(calls[1].options.body);
+  assert.equal(savedPayload.user_id, "user-123");
+  assert.deepEqual(savedPayload.state, state);
+  assert.ok(Number.isFinite(Date.parse(savedPayload.updated_at)));
   assert.equal(calls[1].options.headers.Authorization, "Bearer test-access-token");
 });
 

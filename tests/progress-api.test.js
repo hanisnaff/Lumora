@@ -95,6 +95,12 @@ test("rejects requests without an access token", async () => {
   assert.equal(calls.length, 0);
 });
 
+test("rejects unsupported authorization schemes", async () => {
+  const { response, calls } = await invoke({ authorization: "Basic dGVzdA==" });
+  assert.equal(response.statusCode, 401);
+  assert.equal(calls.length, 0);
+});
+
 test("rejects an invalid Supabase access token", async () => {
   const { response, calls } = await invoke({ authUser: null });
   assert.equal(response.statusCode, 401);

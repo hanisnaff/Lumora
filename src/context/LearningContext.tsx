@@ -50,6 +50,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [hydrated, setHydrated] = useState(false);
   const [remoteIdentityResolved, setRemoteIdentityResolved] = useState(false);
+  const [localPersistenceReady, setLocalPersistenceReady] = useState(!isRemoteProgressConfigured);
   const skipNextRemoteSync = useRef(false);
 
   // Resolve the active cloud identity before reusing any browser-cached progress.
@@ -87,6 +88,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         if (localState) applySavedState(localState);
         if (!cancelled) {
           setRemoteIdentityResolved(true);
+          setLocalPersistenceReady(true);
           setHydrated(true);
         }
         return;
@@ -123,10 +125,14 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
 
         setRemoteIdentityResolved(true);
+        setLocalPersistenceReady(true);
       } catch (error) {
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
         // A signed-in account's cache is not displayed until its identity is verified.
         if (localState && previousOwner?.isAnonymous === true) applySavedState(localState);
+        // Preserve an unverified signed-in cache instead of overwriting it with defaults.
+        // A new browser or a positively identified anonymous demo can still work offline.
+        setLocalPersistenceReady(!localState || previousOwner?.isAnonymous === true);
         // Keep cloud writes paused until the current account identity is verified.
       }
 
@@ -140,7 +146,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   // Save state changes to localStorage
   useEffect(() => {
     // Do not overwrite saved progress with defaults before the initial read completes.
-    if (!hydrated) return;
+    if (!hydrated || !localPersistenceReady) return;
     try {
       const stateToSave = {
         selectedSubject,
@@ -168,6 +174,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     completedLessons,
     activeLessonConcept,
     hydrated,
+    localPersistenceReady,
   ]);
 
   // Debounce cloud writes to avoid sending a request for every individual state update.

@@ -126,7 +126,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
       } catch (error) {
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
         // A signed-in account's cache is not displayed until its identity is verified.
-        if (localState && previousOwner?.isAnonymous !== false) applySavedState(localState);
+        if (localState && previousOwner?.isAnonymous === true) applySavedState(localState);
         // Keep cloud writes paused until the current account identity is verified.
       }
 

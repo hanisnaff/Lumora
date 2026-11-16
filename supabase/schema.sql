@@ -21,22 +21,22 @@ grant select, insert, update, delete on table public.learning_progress to authen
 drop policy if exists "Learners can read their own progress" on public.learning_progress;
 create policy "Learners can read their own progress"
   on public.learning_progress for select to authenticated
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 drop policy if exists "Learners can create their own progress" on public.learning_progress;
 create policy "Learners can create their own progress"
   on public.learning_progress for insert to authenticated
-  with check (auth.uid() = user_id);
+  with check ((select auth.uid()) = user_id);
 
 drop policy if exists "Learners can update their own progress" on public.learning_progress;
 create policy "Learners can update their own progress"
   on public.learning_progress for update to authenticated
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id)
+  with check ((select auth.uid()) = user_id);
 
 drop policy if exists "Learners can delete their own progress" on public.learning_progress;
 create policy "Learners can delete their own progress"
   on public.learning_progress for delete to authenticated
-  using (auth.uid() = user_id);
+  using ((select auth.uid()) = user_id);
 
 grant all on table public.learning_progress to service_role;

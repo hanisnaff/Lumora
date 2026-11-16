@@ -120,7 +120,7 @@ If the health endpoint reports that the table cannot be queried, rerun **supabas
     │   ├── context/              # Learning state and progress synchronization
     │   ├── data/                 # C++ pointers diagnostic/practice content
     │   ├── pages/                # Learning flow pages
-    │   ├── services/             # Assessment, mastery, and remote progress
+    │   ├── services/             # Assessment, mastery, progress sync, and ownership
     │   └── types/                # Shared TypeScript types
     ├── supabase/
     │   └── schema.sql            # Progress table, grants, and RLS policies

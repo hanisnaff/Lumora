@@ -228,7 +228,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
               Reset Demo Progress?
             </h3>
             <p className="text-sm text-[#68716C] mt-2 leading-relaxed">
-              This clears your local diagnostic results, concept mastery, and practice history. Lumora will also try to delete the cloud copy for your current account.
+              This clears your local diagnostic results, concept mastery, lesson completions, and practice history. Lumora will also try to delete the cloud copy for your current account.
             </p>
             {resetError && <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-relaxed text-red-800">{resetError}</p>}
             <div className="mt-6 flex items-center justify-end gap-3">

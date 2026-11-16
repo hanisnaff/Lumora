@@ -28,6 +28,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const [resetting, setResetting] = useState(false);
   const [resetError, setResetError] = useState('');
   const resetTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
   const cancelResetRef = useRef<HTMLButtonElement | null>(null);
   const confirmResetRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
@@ -67,7 +68,9 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   }, [resetModalOpen, resetting]);
 
   const openResetDialog = (event: React.MouseEvent<HTMLButtonElement>) => {
-    resetTriggerRef.current = event.currentTarget;
+    resetTriggerRef.current = event.currentTarget.closest('#mobile-navigation-drawer')
+      ? mobileMenuButtonRef.current
+      : event.currentTarget;
     setResetError('');
     setMobileSidebarOpen(false);
     setResetModalOpen(true);
@@ -189,6 +192,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
           </NavLink>
           <button
             type="button"
+            ref={mobileMenuButtonRef}
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className="p-1.5 rounded-lg border border-[#D6DDD8] text-[#244B3C]"
             aria-label="Toggle navigation"

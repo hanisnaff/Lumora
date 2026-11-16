@@ -51,6 +51,7 @@ test("does not treat an unowned local cache as anonymous when the current user i
 test("keeps anonymous progress available offline but protects signed-in caches", () => {
   assert.equal(canUseOfflineLocalProgress({ userId: "anon-a", isAnonymous: true }, true), true);
   assert.equal(canUseOfflineLocalProgress({ userId: "user-a", isAnonymous: false }, true), false);
+  assert.equal(canUseOfflineLocalProgress(null, true), false);
   assert.equal(canUseOfflineLocalProgress(null, false), true);
 });
 

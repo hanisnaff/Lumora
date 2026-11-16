@@ -7,7 +7,7 @@ import { ArrowRight, RotateCcw } from 'lucide-react';
 
 export const KnowledgeGapResultsPage: React.FC = () => {
   const navigate = useNavigate();
-  const { assessmentResult, selectedSubject, setActiveLessonConcept } = useLearning();
+  const { assessmentResult, selectedSubject, setActiveLessonConcept, resetAssessmentAnswers } = useLearning();
 
   if (!assessmentResult) {
     return (
@@ -15,7 +15,7 @@ export const KnowledgeGapResultsPage: React.FC = () => {
         <section className="mx-auto max-w-lg rounded-2xl border border-[#E2E8E2] bg-white p-8 text-center">
           <h2 className="text-xl font-bold text-[#202923]">No results yet</h2>
           <p className="mt-2 text-sm leading-6 text-[#68736C]">Take the short starting check first. Lumora will then show you what to focus on.</p>
-          <button type="button" onClick={() => navigate('/assessment')} className="mt-5 rounded-xl bg-[#285443] px-5 py-3 text-sm font-semibold text-white">Start the check</button>
+          <button type="button" onClick={() => { resetAssessmentAnswers(); navigate('/assessment'); }} className="mt-5 rounded-xl bg-[#285443] px-5 py-3 text-sm font-semibold text-white">Start the check</button>
         </section>
       </LearningShell>
     );

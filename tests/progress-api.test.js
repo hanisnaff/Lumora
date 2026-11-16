@@ -158,6 +158,28 @@ test("deletes only the authenticated user's progress", async () => {
   assert.equal(calls[1].options.method, "DELETE");
 });
 
+test("returns a safe gateway error when Supabase cannot load progress", async () => {
+  const { response } = await invoke({ databaseStatus: 503 });
+  assert.equal(response.statusCode, 502);
+  assert.deepEqual(response.payload, { error: "Could not load saved progress." });
+});
+
+test("does not report a successful save when Supabase rejects the write", async () => {
+  const { response } = await invoke({
+    method: "PUT",
+    body: { state: { completedLessons: ["pointers"] } },
+    databaseStatus: 500,
+  });
+  assert.equal(response.statusCode, 502);
+  assert.deepEqual(response.payload, { error: "Could not save progress to the database." });
+});
+
+test("does not report a successful reset when Supabase rejects the delete", async () => {
+  const { response } = await invoke({ method: "DELETE", databaseStatus: 500 });
+  assert.equal(response.statusCode, 502);
+  assert.deepEqual(response.payload, { error: "Could not reset saved progress." });
+});
+
 test("Vercel config includes baseline browser security headers", () => {
   const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
   const headers = config.headers?.find((rule) => rule.source === "/(.*)")?.headers ?? [];

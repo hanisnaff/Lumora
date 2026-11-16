@@ -426,6 +426,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         practiceAttempts,
         completedLessons,
         activeLessonConcept,
+        progressSyncError,
         setSubject,
         setTopic,
         setDifficulty,

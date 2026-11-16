@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
 import {
   Home,
@@ -29,7 +29,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const [resetError, setResetError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { assessmentResult, resetProgress, selectedSubject, selectedTopic } = useLearning();
+  const { assessmentResult, resetProgress, selectedSubject, selectedTopic, progressSyncError } = useLearning();
 
   const navItems = [
     { name: 'Home', path: '/', icon: Home, exact: true },
@@ -195,6 +195,12 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+        {progressSyncError && (
+          <div role="alert" className="flex flex-wrap items-center justify-between gap-3 border-b border-amber-200 bg-amber-50 px-6 py-3 text-xs text-amber-900">
+            <p>{progressSyncError}</p>
+            <Link to="/auth" className="shrink-0 font-semibold underline underline-offset-2">Open sign in</Link>
+          </div>
+        )}
         {/* Optional Page Subheader */}
         {(title || subtitle) && (
           <div className="border-b border-[#D6DDD8] bg-[#F8FAF9]/80 px-6 py-5">

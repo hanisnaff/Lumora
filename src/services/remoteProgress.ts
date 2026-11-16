@@ -16,11 +16,29 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABA
 export const isRemoteProgressConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 function readSession(): RemoteSession | null {
+  let raw: string | null;
   try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? (JSON.parse(raw) as RemoteSession) : null;
+    raw = localStorage.getItem(SESSION_KEY);
   } catch {
     return null;
+  }
+  if (!raw) return null;
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<RemoteSession>;
+    if (typeof parsed.access_token !== "string"
+      || !parsed.access_token
+      || typeof parsed.refresh_token !== "string"
+      || !parsed.refresh_token
+      || typeof parsed.expires_at !== "number"
+      || !Number.isFinite(parsed.expires_at)) {
+      throw new Error("Invalid saved session.");
+    }
+    return parsed as RemoteSession;
+  } catch {
+    // A broken saved session must not be mistaken for a first-time visitor;
+    // creating an anonymous session could target the wrong learner's data.
+    throw new Error("Your saved session is unreadable. Sign in again to sync progress.");
   }
 }
 

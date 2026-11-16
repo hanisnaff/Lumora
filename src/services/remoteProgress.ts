@@ -70,8 +70,12 @@ async function getSession(): Promise<RemoteSession> {
       });
       const session = saveSession(refreshed);
       if (session) return session;
-    } catch {
+      throw new Error("Supabase returned an invalid refreshed session.");
+    } catch (error) {
       localStorage.removeItem(SESSION_KEY);
+      // Do not silently replace a failed signed-in session with an anonymous
+      // one: subsequent progress reads/deletes would target the wrong user.
+      throw new Error("Your saved session could not be refreshed. Sign in again to sync or delete account progress.");
     }
   }
 

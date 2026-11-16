@@ -19,8 +19,7 @@ export function canMigrateAnonymousProgress(owner) {
 
 export function canReuseLocalProgress(previousOwner, currentOwner) {
   return isSameProgressOwner(previousOwner, currentOwner)
-    || canMigrateAnonymousProgress(previousOwner)
-    || (!previousOwner && currentOwner?.isAnonymous === true);
+    || canMigrateAnonymousProgress(previousOwner);
 }
 
 export function canUseOfflineLocalProgress(previousOwner, hasLocalState) {

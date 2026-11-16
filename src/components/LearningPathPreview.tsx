@@ -134,7 +134,7 @@ export const LearningPathPreview: React.FC = () => {
             <div className="my-3 p-3 rounded-xl bg-[#FFFFFF] border border-[#D6DDD8] shadow-inner">
               <ConceptGraphVisual activeConceptName={currentStepData.title} />
               <div className="mt-2 text-center text-[10px] text-[#68716C]">
-                Click nodes to inspect prerequisite connections &amp; diagnostic status.
+                Illustrative concept relationships with sample status labels; this diagram is not interactive.
               </div>
             </div>
           ) : (

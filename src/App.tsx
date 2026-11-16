@@ -14,19 +14,19 @@ export default function App() {
   return (
     <LearningProvider>
       <MotionConfig reducedMotion="user">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/learn" element={<LearningSetupPage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/assessment" element={<DiagnosticAssessmentPage />} />
-          <Route path="/results" element={<KnowledgeGapResultsPage />} />
-          <Route path="/lesson" element={<PersonalizedLessonPage />} />
-          <Route path="/practice" element={<TargetedPracticePage />} />
-          <Route path="/progress" element={<LearningProgressPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/learn" element={<LearningSetupPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/assessment" element={<DiagnosticAssessmentPage />} />
+            <Route path="/results" element={<KnowledgeGapResultsPage />} />
+            <Route path="/lesson" element={<PersonalizedLessonPage />} />
+            <Route path="/practice" element={<TargetedPracticePage />} />
+            <Route path="/progress" element={<LearningProgressPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
       </MotionConfig>
     </LearningProvider>
   );

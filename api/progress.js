@@ -65,7 +65,7 @@ export default async function handler(req, res) {
     }
 
     const serialized = JSON.stringify(state);
-    if (serialized.length > 200_000) {
+    if (Buffer.byteLength(serialized, "utf8") > 200_000) {
       return sendJson(res, 413, { error: "Progress payload is too large." });
     }
 

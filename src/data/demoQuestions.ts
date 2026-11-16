@@ -405,7 +405,7 @@ if (safePtr != nullptr) {
       options: [
         'It returns 0',
         'It allocates a new default integer',
-        'Undefined behavior, typically resulting in an immediate program crash',
+        'Undefined behavior; the C++ standard does not specify an outcome',
         'It outputs a compiler warning',
       ],
       correctIndex: 2,

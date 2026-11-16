@@ -26,6 +26,7 @@ interface LearningContextType {
   setTopic: (topic: string) => void;
   setDifficulty: (diff: Difficulty) => void;
   saveAssessmentAnswer: (questionId: number, optionIndex: number) => void;
+  resetAssessmentAnswers: () => void;
   submitAssessment: () => AssessmentResult;
   setActiveLessonConcept: (conceptId: ConceptId) => void;
   markLessonCompleted: (conceptId: ConceptId) => void;
@@ -178,6 +179,10 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
+  const resetAssessmentAnswers = () => {
+    setAssessmentAnswers({});
+  };
+
   const submitAssessment = (): AssessmentResult => {
     const result = calculateAssessmentResult(assessmentAnswers, DIAGNOSTIC_QUESTIONS);
     setAssessmentResult(result);
@@ -251,6 +256,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         setTopic,
         setDifficulty,
         saveAssessmentAnswer,
+        resetAssessmentAnswers,
         submitAssessment,
         setActiveLessonConcept,
         markLessonCompleted,

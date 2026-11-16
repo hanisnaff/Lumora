@@ -83,6 +83,12 @@ test("does not label an authenticated account as anonymous when the flag is abse
   assert.equal(response.payload.isAnonymous, false);
 });
 
+test("accepts the bearer authentication scheme case-insensitively", async () => {
+  const { response, calls } = await invoke({ authorization: "bEaReR test-access-token" });
+  assert.equal(response.statusCode, 200);
+  assert.equal(calls[1].options.headers.Authorization, "Bearer test-access-token");
+});
+
 test("rejects requests without an access token", async () => {
   const { response, calls } = await invoke({ authorization: "" });
   assert.equal(response.statusCode, 401);

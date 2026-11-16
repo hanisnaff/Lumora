@@ -48,6 +48,8 @@ test("keeps anonymous progress available offline but protects signed-in caches",
 test("distinguishes an empty cloud row from existing account progress", () => {
   assert.equal(hasLearningActivity(null), false);
   assert.equal(hasLearningActivity({}), false);
+  assert.equal(hasLearningActivity({ assessmentResult: {} }), false);
+  assert.equal(hasLearningActivity({ assessmentAnswers: [] }), false);
   assert.equal(hasLearningActivity({ conceptMasteries: { pointers: { score: 0, questionsTested: 0 } } }), false);
   assert.equal(hasLearningActivity({ assessmentAnswers: { 1: 0 } }), true);
   assert.equal(hasLearningActivity({ practiceAttempts: [{ timestamp: 1 }] }), true);

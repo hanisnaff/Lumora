@@ -35,12 +35,13 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const { assessmentResult, resetProgress, selectedSubject, selectedTopic, progressSyncError } = useLearning();
 
   useEffect(() => {
-    if (!resetModalOpen) {
-      resetTriggerRef.current?.focus();
-      return;
-    }
+    if (resetModalOpen) cancelResetRef.current?.focus();
+    else resetTriggerRef.current?.focus();
+  }, [resetModalOpen]);
 
-    cancelResetRef.current?.focus();
+  useEffect(() => {
+    if (!resetModalOpen) return;
+
     const handleDialogKeys = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !resetting) {
         setResetModalOpen(false);

@@ -260,7 +260,7 @@ export const LearningPathPreview: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5 text-[#244B3C]" />
               <span>Illustrative learning-path preview</span>
             </span>
-            <span className="font-mono text-[10px] text-[#244B3C] font-semibold">C++ Systems Track</span>
+            <span className="font-mono text-[10px] text-[#244B3C] font-semibold">C++ Pointers Demo</span>
           </div>
 
         </div>

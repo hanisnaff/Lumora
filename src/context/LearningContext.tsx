@@ -31,7 +31,7 @@ interface LearningContextType {
   setActiveLessonConcept: (conceptId: ConceptId) => void;
   markLessonCompleted: (conceptId: ConceptId) => void;
   recordPracticeSession: (conceptId: ConceptId, total: number, correct: number) => void;
-  resetProgress: () => void;
+  resetProgress: () => Promise<void>;
 }
 
 const STORAGE_KEY = 'lumora_learning_state_v1';
@@ -379,12 +379,13 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     ]);
   };
 
-  const resetProgress = () => {
+  const resetProgress = async (): Promise<void> => {
     skipNextRemoteSync.current = true;
-    localStorage.removeItem(STORAGE_KEY);
-    void deleteRemoteProgress().catch((error) => {
-      console.warn('Lumora could not delete cloud progress:', error);
-    });
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.warn('Lumora could not clear its local progress cache:', error);
+    }
     setSubject('C++');
     setTopic('Pointers');
     setDifficulty('Beginner');
@@ -394,6 +395,10 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     setPracticeAttempts([]);
     setCompletedLessons([]);
     setActiveLessonConcept('dereferencing');
+
+    // Report a cloud deletion failure to the caller instead of silently
+    // presenting the reset as complete when the server still has old progress.
+    await deleteRemoteProgress();
   };
 
   return (

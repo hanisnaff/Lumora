@@ -129,15 +129,6 @@ export async function loadRemoteProgress(): Promise<Record<string, unknown> | nu
   const response = await progressRequest("GET");
   if (typeof response.isAnonymous === "boolean") {
     try {
-      const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
-      let previousOwner: { isAnonymous?: boolean } | null = null;
-      if (ownerRaw) {
-        try {
-          previousOwner = JSON.parse(ownerRaw) as { isAnonymous?: boolean };
-        } catch {
-          previousOwner = null;
-        }
-      }
       // Store the actual Supabase identity. Cache reuse is decided separately
       // using the previous owner, so a fresh anonymous session can still build
       // new demo progress and later migrate it during sign-up.

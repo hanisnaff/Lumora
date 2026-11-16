@@ -107,7 +107,7 @@ export const AuthPage: React.FC = () => {
             const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
             if (ownerRaw) {
               try {
-                const owner = JSON.parse(ownerRaw) as { isAnonymous?: unknown };
+                const owner = JSON.parse(ownerRaw) as { isAnonymous?: boolean };
                 localProgressIsAnonymous = canMigrateAnonymousProgress(owner);
               } catch {
                 localProgressIsAnonymous = false;

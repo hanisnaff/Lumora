@@ -57,3 +57,7 @@ export function hasLearningActivity(state) {
 export function shouldMigrateAnonymousProgress(owner, cloudState) {
   return canMigrateAnonymousProgress(owner) && !hasLearningActivity(cloudState);
 }
+
+export function canStartAnonymousSession(previousOwner) {
+  return !previousOwner || previousOwner.isAnonymous === true;
+}

@@ -161,7 +161,7 @@ std::cout << *ptr;   // Reads 10 (dereferencing)
 *ptr = 42;           // Modifies number directly through the pointer
 std::cout << number; // Outputs 42!`,
       steps: [
-        { line: 1, explanation: 'Declares a local integer `number` with initial value 10. Its exact physical placement is implementation-dependent.' },
+        { line: 1, explanation: 'Declares a local integer `number` with initial value 10. Its exact storage location is implementation-dependent.' },
         { line: 2, explanation: 'Uses `&number` to retrieve the address of `number` and assigns it to pointer `ptr`.' },
         { line: 4, explanation: '`*ptr` dereferences `ptr`, follows the address stored in it, and reads the value 10 from `number`.' },
         { line: 6, explanation: '`*ptr = 42` writes 42 into that exact memory cell. `number` is now changed to 42.' },

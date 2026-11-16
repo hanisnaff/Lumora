@@ -59,7 +59,7 @@ std::cout << &score;`,
     ],
     correctOptionIndex: 1,
     explanation:
-      'The & operator (address-of) returns the physical or virtual memory address (in hexadecimal format) where the variable resides in memory, rather than its contents.',
+      'The & operator (address-of) produces a pointer to the variable’s storage location in the program’s virtual address space. It gives you an address, not the variable’s contents.',
   },
   {
     id: 2,
@@ -132,7 +132,7 @@ ptr = &b;
     ],
     correctOptionIndex: 2,
     explanation:
-      'An uninitialized local pointer contains indeterminate garbage memory data. Dereferencing it writes to an arbitrary memory location, which can corrupt program memory or trigger an OS segmentation fault.',
+      'An uninitialized local pointer has an indeterminate value. Using it as though it points to a valid object, including dereferencing it, causes undefined behavior and may crash or corrupt program state.',
   },
 ];
 
@@ -208,7 +208,7 @@ std::cout << number; // Outputs 42!`,
     badge: 'Foundational',
     estimatedMinutes: 5,
     primaryExplanation:
-      'When your program declares a variable, the operating system allocates a block of memory bytes. The starting byte of this block is known as its memory address, typically represented as a hexadecimal number (e.g. `0x7ffee4`). The `&` operator allows your code to inspect this location.',
+      'When your program declares an object, it has a storage location while its lifetime is active. The `&` operator produces a pointer to that location in the program’s address space. Addresses are often displayed in hexadecimal (for example, `0x7ffee4`), but their actual values are implementation- and run-dependent.',
     alternateExplanation:
       'Every house in a city has an address, like 742 Evergreen Terrace. The house contains people and furniture (the data), but the street address tells postal workers where to go. The `&` operator is like looking up the address in the city registry.',
     analogy: {
@@ -266,7 +266,7 @@ std::cout << "Address: " << &price << "\\n";`,
       'If you have a business card, it is not enough to just say "this is an address". You need to know if it is the address of an apartment, a warehouse, or a skyscraper so you know what to expect when you arrive.',
     analogy: {
       title: 'The Shipping Label Analogy',
-      text: 'A shipping label marked "FRAGILE GLASSWARE" tells handlers how to treat the box at the destination address. Similarly, `char*` tells C++ to treat the destination as 1-byte characters, while `int*` treats it as a 4-byte integer.',
+      text: 'A shipping label marked "FRAGILE GLASSWARE" tells handlers how to treat the box at the destination address. Similarly, `char*` points to a `char` and `int*` points to an `int`. The pointed-to type determines how dereferencing and pointer arithmetic work; do not assume every platform gives `int` the same size.',
     },
     codeExample: {
       code: `int age = 21;
@@ -409,7 +409,7 @@ if (safePtr != nullptr) {
         'It outputs a compiler warning',
       ],
       correctIndex: 2,
-      explanation: 'Dereferencing a nullptr attempts to read protected kernel address 0x0, triggering an immediate OS exception.',
+      explanation: 'Dereferencing a null pointer has undefined behavior. Many systems terminate the program with an access violation, but the C++ standard does not guarantee a particular outcome.',
     },
   },
 };

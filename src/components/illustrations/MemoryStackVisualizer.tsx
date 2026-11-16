@@ -71,16 +71,16 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
 
         {hasVariable && hasPointer && (
           <div className="flex flex-col items-center justify-center gap-1.5 my-2 md:my-0">
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex flex-row-reverse items-center gap-1">
               <div className="h-0.5 w-10 bg-[#1A3628]" />
-              <div className="w-0 h-0 border-y-4 border-y-transparent border-l-8 border-l-[#1A3628]" />
+              <div className="w-0 h-0 border-y-4 border-y-transparent border-r-8 border-r-[#1A3628]" />
             </div>
-            <div className="md:hidden flex flex-col items-center gap-1">
+            <div className="md:hidden flex flex-col-reverse items-center gap-1">
               <div className="w-0.5 h-8 bg-[#1A3628]" />
-              <div className="w-0 h-0 border-x-4 border-x-transparent border-t-8 border-t-[#1A3628]" />
+              <div className="w-0 h-0 border-x-4 border-x-transparent border-b-8 border-b-[#1A3628]" />
             </div>
             <div className="px-2.5 py-1 rounded-md bg-[#1A3628] text-[#C8E348] font-mono text-[10px] font-bold tracking-wide text-center">
-              Dereference *{pointerName}
+              {pointerName} points to object
             </div>
             <span className="text-[10px] text-[#5C675F] font-sans">Follows the stored address</span>
           </div>

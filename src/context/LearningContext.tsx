@@ -52,7 +52,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [remoteIdentityResolved, setRemoteIdentityResolved] = useState(false);
   const skipNextRemoteSync = useRef(false);
 
-  // Restore local progress first, then let the database copy take precedence when configured.
+  // Resolve the active cloud identity before reusing any browser-cached progress.
   useEffect(() => {
     let cancelled = false;
 

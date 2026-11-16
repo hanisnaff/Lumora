@@ -26,7 +26,7 @@ export const TargetedPracticePage: React.FC = () => {
   const conceptQuestions = TARGETED_PRACTICE_QUESTIONS.filter(
     (q) => q.conceptId === activeLessonConcept
   );
-  const questions = conceptQuestions.length >= 3 ? conceptQuestions : TARGETED_PRACTICE_QUESTIONS.slice(0, 3);
+  const questions = conceptQuestions.length > 0 ? conceptQuestions : TARGETED_PRACTICE_QUESTIONS.slice(0, 3);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);

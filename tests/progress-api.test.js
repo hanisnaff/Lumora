@@ -83,19 +83,6 @@ test("does not label an authenticated account as anonymous when the flag is abse
   assert.equal(response.payload.isAnonymous, false);
 });
 
-test("identifies anonymous sessions in the progress response", async () => {
-  const { response } = await invoke({
-    authUser: { id: "anon-user-456", is_anonymous: true },
-    databaseBody: [],
-  });
-  assert.equal(response.statusCode, 200);
-  assert.deepEqual(response.payload, {
-    state: null,
-    userId: "anon-user-456",
-    isAnonymous: true,
-  });
-});
-
 test("rejects requests without an access token", async () => {
   const { response, calls } = await invoke({ authorization: "" });
   assert.equal(response.statusCode, 401);

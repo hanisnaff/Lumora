@@ -12,7 +12,7 @@ export const DiscoverVisual: React.FC = () => {
         {/* Scanning beam angle */}
         <path d="M 140 70 L 195 35 A 58 58 0 0 1 198 70 Z" fill="#C8E348" opacity="0.25" />
 
-        {/* Verified Knowledge Nodes */}
+        {/* Illustrative knowledge nodes */}
         <circle cx="95" cy="48" r="8" fill="#1A3628" />
         <path d="M 93 48 L 95 50 L 98 46" stroke="#C8E348" strokeWidth="1.5" strokeLinecap="round" />
 

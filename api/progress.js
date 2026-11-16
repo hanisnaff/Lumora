@@ -1,6 +1,10 @@
 import { authenticateRequest, getAccessToken, getSupabaseConfig, sendJson } from "../lib/supabaseServer.js";
 
 export default async function handler(req, res) {
+  // Learner progress is private and must never be stored by shared caches.
+  res.setHeader("Cache-Control", "private, no-store, max-age=0");
+  res.setHeader("Vary", "Authorization");
+
   if (!["GET", "PUT", "DELETE"].includes(req.method)) {
     res.setHeader("Allow", "GET, PUT, DELETE");
     return sendJson(res, 405, { error: "Method not allowed." });

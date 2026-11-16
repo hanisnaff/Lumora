@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
 import { canMigrateAnonymousProgress, hasLearningActivity } from '../services/progressOwnership';
+import { SESSION_KEY } from '../services/remoteProgress';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://ewjhbfggfjlvseozixtv.supabase.co').replace(/\/$/, '');
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN';
-const SESSION_KEY = 'lumora_supabase_session_v1';
 
 type AuthMode = 'signin' | 'signup' | 'reset' | 'update';
 

@@ -49,6 +49,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [activeLessonConcept, setActiveLessonConcept] = useState<ConceptId>('dereferencing');
   const [hydrated, setHydrated] = useState(false);
+  const [remoteIdentityResolved, setRemoteIdentityResolved] = useState(false);
   const skipNextRemoteSync = useRef(false);
 
   // Restore local progress first, then let the database copy take precedence when configured.
@@ -70,26 +71,62 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     };
 
     const hydrate = async () => {
+      let localState: Record<string, unknown> | null = null;
+      let previousOwner: { userId?: string | null; isAnonymous?: boolean } | null = null;
+
       try {
         const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('mindpath_ai_state_v1');
-        if (saved) {
-          applySavedState(JSON.parse(saved) as Record<string, unknown>);
-          localStorage.setItem(STORAGE_KEY, saved);
-        }
+        if (saved) localState = JSON.parse(saved) as Record<string, unknown>;
+        const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+        if (ownerRaw) previousOwner = JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean };
       } catch (error) {
-        console.warn('Could not parse saved Lumora state:', error);
+        console.warn('Could not parse saved Lumora state or ownership:', error);
       }
 
-      if (isRemoteProgressConfigured) {
-        try {
-          const remote = await loadRemoteProgress();
-          if (!cancelled && remote) {
-            applySavedState(remote);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
-          }
-        } catch (error) {
-          console.warn('Lumora could not load cloud progress; keeping local progress:', error);
+      if (!isRemoteProgressConfigured) {
+        if (localState) applySavedState(localState);
+        if (!cancelled) {
+          setRemoteIdentityResolved(true);
+          setHydrated(true);
         }
+        return;
+      }
+
+      try {
+        const remote = await loadRemoteProgress();
+        if (cancelled) return;
+
+        if (remote) {
+          applySavedState(remote);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
+        } else if (localState) {
+          const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+          const currentOwner = ownerRaw
+            ? JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean }
+            : null;
+          const sameOwner = Boolean(
+            previousOwner
+            && currentOwner
+            && previousOwner.userId
+            && previousOwner.userId === currentOwner.userId
+            && previousOwner.isAnonymous === currentOwner.isAnonymous
+          );
+          const firstAnonymousSession = !previousOwner && currentOwner?.isAnonymous === true;
+
+          // Reuse a local cache only when it belongs to this same session, or
+          // when a brand-new anonymous session is claiming unowned demo data.
+          // Never show or sync one signed-in account's cache in another account.
+          if (sameOwner || firstAnonymousSession) {
+            applySavedState(localState);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
+          }
+        }
+
+        setRemoteIdentityResolved(true);
+      } catch (error) {
+        console.warn('Lumora could not load cloud progress; keeping local progress offline:', error);
+        if (localState) applySavedState(localState);
+        // Keep cloud writes paused until the current account identity is verified.
       }
 
       if (!cancelled) setHydrated(true);
@@ -134,7 +171,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // Debounce cloud writes to avoid sending a request for every individual state update.
   useEffect(() => {
-    if (!hydrated || !isRemoteProgressConfigured) return;
+    if (!hydrated || !remoteIdentityResolved || !isRemoteProgressConfigured) return;
     if (skipNextRemoteSync.current) {
       skipNextRemoteSync.current = false;
       return;
@@ -170,6 +207,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
     completedLessons,
     activeLessonConcept,
     hydrated,
+    remoteIdentityResolved,
   ]);
 
   const saveAssessmentAnswer = (questionId: number, optionIndex: number) => {

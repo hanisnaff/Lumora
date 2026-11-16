@@ -127,6 +127,15 @@ test("measures the progress payload limit in UTF-8 bytes", async () => {
   assert.equal(calls.length, 1);
 });
 
+test("measures progress payload limits in UTF-8 bytes", async () => {
+  const { response, calls } = await invoke({
+    method: "PUT",
+    body: { state: { note: "界".repeat(67_000) } },
+  });
+  assert.equal(response.statusCode, 413);
+  assert.equal(calls.length, 1);
+});
+
 test("writes progress with the authenticated user ID", async () => {
   const state = { completedLessons: ["pointers"] };
   const { response, calls } = await invoke({ method: "PUT", body: { state }, databaseStatus: 204 });

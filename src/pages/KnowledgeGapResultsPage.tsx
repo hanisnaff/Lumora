@@ -75,7 +75,7 @@ export const KnowledgeGapResultsPage: React.FC = () => {
         </section>
 
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <button type="button" onClick={() => navigate('/assessment')} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#68736C] hover:bg-white hover:text-[#285443]">
+          <button type="button" onClick={() => { resetAssessmentAnswers(); navigate('/assessment'); }} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#68736C] hover:bg-white hover:text-[#285443]">
             <RotateCcw className="h-4 w-4" /> Retake check
           </button>
           <button type="button" onClick={() => navigate('/learn')} className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-[#285443] hover:bg-white">

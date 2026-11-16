@@ -32,7 +32,7 @@ export const MemoryStackVisualizer: React.FC<MemoryStackVisualizerProps> = ({
         </div>
         <div className="flex items-center gap-2 text-xs font-mono text-[#5C675F]">
           <span className="px-2 py-0.5 rounded bg-[#F3EBDD] border border-[#D9CCBA]">
-            Example: x86-64
+            Example hex addresses
           </span>
           <span className="px-2 py-0.5 rounded bg-[#1A3628] text-[#FAF8F3]">
             Simplified layout

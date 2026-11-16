@@ -116,8 +116,8 @@ function normaliseAssessmentResult(value: unknown): AssessmentResult | null {
 
   const totalQuestions = safeCount(value.totalQuestions, DIAGNOSTIC_QUESTIONS.length);
   const correctAnswers = Math.min(safeCount(value.correctAnswers, totalQuestions), totalQuestions);
-  const percentage = typeof value.percentage === 'number' && Number.isFinite(value.percentage)
-    ? Math.max(0, Math.min(100, Math.round(value.percentage)))
+  const percentage = totalQuestions > 0
+    ? Math.round((correctAnswers / totalQuestions) * 100)
     : 0;
 
   return {

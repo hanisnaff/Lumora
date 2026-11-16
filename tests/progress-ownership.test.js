@@ -38,9 +38,9 @@ test("allows anonymous demo progress to be claimed during sign-in", () => {
   assert.equal(canReuseLocalProgress(anonymousOwner, signedInOwner), true);
 });
 
-test("allows a new anonymous session to claim unowned local demo progress", () => {
+test("does not auto-claim unowned legacy progress in a remote-enabled app", () => {
   const newAnonymousOwner = { userId: "anon-new", isAnonymous: true };
-  assert.equal(canReuseLocalProgress(null, newAnonymousOwner), true);
+  assert.equal(canReuseLocalProgress(null, newAnonymousOwner), false);
 });
 
 test("does not treat an unowned local cache as anonymous when the current user is signed in", () => {

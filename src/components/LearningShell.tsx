@@ -29,6 +29,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const [resetError, setResetError] = useState('');
   const resetTriggerRef = useRef<HTMLButtonElement | null>(null);
   const mobileMenuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const resetDialogRef = useRef<HTMLDivElement | null>(null);
   const cancelResetRef = useRef<HTMLButtonElement | null>(null);
   const confirmResetRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
@@ -36,9 +37,10 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const { assessmentResult, resetProgress, selectedSubject, selectedTopic, progressSyncError } = useLearning();
 
   useEffect(() => {
-    if (resetModalOpen) cancelResetRef.current?.focus();
-    else resetTriggerRef.current?.focus();
-  }, [resetModalOpen]);
+    if (!resetModalOpen) resetTriggerRef.current?.focus();
+    else if (resetting) resetDialogRef.current?.focus();
+    else cancelResetRef.current?.focus();
+  }, [resetModalOpen, resetting]);
 
   useEffect(() => {
     if (!resetModalOpen) return;
@@ -49,6 +51,11 @@ export const LearningShell: React.FC<LearningShellProps> = ({
         return;
       }
       if (event.key !== 'Tab') return;
+      if (resetting) {
+        event.preventDefault();
+        resetDialogRef.current?.focus();
+        return;
+      }
 
       const first = cancelResetRef.current;
       const last = confirmResetRef.current;
@@ -273,7 +280,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
       {/* Reset Confirmation Modal */}
       {resetModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#244B3C]/40 backdrop-blur-xs">
-          <div role="dialog" aria-modal="true" aria-labelledby="reset-progress-title" aria-describedby="reset-progress-description" className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+          <div ref={resetDialogRef} role="dialog" aria-modal="true" aria-labelledby="reset-progress-title" aria-describedby="reset-progress-description" tabIndex={-1} className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <h3 id="reset-progress-title" className="font-heading font-bold text-lg text-[#244B3C]">
               Reset Demo Progress?
             </h3>

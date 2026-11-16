@@ -77,7 +77,7 @@ Lumora is configured with the public URL and publishable key for its connected S
 
 1. Open Supabase **Authentication** settings and enable **Anonymous Sign-Ins** so learners can try the demo without creating an account.
 2. Ensure email/password authentication is enabled if you want learners to create accounts and sign in.
-3. In **Authentication → Settings → Password Security**, enable leaked-password protection so compromised passwords are rejected.
+3. In **Authentication → Settings → Password Security**, enable leaked-password protection so compromised passwords are rejected ([Supabase guide](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)).
 4. In **URL Configuration**, set the Site URL and add the exact app callback URLs to the Redirect URLs allow list, including your deployed app's `/auth` route and `http://localhost:5173/auth` for local development. Password recovery returns to `/auth` to let the learner set a new password.
 5. Confirm that the **public.learning_progress** table exists. If needed, run [supabase/schema.sql](supabase/schema.sql) in the Supabase SQL Editor. The script can be safely re-run.
 6. The table uses row-level security (RLS). Authenticated sessions can read or modify only the row whose **user_id** matches their own Supabase user ID.

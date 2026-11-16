@@ -243,10 +243,12 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.warn('Lumora could not load cloud progress; keeping eligible local progress offline:', error);
         setProgressSyncError('Cloud progress could not be loaded. Check your connection or sign in again to restore account sync.');
         // A signed-in account's cache is not displayed until its identity is verified.
-        if (localState && canUseOfflineLocalProgress(previousOwner, true)) applySavedState(localState);
-        // Preserve unowned or signed-in caches until their identity can be verified.
-        // A previously identified anonymous demo can still work offline.
-        setLocalPersistenceReady(canUseOfflineLocalProgress(previousOwner, Boolean(localState)));
+        const newlyMarkedDemo = !previousOwner && !localState && markUnownedLocalProgressAsDemo();
+        const offlineOwner = newlyMarkedDemo ? { userId: null, isAnonymous: true } : previousOwner;
+        if (localState && canUseOfflineLocalProgress(offlineOwner, true)) applySavedState(localState);
+        // Preserve unowned legacy or signed-in caches until their identity can be verified.
+        // A fresh offline demo and previously identified anonymous progress can still work.
+        setLocalPersistenceReady(canUseOfflineLocalProgress(offlineOwner, Boolean(localState)));
         // Keep cloud writes paused until the current account identity is verified.
       }
 

@@ -135,6 +135,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartLearning, onExploreDemo }
               </a>
             ))}
             <div className="pt-2 flex flex-col gap-3">
+              <Link
+                to="/auth"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-2.5 text-center text-sm font-semibold text-[#244B3C] border border-[#D6DDD8] rounded-xl bg-white"
+              >
+                Sign in
+              </Link>
               <button
                 type="button"
                 onClick={() => {

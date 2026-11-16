@@ -8,7 +8,7 @@ export function updateMasteryAfterPractice(
   const updatedTested = (currentMastery.questionsTested || 0) + totalPracticed;
   const updatedCorrect = (currentMastery.correctAnswers || 0) + correctCount;
 
-  // Blended mastery score: weighted 40% diagnostic + 60% recent practice
+  // Blended mastery score: weighted 35% previous mastery + 65% recent practice
   const practicePercentage = totalPracticed > 0 ? (correctCount / totalPracticed) * 100 : 0;
   
   let newScore = Math.round(

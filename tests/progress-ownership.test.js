@@ -43,3 +43,14 @@ test("keeps anonymous progress available offline but protects signed-in caches",
   assert.equal(canUseOfflineLocalProgress({ userId: "user-a", isAnonymous: false }, true), false);
   assert.equal(canUseOfflineLocalProgress(null, false), true);
 });
+
+test("distinguishes an empty cloud row from existing account progress", async () => {
+  const { hasLearningActivity } = await import("../src/services/progressOwnership.js");
+  assert.equal(hasLearningActivity(null), false);
+  assert.equal(hasLearningActivity({}), false);
+  assert.equal(hasLearningActivity({ conceptMasteries: { pointers: { score: 0, questionsTested: 0 } } }), false);
+  assert.equal(hasLearningActivity({ assessmentAnswers: { 1: 0 } }), true);
+  assert.equal(hasLearningActivity({ practiceAttempts: [{ timestamp: 1 }] }), true);
+  assert.equal(hasLearningActivity({ completedLessons: ["dereferencing"] }), true);
+  assert.equal(hasLearningActivity({ conceptMasteries: { pointers: { score: 50, questionsTested: 2 } } }), true);
+});

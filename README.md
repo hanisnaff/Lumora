@@ -130,7 +130,7 @@ Checks whether the API can reach the progress table. It does not return credenti
 
 ### GET /api/progress
 
-Requires a valid Supabase access token in the Authorization: Bearer <token> header. Returns the current learner's saved state or null if no state exists.
+Requires a valid Supabase access token in the Authorization: Bearer <token> header. Returns the current learner's saved state or null if no state exists, plus the authenticated user ID and anonymous-session flag. The client uses this metadata to avoid reusing one signed-in account's browser cache in another account.
 
 ### PUT /api/progress
 

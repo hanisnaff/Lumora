@@ -1,8 +1,8 @@
 import { authenticateRequest, getAccessToken, getSupabaseConfig, sendJson } from "../lib/supabaseServer.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "GET" && req.method !== "PUT") {
-    res.setHeader("Allow", "GET, PUT");
+  if (!["GET", "PUT", "DELETE"].includes(req.method)) {
+    res.setHeader("Allow", "GET, PUT, DELETE");
     return sendJson(res, 405, { error: "Method not allowed." });
   }
 
@@ -23,6 +23,22 @@ export default async function handler(req, res) {
       apikey: config.anonKey,
       Authorization: `Bearer ${accessToken}`,
     };
+    const userFilter = `?user_id=eq.${encodeURIComponent(user.id)}`;
+
+    if (req.method === "DELETE") {
+      const response = await fetch(`${tableUrl}${userFilter}`, {
+        method: "DELETE",
+        headers: { ...databaseHeaders, Prefer: "return=minimal" },
+      });
+
+      if (!response.ok) {
+        const detail = await response.text();
+        console.error("Supabase delete failed:", detail);
+        return sendJson(res, 502, { error: "Could not reset saved progress." });
+      }
+
+      return sendJson(res, 200, { deleted: true });
+    }
 
     if (req.method === "GET") {
       const response = await fetch(`${tableUrl}?select=state&user_id=eq.${encodeURIComponent(user.id)}&limit=1`, {

@@ -102,7 +102,19 @@ export const AuthPage: React.FC = () => {
             const cloudResponse = await fetch('/api/progress', { headers: authHeaders });
             if (!cloudResponse.ok) throw new Error('Could not check existing cloud progress.');
             const cloudPayload = await cloudResponse.json() as { state?: unknown };
-            if (!cloudPayload.state) {
+            let localProgressIsAnonymous = true;
+            const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+            if (ownerRaw) {
+              try {
+                const owner = JSON.parse(ownerRaw) as { isAnonymous?: unknown };
+                localProgressIsAnonymous = owner.isAnonymous === true;
+              } catch {
+                localProgressIsAnonymous = false;
+              }
+            }
+            // Only claim progress from an anonymous/demo session. Never copy one
+            // signed-in account's local cache into a different account.
+            if (!cloudPayload.state && localProgressIsAnonymous) {
               const syncResponse = await fetch('/api/progress', {
                 method: 'PUT',
                 headers: { ...authHeaders, 'Content-Type': 'application/json' },

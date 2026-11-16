@@ -98,7 +98,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 
           {/* Contextual Study Flow Items */}
           <div className="pt-4 px-3 py-1.5 text-[11px] font-bold tracking-wider text-[#68716C] uppercase">
-            Adaptive Workspace
+            Your study steps
           </div>
           {subNavItems.map((item) => {
             const Icon = item.icon;
@@ -128,7 +128,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
           })}
         </nav>
 
-        {/* Diagnostic Snapshot Badge in Sidebar */}
+        {/* Quick progress summary */}
         <div className="p-3.5 mx-3 mb-3 bg-[#E8EBE9]/80 border border-[#D6DDD8] rounded-xl text-xs space-y-1.5">
           <div className="flex items-center justify-between text-[#244B3C] font-bold">
             <span className="flex items-center gap-1.5">
@@ -142,7 +142,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
           <p className="text-[11px] text-[#68716C] leading-tight">
             {assessmentResult
               ? `Weakest concept: ${assessmentResult.conceptMastery[assessmentResult.weakestConceptId]?.conceptName || 'Pointers'}`
-              : 'Take the 5-question baseline to isolate gaps.'}
+              : 'Start with a short check to find what to study next.'}
           </p>
         </div>
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
 import { canMigrateAnonymousProgress, hasLearningActivity } from '../services/progressOwnership';
-import { SESSION_KEY } from '../services/remoteProgress';
+import { SESSION_KEY, PROGRESS_OWNER_KEY } from '../services/remoteProgress';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://ewjhbfggfjlvseozixtv.supabase.co').replace(/\/$/, '');
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_GL6ijpDCW4wgjJXe__oEZw_jWFNi2BN';
@@ -104,7 +104,7 @@ export const AuthPage: React.FC = () => {
             if (!cloudResponse.ok) throw new Error('Could not check existing cloud progress.');
             const cloudPayload = await cloudResponse.json() as { state?: unknown };
             let localProgressIsAnonymous = false;
-            const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+            const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
             if (ownerRaw) {
               try {
                 const owner = JSON.parse(ownerRaw) as { isAnonymous?: boolean };

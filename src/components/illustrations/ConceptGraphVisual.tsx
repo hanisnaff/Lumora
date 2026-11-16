@@ -94,7 +94,7 @@ export const ConceptGraphVisual: React.FC<ConceptGraphVisualProps> = ({
           {/* Checkmark icon */}
           <path d="M-5 0 L-1 4 L6 -4" stroke="#C6F36B" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           <text x="0" y="34" textAnchor="middle" fill="#242A27" fontSize="10" fontWeight="600" fontFamily="Inter">
-            Memory Addr (&)
+            Address-of (&)
           </text>
           <text x="0" y="45" textAnchor="middle" fill="#7D8880" fontSize="8.5" fontFamily="monospace">
             SAMPLE COMPLETE

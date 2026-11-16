@@ -155,6 +155,7 @@ The example is abbreviated; the application stores the full learning state. Requ
 - The API validates each access token with Supabase before accessing progress.
 - Browser-cache ownership is tracked: anonymous demo progress can be claimed during sign-in, but a cache associated with a different signed-in account is not reused.
 - Progress API responses set private, no-store cache headers, and requests use the learner's token when querying Postgres so row-level policies enforce ownership.
+- Expired or malformed saved sessions fail closed; learners must sign in again rather than silently switching to a new anonymous account.
 - Do not add service-role keys, database passwords, or other secrets to source control.
 - See [SECURITY.md](SECURITY.md) for reporting a vulnerability.
 

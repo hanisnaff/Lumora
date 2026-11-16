@@ -14,6 +14,15 @@ updates:
         update-types:
           - minor
           - patch
+      vite-toolchain:
+        patterns:
+          - "vite"
+          - "@vitejs/plugin-react"
+          - "@tailwindcss/vite"
+        update-types:
+          - major
+          - minor
+          - patch
       development-dependencies:
         dependency-type: development
         update-types:

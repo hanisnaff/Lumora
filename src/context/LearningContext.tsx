@@ -111,12 +111,12 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
             && previousOwner.userId === currentOwner.userId
             && previousOwner.isAnonymous === currentOwner.isAnonymous
           );
+          const anonymousProgressCanBeClaimed = previousOwner?.isAnonymous === true;
           const firstAnonymousSession = !previousOwner && currentOwner?.isAnonymous === true;
 
-          // Reuse a local cache only when it belongs to this same session, or
-          // when a brand-new anonymous session is claiming unowned demo data.
-          // Never show or sync one signed-in account's cache in another account.
-          if (sameOwner || firstAnonymousSession) {
+          // Anonymous demo progress may be claimed by the account the learner
+          // signs into. A cache owned by a different signed-in account is never reused.
+          if (sameOwner || anonymousProgressCanBeClaimed || firstAnonymousSession) {
             applySavedState(localState);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
           }

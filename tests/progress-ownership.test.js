@@ -7,7 +7,14 @@ import {
   canUseOfflineLocalProgress,
   hasLearningActivity,
   shouldMigrateAnonymousProgress,
+  canStartAnonymousSession,
 } from "../src/services/progressOwnership.js";
+
+test("creates anonymous sessions only when no signed-in owner is stranded", () => {
+  assert.equal(canStartAnonymousSession(null), true);
+  assert.equal(canStartAnonymousSession({ userId: "anon-a", isAnonymous: true }), true);
+  assert.equal(canStartAnonymousSession({ userId: "user-a", isAnonymous: false }), false);
+});
 
 test("reuses a cache for the same authenticated user", () => {
   const owner = { userId: "user-a", isAnonymous: false };

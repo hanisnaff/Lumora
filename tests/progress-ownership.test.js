@@ -5,6 +5,7 @@ import {
   canMigrateAnonymousProgress,
   canReuseLocalProgress,
   canUseOfflineLocalProgress,
+  hasLearningActivity,
 } from "../src/services/progressOwnership.js";
 
 test("reuses a cache for the same authenticated user", () => {
@@ -44,8 +45,7 @@ test("keeps anonymous progress available offline but protects signed-in caches",
   assert.equal(canUseOfflineLocalProgress(null, false), true);
 });
 
-test("distinguishes an empty cloud row from existing account progress", async () => {
-  const { hasLearningActivity } = await import("../src/services/progressOwnership.js");
+test("distinguishes an empty cloud row from existing account progress", () => {
   assert.equal(hasLearningActivity(null), false);
   assert.equal(hasLearningActivity({}), false);
   assert.equal(hasLearningActivity({ conceptMasteries: { pointers: { score: 0, questionsTested: 0 } } }), false);

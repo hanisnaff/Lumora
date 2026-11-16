@@ -126,6 +126,12 @@ async function getSession(): Promise<RemoteSession> {
   if (!session) {
     throw new Error("Supabase did not return an anonymous session. Enable anonymous sign-ins in Supabase Auth.");
   }
+  if (created.user?.id) {
+    localStorage.setItem(PROGRESS_OWNER_KEY, JSON.stringify({
+      userId: created.user.id,
+      isAnonymous: true,
+    }));
+  }
   return session;
 }
 

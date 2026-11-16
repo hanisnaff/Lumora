@@ -19,3 +19,5 @@ export function canUseOfflineLocalProgress(
   previousOwner: ProgressOwner | null,
   hasLocalState: boolean
 ): boolean;
+
+export function hasLearningActivity(state: unknown): boolean;

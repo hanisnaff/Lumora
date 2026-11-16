@@ -24,7 +24,10 @@ export const LearningSetupPage: React.FC = () => {
       navigate('/assessment');
       return;
     }
-    setActiveLessonConcept(focusConcept || next.conceptId || 'dereferencing');
+    const nextConcept = lessonDone && practiceDone
+      ? next.conceptId || focusConcept || 'dereferencing'
+      : focusConcept || next.conceptId || 'dereferencing';
+    setActiveLessonConcept(nextConcept);
     navigate(!lessonDone ? '/lesson' : !practiceDone ? '/practice' : next.targetRoute);
   };
 

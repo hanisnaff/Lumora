@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
 import {
@@ -27,9 +27,50 @@ export const LearningShell: React.FC<LearningShellProps> = ({
   const [resetModalOpen, setResetModalOpen] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [resetError, setResetError] = useState('');
+  const resetTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const cancelResetRef = useRef<HTMLButtonElement | null>(null);
+  const confirmResetRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { assessmentResult, resetProgress, selectedSubject, selectedTopic, progressSyncError } = useLearning();
+
+  useEffect(() => {
+    if (!resetModalOpen) {
+      resetTriggerRef.current?.focus();
+      return;
+    }
+
+    cancelResetRef.current?.focus();
+    const handleDialogKeys = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !resetting) {
+        setResetModalOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const first = cancelResetRef.current;
+      const last = confirmResetRef.current;
+      if (!first || !last) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleDialogKeys);
+    return () => window.removeEventListener('keydown', handleDialogKeys);
+  }, [resetModalOpen, resetting]);
+
+  const openResetDialog = (event: React.MouseEvent<HTMLButtonElement>) => {
+    resetTriggerRef.current = event.currentTarget;
+    setResetError('');
+    setMobileSidebarOpen(false);
+    setResetModalOpen(true);
+  };
 
   const navItems = [
     { name: 'Home', path: '/', icon: Home, exact: true },
@@ -123,7 +164,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
         <div className="p-3.5 border-t border-[#D6DDD8]/70">
           <button
             type="button"
-            onClick={() => { setResetError(''); setResetModalOpen(true); }}
+            onClick={openResetDialog}
             className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs font-semibold text-[#68716C] hover:text-[#244B3C] hover:bg-[#E8EBE9]/80 rounded-xl border border-[#D6DDD8]/80 transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
@@ -183,11 +224,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
           })}
           <button
             type="button"
-            onClick={() => {
-              setMobileSidebarOpen(false);
-              setResetError('');
-              setResetModalOpen(true);
-            }}
+            onClick={openResetDialog}
             className="w-full mt-3 py-2 text-xs font-semibold text-[#68716C] border border-[#D6DDD8] rounded-xl"
           >
             Reset Demo Progress
@@ -242,6 +279,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
             <div className="mt-6 flex items-center justify-end gap-3">
               <button
                 type="button"
+                ref={cancelResetRef}
                 onClick={() => setResetModalOpen(false)}
                 disabled={resetting}
                 className="px-4 py-2 text-xs font-semibold text-[#68716C] hover:text-[#244B3C] rounded-xl border border-[#D6DDD8]"
@@ -250,6 +288,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
               </button>
               <button
                 type="button"
+                ref={confirmResetRef}
                 onClick={handleResetConfirm}
                 disabled={resetting}
                 className="px-4 py-2 text-xs font-semibold bg-[#244B3C] text-[#F8FAF9] rounded-xl hover:bg-[#1D3D31]"

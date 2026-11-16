@@ -6,6 +6,7 @@ import {
   canReuseLocalProgress,
   canUseOfflineLocalProgress,
   hasLearningActivity,
+  shouldMigrateAnonymousProgress,
 } from "../src/services/progressOwnership.js";
 
 test("reuses a cache for the same authenticated user", () => {
@@ -43,6 +44,14 @@ test("keeps anonymous progress available offline but protects signed-in caches",
   assert.equal(canUseOfflineLocalProgress({ userId: "anon-a", isAnonymous: true }, true), true);
   assert.equal(canUseOfflineLocalProgress({ userId: "user-a", isAnonymous: false }, true), false);
   assert.equal(canUseOfflineLocalProgress(null, false), true);
+});
+
+test("migrates anonymous progress only when the destination account has no activity", () => {
+  const anonymousOwner = { userId: "anon-a", isAnonymous: true };
+  assert.equal(shouldMigrateAnonymousProgress(anonymousOwner, null), true);
+  assert.equal(shouldMigrateAnonymousProgress(anonymousOwner, {}), true);
+  assert.equal(shouldMigrateAnonymousProgress(anonymousOwner, { assessmentAnswers: { 1: 0 } }), false);
+  assert.equal(shouldMigrateAnonymousProgress({ userId: "user-a", isAnonymous: false }, null), false);
 });
 
 test("distinguishes an empty cloud row from existing account progress", () => {

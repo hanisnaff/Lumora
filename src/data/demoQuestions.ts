@@ -509,7 +509,7 @@ std::cout << val1 << " " << val2;`,
     question: 'What keyword introduced in C++11 represents a type-safe null pointer constant?',
     options: ['NULL', '0', 'nullptr', 'nil'],
     correctOptionIndex: 2,
-    explanation: '`nullptr` is a C++11 keyword that represents a null pointer constant of type `std::nullptr_t`, avoiding integer overload ambiguity that plagued NULL.',
+    explanation: '`nullptr` is a C++11 keyword with type `std::nullptr_t`. It converts to pointer types but not integers, avoiding overload ambiguity that can occur with integer null pointer constants such as `0` or `NULL` when it is defined that way.',
   },
   {
     id: 107,

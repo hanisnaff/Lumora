@@ -2,11 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import handler from "../api/health.js";
 
-async function invoke({ method = "GET", databaseStatus = 200 } = {}) {
+async function invoke({ method = "GET", databaseStatus = 200, networkError = false } = {}) {
   const originalFetch = globalThis.fetch;
   const calls = [];
   globalThis.fetch = async (url, options = {}) => {
     calls.push({ url: String(url), options });
+    if (networkError) throw new Error("Private network diagnostic");
     return new Response(databaseStatus === 204 ? null : "[]", { status: databaseStatus });
   };
 
@@ -52,6 +53,18 @@ test("health endpoint reports database errors without exposing backend details",
     databaseReachable: false,
     message: "Supabase is configured, but the learning_progress table could not be queried. Check the table grants and run supabase/schema.sql.",
   });
+});
+
+test("health endpoint handles network failures without exposing details", async () => {
+  const { response } = await invoke({ networkError: true });
+  assert.equal(response.statusCode, 503);
+  assert.deepEqual(response.payload, {
+    ok: false,
+    databaseConfigured: true,
+    databaseReachable: false,
+    message: "Could not reach Supabase from the server.",
+  });
+  assert.equal(JSON.stringify(response.payload).includes("Private network diagnostic"), false);
 });
 
 test("health endpoint rejects non-GET requests", async () => {

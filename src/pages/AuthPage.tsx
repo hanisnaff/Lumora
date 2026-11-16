@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, LockKeyhole, Mail } from 'lucide-react';
 import { Logo } from '../components/Logo';
-import { canMigrateAnonymousProgress, hasLearningActivity } from '../services/progressOwnership';
+import { shouldMigrateAnonymousProgress } from '../services/progressOwnership';
 import { SESSION_KEY, PROGRESS_OWNER_KEY } from '../services/remoteProgress';
 
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || 'https://ewjhbfggfjlvseozixtv.supabase.co').replace(/\/$/, '');
@@ -103,19 +103,18 @@ export const AuthPage: React.FC = () => {
             const cloudResponse = await fetch('/api/progress', { headers: authHeaders });
             if (!cloudResponse.ok) throw new Error('Could not check existing cloud progress.');
             const cloudPayload = await cloudResponse.json() as { state?: unknown };
-            let localProgressIsAnonymous = false;
+            let previousOwner: { userId?: string | null; isAnonymous?: boolean } | null = null;
             const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
             if (ownerRaw) {
               try {
-                const owner = JSON.parse(ownerRaw) as { isAnonymous?: boolean };
-                localProgressIsAnonymous = canMigrateAnonymousProgress(owner);
+                previousOwner = JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean };
               } catch {
-                localProgressIsAnonymous = false;
+                previousOwner = null;
               }
             }
-            // Only claim anonymous/demo progress, and only when the destination
-            // account has no existing learning activity to protect.
-            if (localProgressIsAnonymous && !hasLearningActivity(cloudPayload.state)) {
+            // Only claim anonymous/demo progress when the destination account
+            // has no existing learning activity to protect.
+            if (shouldMigrateAnonymousProgress(previousOwner, cloudPayload.state)) {
               const syncResponse = await fetch('/api/progress', {
                 method: 'PUT',
                 headers: { ...authHeaders, 'Content-Type': 'application/json' },

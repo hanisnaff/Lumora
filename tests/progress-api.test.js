@@ -65,6 +65,13 @@ test("rejects requests without an access token", async () => {
   assert.equal(calls.length, 0);
 });
 
+test("rejects an invalid Supabase access token", async () => {
+  const { response, calls } = await invoke({ authUser: null });
+  assert.equal(response.statusCode, 401);
+  assert.equal(calls.length, 1);
+  assert.match(calls[0].url, /auth\/v1\/user/);
+});
+
 test("rejects unsupported HTTP methods", async () => {
   const { response, responseHeaders, calls } = await invoke({ method: "PATCH" });
   assert.equal(response.statusCode, 405);

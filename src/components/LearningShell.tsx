@@ -150,6 +150,8 @@ export const LearningShell: React.FC<LearningShellProps> = ({
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             className="p-1.5 rounded-lg border border-[#D6DDD8] text-[#244B3C]"
             aria-label="Toggle navigation"
+            aria-expanded={mobileSidebarOpen}
+            aria-controls="mobile-navigation-drawer"
           >
             {mobileSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -158,7 +160,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
 
       {/* Mobile Navigation Drawer */}
       {mobileSidebarOpen && (
-        <div className="md:hidden bg-[#F8FAF9] border-b border-[#D6DDD8] px-5 py-4 space-y-2 z-30 shadow-md">
+        <nav id="mobile-navigation-drawer" aria-label="Mobile navigation" className="md:hidden bg-[#F8FAF9] border-b border-[#D6DDD8] px-5 py-4 space-y-2 z-30 shadow-md">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = item.exact
@@ -190,7 +192,7 @@ export const LearningShell: React.FC<LearningShellProps> = ({
           >
             Reset Demo Progress
           </button>
-        </div>
+        </nav>
       )}
 
       {/* Main Content Area */}
@@ -229,11 +231,11 @@ export const LearningShell: React.FC<LearningShellProps> = ({
       {/* Reset Confirmation Modal */}
       {resetModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#244B3C]/40 backdrop-blur-xs">
-          <div className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <h3 className="font-heading font-bold text-lg text-[#244B3C]">
+          <div role="dialog" aria-modal="true" aria-labelledby="reset-progress-title" aria-describedby="reset-progress-description" className="bg-[#F8FAF9] border border-[#D6DDD8] rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 id="reset-progress-title" className="font-heading font-bold text-lg text-[#244B3C]">
               Reset Demo Progress?
             </h3>
-            <p className="text-sm text-[#68716C] mt-2 leading-relaxed">
+            <p id="reset-progress-description" className="text-sm text-[#68716C] mt-2 leading-relaxed">
               This clears your local diagnostic results, concept mastery, lesson completions, and practice history. Lumora will also try to delete the cloud copy for your current account.
             </p>
             {resetError && <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-xs leading-relaxed text-red-800">{resetError}</p>}

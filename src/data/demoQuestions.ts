@@ -222,7 +222,7 @@ std::cout << "Address: " << &price << "\\n";`,
       steps: [
         { line: 1, explanation: 'Declares double variable `price` occupying 8 bytes in memory.' },
         { line: 2, explanation: 'Prints the value 19.99 stored inside `price`.' },
-        { line: 3, explanation: '`&price` queries the compiler/OS for the starting address in memory.' },
+        { line: 3, explanation: '`&price` evaluates to the address of the `price` object. Its concrete value depends on the program's execution and implementation.' },
       ],
     },
     memoryDiagram: {

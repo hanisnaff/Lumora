@@ -21,3 +21,8 @@ export function canUseOfflineLocalProgress(
 ): boolean;
 
 export function hasLearningActivity(state: unknown): boolean;
+
+export function shouldMigrateAnonymousProgress(
+  owner: ProgressOwner | null,
+  cloudState: unknown
+): boolean;

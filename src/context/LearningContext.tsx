@@ -225,7 +225,7 @@ export const LearningProvider: React.FC<{ children: ReactNode }> = ({ children }
           applySavedState(remote);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(remote));
         } else if (localState) {
-          const ownerRaw = localStorage.getItem('lumora_progress_owner_v1');
+          const ownerRaw = localStorage.getItem(PROGRESS_OWNER_KEY);
           const currentOwner = ownerRaw
             ? JSON.parse(ownerRaw) as { userId?: string | null; isAnonymous?: boolean }
             : null;
